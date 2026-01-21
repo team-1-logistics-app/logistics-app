@@ -1,5 +1,5 @@
 package com.austria.logistics.models;
 
-public class Package {
+public class PackageImpl {
     //TO DO
 }

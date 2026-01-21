@@ -1,5 +1,5 @@
 package com.austria.logistics.models;
 
-public class Route {
+public class RouteImpl {
     //TO DO
 }
