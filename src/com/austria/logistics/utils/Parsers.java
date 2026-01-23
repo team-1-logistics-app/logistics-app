@@ -1,34 +1,34 @@
 package com.austria.logistics.utils;
 
 import com.austria.logistics.constants.Constants;
-import com.austria.logistics.exceptions.InvalidLocation;
-import com.austria.logistics.models.enums.Cities;
+import com.austria.logistics.exceptions.InvalidLocationException;
+import com.austria.logistics.models.enums.Locations;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Parsers {
-    private Parsers() {};
+    private Parsers() {}
 
-    public static Cities parseLocation(String location) {
+    public static Locations parseLocation(String location) {
         switch (location) {
             case "Sydney":
-                return Cities.getCityValue("Sydney");
+                return Locations.getCityValue("Sydney");
             case "Melbourne":
-                return Cities.getCityValue("Melbourne");
+                return Locations.getCityValue("Melbourne");
             case "Adelaide":
-                return Cities.getCityValue("Adelaide");
+                return Locations.getCityValue("Adelaide");
             case "Alice Springs":
-                return Cities.getCityValue("Alice Springs");
+                return Locations.getCityValue("Alice Springs");
             case "Brisbane":
-                return Cities.getCityValue("Brisbane");
+                return Locations.getCityValue("Brisbane");
             case "Darwin":
-                return Cities.getCityValue("Darwin");
+                return Locations.getCityValue("Darwin");
             case "Perth":
-                return Cities.getCityValue("Perth");
+                return Locations.getCityValue("Perth");
             default:
-                throw new InvalidLocation(String.format(Constants.LOCATION_INVALID_MESSAGE, location));
+                throw new InvalidLocationException(String.format(Constants.LOCATION_INVALID_MESSAGE, location));
         }
     }
     public static LocalDateTime parseEventTime(String eventTime){

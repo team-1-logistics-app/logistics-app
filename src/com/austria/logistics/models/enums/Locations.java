@@ -1,9 +1,9 @@
 package com.austria.logistics.models.enums;
 
 import com.austria.logistics.constants.Constants;
-import com.austria.logistics.exceptions.InvalidLocation;
+import com.austria.logistics.exceptions.InvalidLocationException;
 
-public enum Cities {
+public enum Locations {
     SYD("Sydney"),
     MEL("Melbourne"),
     ADL("Adelaide"),
@@ -14,7 +14,7 @@ public enum Cities {
 
     private final String cityName;
 
-    Cities(String city){
+    Locations(String city){
         this.cityName = city;
     }
 
@@ -22,12 +22,12 @@ public enum Cities {
         return cityName;
     }
 
-    public static Cities getCityValue(String cityName){
-        for(Cities city: values()){
+    public static Locations getCityValue(String cityName){
+        for(Locations city: values()){
             if(city.cityName.equalsIgnoreCase(cityName)){
                 return city;
             }
         }
-        throw new InvalidLocation(String.format(Constants.LOCATION_INVALID_MESSAGE,cityName));
+        throw new InvalidLocationException(String.format(Constants.LOCATION_INVALID_MESSAGE,cityName));
     }
 }
