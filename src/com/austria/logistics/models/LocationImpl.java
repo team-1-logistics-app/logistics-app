@@ -26,7 +26,6 @@ public class LocationImpl implements Location {
         return this.location;
     }
 
-
     @Override
     public void setEventTime(LocalDateTime eventTime) {
         this.eventTime = eventTime;
