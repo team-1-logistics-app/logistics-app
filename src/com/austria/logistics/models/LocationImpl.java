@@ -10,6 +10,11 @@ public class LocationImpl implements Location {
     private Locations location;
     private LocalDateTime eventTime;
 
+    public LocationImpl(Locations location){
+        this.setLocation(location);
+    }
+
+
     public LocationImpl(Locations location, LocalDateTime eventTime){
         this.setLocation(location);
         this.setEventTime(eventTime);
