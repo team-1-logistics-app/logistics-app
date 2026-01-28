@@ -37,6 +37,8 @@ public class RouteImpl implements Route {
     public String addLocationToRoute(Locations location) {
         if (!this.isRouteEmpty() && route.getLast().getLocation() == location) {
             throw new InvalidLocationRouteException(String.format(Constants.LOCATION_PREVIOUS_IS_SAME_MESSAGE, this.getId(), location.getCityName()));
+        } else if (this.isRouteEmpty()) {
+            throw new RouteIsEmptyException(String.format(Constants.ROUTE_IS_EMPTY_WHILE_ADDING_AS_FIRST_LOCATION_MESSAGE,this.getId()));
         }
         route.add(new LocationImpl(location));
         return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
@@ -131,8 +133,10 @@ public class RouteImpl implements Route {
         Location prevLocation = this.route.getFirst();
 
         for (int i = 1; i < this.route.size(); i++) {
+
             Location currentLocation = this.route.get(i);
             long minutes = Math.round((Distance.calculateDistance(prevLocation.getLocation(),currentLocation.getLocation()) / Constants.AVERAGE_SPEED_KMH) * 60);
+
             prevTime = prevTime.plusMinutes(minutes);
             currentLocation.setEventTime(prevTime);
             prevLocation = currentLocation;
