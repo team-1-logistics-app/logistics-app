@@ -131,8 +131,10 @@ public class RouteImpl implements Route {
         Location prevLocation = this.route.getFirst();
 
         for (int i = 1; i < this.route.size(); i++) {
+
             Location currentLocation = this.route.get(i);
             long minutes = Math.round((Distance.calculateDistance(prevLocation.getLocation(),currentLocation.getLocation()) / Constants.AVERAGE_SPEED_KMH) * 60);
+
             prevTime = prevTime.plusMinutes(minutes);
             currentLocation.setEventTime(prevTime);
             prevLocation = currentLocation;

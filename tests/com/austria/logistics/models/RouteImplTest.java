@@ -3,6 +3,7 @@ package com.austria.logistics.models;
 import com.austria.logistics.exceptions.InvalidLocationRouteException;
 import com.austria.logistics.exceptions.LocationNotFoundException;
 import com.austria.logistics.exceptions.RouteIsEmptyException;
+import com.austria.logistics.exceptions.RouteNotEnoughLocationsException;
 import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
@@ -215,4 +216,31 @@ class RouteImplTest {
         //Act, Assert
         Assertions.assertThrows(InvalidLocationRouteException.class, () -> route.calculateDistanceBetween(Locations.ADL,Locations.BRI));
     }
+    @Test
+    void calculateSchedule_Should_ThrowException_When_Route_isEmpty(){
+        //Arange, Act, Assert
+        Assertions.assertThrows(RouteNotEnoughLocationsException.class, () -> route.calculateSchedule());
+    }
+
+    @Test
+    void calculateSchedule_Should_ThrowException_When_NotEnough_Locations(){
+        //Arange
+        route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
+
+        //Act, Assert
+        Assertions.assertThrows(RouteNotEnoughLocationsException.class, () -> route.calculateSchedule());
+    }
+
+    @Test
+    void calculateSchedule_Should_Calculate_CorrectTime(){
+        //Arange
+        route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
+        route.addLocationToRoute(Locations.ADL);
+        LocalDateTime expectedArrival = LocalDateTime.of(2026, 1, 25, 10, 9);
+        route.calculateSchedule();
+
+        //Act, Assert
+        assertEquals(expectedArrival, route.getRoute().get(1).getEventTime());
+    }
+
 }
