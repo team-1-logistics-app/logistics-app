@@ -26,10 +26,10 @@ public class RouteImpl implements Route {
 
     @Override
     public String addFirstLocationToRoute(Locations location, LocalDateTime eventTime) {
-        if(!this.route.isEmpty()){
-            throw new RouteIsNotEmptyException(String.format(Constants.ROUTE_IS_NOT_EMPTY_MESSAGE,this.getId()));
+        if (!this.route.isEmpty()) {
+            throw new RouteIsNotEmptyException(String.format(Constants.ROUTE_IS_NOT_EMPTY_MESSAGE, this.getId()));
         }
-        this.route.add(new LocationImpl(location,eventTime));
+        this.route.add(new LocationImpl(location, eventTime));
         return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
     }
 
@@ -38,7 +38,7 @@ public class RouteImpl implements Route {
         if (!this.isRouteEmpty() && route.getLast().getLocation() == location) {
             throw new InvalidLocationRouteException(String.format(Constants.LOCATION_PREVIOUS_IS_SAME_MESSAGE, this.getId(), location.getCityName()));
         } else if (this.isRouteEmpty()) {
-            throw new RouteIsEmptyException(String.format(Constants.ROUTE_IS_EMPTY_WHILE_ADDING_AS_FIRST_LOCATION_MESSAGE,this.getId()));
+            throw new RouteIsEmptyException(String.format(Constants.ROUTE_IS_EMPTY_WHILE_ADDING_AS_FIRST_LOCATION_MESSAGE, this.getId()));
         }
         route.add(new LocationImpl(location));
         return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
@@ -53,14 +53,10 @@ public class RouteImpl implements Route {
 
     @Override
     public Location findByCity(Locations location) {
-        if (this.containsLocation(location)) {
-            for (Location element : this.route) {
-                if (element.getLocation() == location) {
-                    return element;
-                }
-            }
-        }
-        throw new LocationNotFoundException(String.format(Constants.LOCATION_NOT_FOUND_MESSAGE, location.getCityName()));
+        return this.route.stream()
+                .filter(locationElement -> locationElement.getLocation() == location)
+                .findFirst()
+                .orElseThrow(() -> new LocationNotFoundException(String.format(Constants.LOCATION_NOT_FOUND_MESSAGE, location.getCityName())));
     }
 
 
@@ -120,7 +116,7 @@ public class RouteImpl implements Route {
 
     @Override
     public void calculateSchedule() {
-        if(this.route.size() < 2){
+        if (this.route.size() < 2) {
             throw new RouteNotEnoughLocationsException(String.format(Constants.ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE, this.getId()));
         }
 
@@ -130,7 +126,7 @@ public class RouteImpl implements Route {
         for (int i = 1; i < this.route.size(); i++) {
 
             Location currentLocation = this.route.get(i);
-            long minutes = Math.round((Distance.calculateDistance(prevLocation.getLocation(),currentLocation.getLocation()) / Constants.AVERAGE_SPEED_KMH) * 60);
+            long minutes = Math.round((Distance.calculateDistance(prevLocation.getLocation(), currentLocation.getLocation()) / Constants.AVERAGE_SPEED_KMH) * 60);
 
             prevTime = prevTime.plusMinutes(minutes);
             currentLocation.setEventTime(prevTime);
