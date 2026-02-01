@@ -11,8 +11,8 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class RouteImpl implements Route {
-    private int id;
-    private LinkedList<Location> route;
+    private final int id;
+    private final LinkedList<Location> route;
 
     public RouteImpl(int id) {
         this.id = id;

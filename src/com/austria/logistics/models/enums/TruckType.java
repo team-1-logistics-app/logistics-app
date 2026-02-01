@@ -19,5 +19,4 @@ public enum TruckType {
     public int getCapacity() {return this.capacity;}
     public int getMaxRange() {return this.maxRange;}
 
-
 }
