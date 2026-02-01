@@ -1,5 +1,7 @@
 package com.austria.logistics.commands.contracts;
 
+import java.util.List;
+
 public interface Command {
-    //TO DO
+    String execute(List<String> parameters);
 }

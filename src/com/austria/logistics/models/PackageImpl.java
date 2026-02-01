@@ -7,8 +7,8 @@ import com.austria.logistics.models.enums.Locations;
 
 public class PackageImpl implements Package {
     private final int id;
-    private Location startLocation;
-    private Location endLocation;
+    private Locations startLocation;
+    private Locations endLocation;
     private int weight;
     private String contactInformation;
     private Route route;
@@ -33,21 +33,21 @@ public class PackageImpl implements Package {
 
     @Override
     public void setStartLocation(Locations startLocation) {
-        this.startLocation = new LocationImpl(startLocation);
+        this.startLocation = startLocation;
     }
 
     @Override
-    public Location getStartLocation() {
+    public Locations getStartLocation() {
         return this.startLocation;
     }
 
     @Override
     public void setEndLocation(Locations endLocation) {
-        this.endLocation = new LocationImpl(endLocation);
+        this.endLocation = endLocation;
     }
 
     @Override
-    public Location getEndLocation() {
+    public Locations getEndLocation() {
         return this.endLocation;
     }
 

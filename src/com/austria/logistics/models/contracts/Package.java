@@ -7,10 +7,10 @@ public interface Package extends Identifiable {
     Route getRoute();
 
     void setStartLocation(Locations startLocation);
-    Location getStartLocation();
+    Locations getStartLocation();
 
     void setEndLocation(Locations endLocation);
-    Location getEndLocation();
+    Locations getEndLocation();
 
     void setWeight(int weight);
     int getWeight();
