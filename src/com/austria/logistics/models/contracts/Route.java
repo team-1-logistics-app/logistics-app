@@ -16,7 +16,7 @@ public interface Route extends Identifiable{
     LinkedList<Location> getRoute();
     boolean isRouteEmpty();
     int calculateTotalDistance();
-    int calculateDistanceBetween(Locations startLocation, Locations endLocaiton);
+    int calculateDistanceBetween(Locations startLocation, Locations endLocation);
     void calculateSchedule();
     Truck getAssignedTruck();
     void assignTruck(Truck truck);
