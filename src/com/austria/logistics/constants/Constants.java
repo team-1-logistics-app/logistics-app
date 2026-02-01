@@ -15,6 +15,8 @@ public class Constants {
 
     public static final String WEIGHT_VALUE_INVALID_MESSAGE = "Weight can't be 0 or less kg.";
 
+    public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
+
     public static final double AVERAGE_SPEED_KMH = 87;
 
     public static final int[][] distances = {

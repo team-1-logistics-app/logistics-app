@@ -9,7 +9,7 @@ public class TruckImpl implements Truck {
     private boolean isAssigned;
     private int currentLoad;
 
-    TruckImpl(int id, TruckType truckType){
+    public TruckImpl(int id, TruckType truckType){
         this.id = id;
         this.truckType = truckType;
         this.isAssigned = false;
