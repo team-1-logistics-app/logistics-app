@@ -5,6 +5,7 @@ import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -13,6 +14,7 @@ import java.util.ListIterator;
 public class RouteImpl implements Route {
     private final int id;
     private final LinkedList<Location> route;
+    private Truck truck;
 
     public RouteImpl(int id) {
         this.id = id;
@@ -22,6 +24,16 @@ public class RouteImpl implements Route {
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public void assignTruck(Truck truck) {
+     this.truck = truck;
+    }
+
+    @Override
+    public Truck getAssignedTruck() {
+        return this.truck;
     }
 
     @Override
@@ -133,5 +145,4 @@ public class RouteImpl implements Route {
             prevLocation = currentLocation;
         }
     }
-
 }

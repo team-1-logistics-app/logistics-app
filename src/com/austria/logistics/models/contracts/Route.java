@@ -1,6 +1,7 @@
 package com.austria.logistics.models.contracts;
 
 import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
@@ -17,5 +18,6 @@ public interface Route extends Identifiable{
     int calculateTotalDistance();
     int calculateDistanceBetween(Locations startLocation, Locations endLocaiton);
     void calculateSchedule();
-
+    Truck getAssignedTruck();
+    void assignTruck(Truck truck);
 }
