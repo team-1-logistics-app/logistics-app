@@ -1,4 +1,4 @@
-package com.austria.logistics.commands.creation;
+package com.austria.logistics.commands.creationCommands;
 
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.constants.Constants;
@@ -10,7 +10,6 @@ import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
 
-import javax.swing.plaf.PanelUI;
 import java.util.List;
 
 public class CreatePackage implements Command {
