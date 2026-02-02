@@ -67,6 +67,13 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public Route assignTruckToRoute(Truck truck, int id) {
+        Route route = this.findElementById(this.getRoutes(),id);
+        route.assignTruck(truck);
+        return route;
+    }
+
+    @Override
     public Package createPackage(Locations startLocation, Locations endLocation, int weight, String contactInformation) {
         Package pkg = new PackageImpl(++this.nextId,startLocation,endLocation,weight,contactInformation);
         this.packages.add(pkg);

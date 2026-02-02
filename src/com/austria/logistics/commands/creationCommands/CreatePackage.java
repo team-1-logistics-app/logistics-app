@@ -16,8 +16,8 @@ public class CreatePackage implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
     private final Repository repository;
 
-    public CreatePackage() {
-        this.repository = new RepositoryImpl();
+    public CreatePackage(Repository repository) {
+        this.repository = repository;
     }
 
 
