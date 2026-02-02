@@ -51,6 +51,9 @@ public class AssignTruck implements Command {
         } catch (NoAvailableTruckException e) {
             return e.getMessage();
         }
+
+        truck.assign();
+
         int id = repository.assignTruckToRoute(truck, route).getId();
 
         return String.format(Constants.TRUCK_ASSIGNED_MESSAGE, truckType.getDisplayName(), truck.getId(), id);
