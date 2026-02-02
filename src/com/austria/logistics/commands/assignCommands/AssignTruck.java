@@ -1,5 +1,58 @@
 package com.austria.logistics.commands.assignCommands;
 
-public class AssignTruck {
-    //TO DO
+import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.constants.Constants;
+import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.ElementNotFoundException;
+import com.austria.logistics.exceptions.InvalidTruckTypeException;
+import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.NoAvailableTruckException;
+import com.austria.logistics.models.contracts.Route;
+import com.austria.logistics.models.enums.TruckType;
+import com.austria.logistics.models.vehicles.contracts.Truck;
+import com.austria.logistics.utils.Parsers;
+import com.austria.logistics.utils.Validators;
+
+import java.util.List;
+
+public class AssignTruck implements Command {
+    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    public final Repository repository;
+
+    public AssignTruck(Repository repository) {
+        this.repository = repository;
+    }
+
+
+    @Override
+    public String execute(List<String> parameters) {
+        Route route;
+        TruckType truck;
+        int id;
+        try {
+            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+            id = Parsers.parseToInteger("ID", parameters.get(0));
+            route = this.repository.findElementById(this.repository.getRoutes(), id);
+            truck = Parsers.parseTruck(parameters.get(1));
+        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException |
+                 InvalidTruckTypeException e) {
+            return e.getMessage();
+        }
+        return assignTruck(route, truck);
+    }
+
+    public String assignTruck(Route route, TruckType truckType) {
+        Truck truck;
+        try {
+            truck = this.repository.getTrucks().stream()
+                    .filter(element -> element.getTruckType() == truckType && !element.isAssigned())
+                    .findFirst()
+                    .orElseThrow(() -> new NoAvailableTruckException(String.format(Constants.TRUCK_TYPE_NOT_AVAILABLE_MESSAGE, truckType.getDisplayName())));
+        } catch (NoAvailableTruckException e) {
+            return e.getMessage();
+        }
+        int id = repository.assignTruckToRoute(truck, route).getId();
+
+        return String.format(Constants.TRUCK_ASSIGNED_MESSAGE, truckType.getDisplayName(), truck.getId(), id);
+    }
 }

@@ -14,7 +14,7 @@ public class Constants {
     public static final String ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE = "Route with id %d doesn't contain enough locations to calculate schedule. ";
 
     public static final String WEIGHT_VALUE_INVALID_MESSAGE = "Weight can't be 0 or less kg.";
-    public static final String WEIGHT_VALUE_INVALID_FORMAT_MESSAGE = "Weight has to be valid integer.";
+    public static final String VALUE_INVALID_FORMAT_MESSAGE = "%s has to be valid integer.";
 
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 
@@ -23,6 +23,10 @@ public class Constants {
     public static final String INVALID_TIME_IS_PAST_MESSAGE = "The date-time is in the past, current date-time is %s.";
 
     public static final String PACKAGE_CREATED = "Package with id %d was created!";
+
+    public static final String TRUCK_INVALID_TYPE_MESSAGE = "%s is unsupported truck type, use one of those: Scania, Man or Actros";
+    public static final String TRUCK_TYPE_NOT_AVAILABLE_MESSAGE = "All trucks %s are busy at the moment, try different truck";
+    public static final String TRUCK_ASSIGNED_MESSAGE = "Truck %s with id %d was assigned to route with id %d!";
 
     public static final double AVERAGE_SPEED_KMH = 87;
 

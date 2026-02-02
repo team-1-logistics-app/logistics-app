@@ -67,8 +67,7 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Route assignTruckToRoute(Truck truck, int id) {
-        Route route = this.findElementById(this.getRoutes(),id);
+    public Route assignTruckToRoute(Truck truck, Route route) {
         route.assignTruck(truck);
         return route;
     }
