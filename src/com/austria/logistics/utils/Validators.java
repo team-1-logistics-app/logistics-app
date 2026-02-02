@@ -1,7 +1,7 @@
 package com.austria.logistics.utils;
 
 import com.austria.logistics.constants.Constants;
-import com.austria.logistics.exceptions.InvalidWeightValueException;
+import com.austria.logistics.exceptions.InvalidValueException;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class Validators {
 
     public static void validateWeight(int weight){;
         if(weight <= 0){
-            throw new InvalidWeightValueException(Constants.WEIGHT_VALUE_INVALID_MESSAGE);
+            throw new InvalidValueException(Constants.WEIGHT_VALUE_INVALID_MESSAGE);
         }
     }
 }
