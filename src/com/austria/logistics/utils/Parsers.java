@@ -3,15 +3,12 @@ package com.austria.logistics.utils;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.exceptions.InvalidLocationException;
 import com.austria.logistics.exceptions.InvalidTimeFormatException;
-import com.austria.logistics.exceptions.InvalidTruckTypeException;
-import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.InvalidWeightValueException;
 import com.austria.logistics.models.enums.Locations;
-import com.austria.logistics.models.enums.TruckType;
 
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Locale;
 
 public class Parsers {
@@ -58,20 +55,13 @@ public class Parsers {
         return time;
     }
 
-    public static int parseToInteger(String elementType, String value) {
-        int valueInt;
+    public static int parseWeight(String weight){
+        int weightInt;
         try {
-            valueInt = Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            throw new InvalidValueException(String.format(Constants.VALUE_INVALID_FORMAT_MESSAGE, elementType));
+            weightInt = Integer.parseInt(weight);
+        }catch (NumberFormatException e){
+            throw new InvalidWeightValueException(Constants.WEIGHT_VALUE_INVALID_FORMAT_MESSAGE);
         }
-        return valueInt;
-    }
-
-    public static TruckType parseTruck(String truck) {
-        return Arrays.stream(TruckType.values())
-                .filter(truckType -> truckType.getDisplayName().equalsIgnoreCase(truck))
-                .findFirst()
-                .orElseThrow(() -> new InvalidTruckTypeException(String.format(Constants.TRUCK_INVALID_TYPE_MESSAGE, truck)));
+        return weightInt;
     }
 }

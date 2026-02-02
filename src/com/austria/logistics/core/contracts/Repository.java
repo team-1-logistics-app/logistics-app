@@ -17,6 +17,5 @@ public interface Repository {
     <E extends Identifiable> E findElementById(List<E> elements, int id);
 
     Route createRoute();
-    Route assignTruckToRoute(Truck truck, Route route);
     Package createPackage(Locations startLocation, Locations endLocation, int weight, String contactInformation);
 }
