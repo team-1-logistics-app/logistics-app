@@ -23,12 +23,14 @@ public class AssignTruck implements Command {
         this.repository = repository;
     }
 
-
+    //EXPECTED ARGUMENTS ARE STRING ROUTEID AND STRING TRUCKTYPE
     @Override
     public String execute(List<String> parameters) {
-        Route route;
         TruckType truck;
         int id;
+
+        Route route;
+
         try {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
             id = Parsers.parseToInteger("ID", parameters.get(0));
@@ -52,10 +54,8 @@ public class AssignTruck implements Command {
             return e.getMessage();
         }
 
-        truck.assign();
+        int routeId = repository.assignTruckToRoute(truck, route).getId();
 
-        int id = repository.assignTruckToRoute(truck, route).getId();
-
-        return String.format(Constants.TRUCK_ASSIGNED_MESSAGE, truckType.getDisplayName(), truck.getId(), id);
+        return String.format(Constants.TRUCK_ASSIGNED_MESSAGE, truckType.getDisplayName(), truck.getId(), routeId);
     }
 }

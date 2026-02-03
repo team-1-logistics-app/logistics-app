@@ -19,11 +19,12 @@ public class AssignPackage implements Command {
 
     public AssignPackage(Repository repository){this.repository = repository;}
 
-
+    //EXPECTED ARGUMENTS ARE STRING PACKAGEID AND STRING TRUCKID
     @Override
     public String execute(List<String> parameters) {
         int packageId;
         int truckId;
+
         Package pkg;
         Truck truck;
         String result;
@@ -46,9 +47,8 @@ public class AssignPackage implements Command {
             throw new MaxCapacityReachedException(String.format(Constants.TRUCK_MAXCAPACITY_REACHED_MESSAGE,truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
-        pkg.setTruck(truck);
-        truck.addAssignedPackageId(pkg.getId());
+        int truckId = this.repository.assignPackageToTruck(pkg,truck).getId();
 
-        return String.format(Constants.PACKAGE_ASSIGNED_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truck.getId());
+        return String.format(Constants.PACKAGE_ASSIGNED_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truckId);
     }
 }

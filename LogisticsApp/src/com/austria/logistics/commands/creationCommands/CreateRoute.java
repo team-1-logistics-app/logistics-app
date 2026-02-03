@@ -12,6 +12,7 @@ public class CreateRoute implements Command {
     private final Repository repository;
     public CreateRoute(Repository repository){this.repository = repository;}
 
+    //NO ARGUMENTS ARE EXPECTED
     @Override
     public String execute(List<String> parameters) {
         try {

@@ -19,7 +19,7 @@ public class CreatePackage implements Command {
         this.repository = repository;
     }
 
-
+    //EXPECTED ARGUMENTS ARE STRING STARTLOCATION, STRING ENDLOCATION, STRING WEIGHT, STRING CONTACTINFO
     @Override
     public String execute(List<String> parameters) {
         Locations startLocation;

@@ -71,8 +71,17 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Route assignTruckToRoute(Truck truck, Route route) {
+        truck.assign();
+        truck.setAssignedRoute(route);
         route.assignTruck(truck);
         return route;
+    }
+
+    @Override
+    public Truck assignPackageToTruck(Package pkg, Truck truck) {
+        pkg.setAssignedToTruck(truck);
+        truck.addAssignedPackageId(pkg.getId());
+        return truck;
     }
 
     @Override

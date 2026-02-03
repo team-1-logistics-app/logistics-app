@@ -1,8 +1,6 @@
 package com.austria.logistics.models;
 
-import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Package;
-import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
@@ -12,7 +10,7 @@ public class PackageImpl implements Package {
     private Locations endLocation;
     private int weight;
     private String contactInformation;
-    private Truck truck;
+    private Truck assignedToTruck;
 
     public PackageImpl(int id, Locations startLocation, Locations endLocation, int weight, String contactInformation){
         this.id = id;
@@ -23,11 +21,11 @@ public class PackageImpl implements Package {
     }
 
     @Override
-    public void setTruck(Truck truck) {this.truck = truck;}
+    public void setAssignedToTruck(Truck assignedToTruck) {this.assignedToTruck = assignedToTruck;}
 
     @Override
-    public Truck getTruck() {
-        return this.truck;
+    public Truck getAssignedToTruck() {
+        return this.assignedToTruck;
     }
 
     @Override

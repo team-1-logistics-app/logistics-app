@@ -4,8 +4,8 @@ import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
 public interface Package extends Identifiable {
-    void setTruck(Truck truck);
-    Truck getTruck();
+    void setAssignedToTruck(Truck assignedToTruck);
+    Truck getAssignedToTruck();
 
     void setStartLocation(Locations startLocation);
     Locations getStartLocation();
