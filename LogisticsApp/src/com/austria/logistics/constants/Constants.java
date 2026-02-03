@@ -12,6 +12,7 @@ public class Constants {
     public static final String ROUTE_IS_EMPTY_WHILE_ADDING_AS_FIRST_LOCATION_MESSAGE = "Route with id %d doesn't contain any locations yet, you should provide departure time for your start location.";
     public static final String ROUTE_IS_NOT_EMPTY_MESSAGE = "Route with id %d already contains location with depart time(starting location).";
     public static final String ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE = "Route with id %d doesn't contain enough locations to calculate schedule. ";
+    public static final String ROUTE_CREATED_MESSAGE = "Route with id %d was created!";
 
     public static final String WEIGHT_VALUE_INVALID_MESSAGE = "Weight can't be 0 or less kg.";
     public static final String VALUE_INVALID_FORMAT_MESSAGE = "%s has to be valid integer.";
@@ -22,7 +23,7 @@ public class Constants {
     public static final String INVALID_TIME_FORMAT_MESSAGE = "Invalid event time format. Expected format: MMM d HH:mm.";
     public static final String INVALID_TIME_IS_PAST_MESSAGE = "The date-time is in the past, current date-time is %s.";
 
-    public static final String PACKAGE_CREATED = "Package with id %d was created!";
+    public static final String PACKAGE_CREATED_MESSAGE = "Package with id %d was created!";
 
     public static final String TRUCK_INVALID_TYPE_MESSAGE = "%s is unsupported truck type, use one of those: Scania, Man or Actros";
     public static final String TRUCK_TYPE_NOT_AVAILABLE_MESSAGE = "All trucks %s are busy at the moment, try different truck";

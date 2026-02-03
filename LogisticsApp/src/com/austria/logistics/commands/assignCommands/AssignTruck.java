@@ -41,7 +41,7 @@ public class AssignTruck implements Command {
         return assignTruck(route, truck);
     }
 
-    public String assignTruck(Route route, TruckType truckType) {
+    private String assignTruck(Route route, TruckType truckType) {
         Truck truck;
         try {
             truck = this.repository.getTrucks().stream()

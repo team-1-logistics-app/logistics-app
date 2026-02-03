@@ -41,9 +41,9 @@ public class CreatePackage implements Command {
         return createPackage(startLocation, endLocation, weight, contactInfo);
     }
 
-    public String createPackage(Locations startLocation, Locations endLocation, int weight, String contactInfo) {
+    private String createPackage(Locations startLocation, Locations endLocation, int weight, String contactInfo) {
         int id = this.repository.createPackage(startLocation, endLocation, weight, contactInfo).getId();
 
-        return String.format(Constants.PACKAGE_CREATED, id);
+        return String.format(Constants.PACKAGE_CREATED_MESSAGE, id);
     }
 }
