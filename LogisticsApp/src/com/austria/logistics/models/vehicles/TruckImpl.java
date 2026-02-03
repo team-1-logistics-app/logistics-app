@@ -1,18 +1,25 @@
 package com.austria.logistics.models.vehicles;
 
+import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.contracts.Truck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TruckImpl implements Truck {
     private final int id;
     private final TruckType truckType;
+    private final List<Integer> assignedPackagesIdList;
     private boolean isAssigned;
+    private Route assignedRoute;
     private int currentLoad;
 
     public TruckImpl(int id, TruckType truckType){
         this.id = id;
         this.truckType = truckType;
         this.isAssigned = false;
+        this.assignedPackagesIdList = new ArrayList<>();
         this.currentLoad = 0;
     }
 
@@ -42,8 +49,28 @@ public class TruckImpl implements Truck {
     }
 
     @Override
+    public Route getAssignedRoute() {
+       return this.assignedRoute;
+    }
+
+    @Override
+    public List<Integer> getAssignedPackagesIdList() {
+        return new ArrayList<>(this.assignedPackagesIdList);
+    }
+
+    @Override
+    public void addAssignedPackageId(int id) {
+        this.assignedPackagesIdList.add(id);
+    }
+
+    @Override
     public void addLoad(int weight) {
         this.currentLoad += weight;
+    }
+
+    @Override
+    public void setAssignedRoute(Route assignedRoute) {
+        this.assignedRoute = assignedRoute;
     }
 
     @Override

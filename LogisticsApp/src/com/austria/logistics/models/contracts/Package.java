@@ -1,10 +1,11 @@
 package com.austria.logistics.models.contracts;
 
 import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.vehicles.contracts.Truck;
 
 public interface Package extends Identifiable {
-    void setRoute(Route route);
-    Route getRoute();
+    void setTruck(Truck truck);
+    Truck getTruck();
 
     void setStartLocation(Locations startLocation);
     Locations getStartLocation();
