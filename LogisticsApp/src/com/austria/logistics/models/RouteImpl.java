@@ -32,6 +32,11 @@ public class RouteImpl implements Route {
     }
 
     @Override
+    public boolean hasAssignedTruck() {
+        return this.truck != null;
+    }
+
+    @Override
     public Truck getAssignedTruck() {
         return this.truck;
     }
