@@ -42,18 +42,20 @@ public class RouteImpl implements Route {
             throw new RouteIsNotEmptyException(String.format(Constants.ROUTE_IS_NOT_EMPTY_MESSAGE, this.getId()));
         }
         this.route.add(new LocationImpl(location, eventTime));
-        return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
+        return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getDisplayName(), this.getId());
     }
 
     @Override
     public String addLocationToRoute(Locations location) {
         if (!this.isRouteEmpty() && route.getLast().getLocation() == location) {
-            throw new InvalidLocationRouteException(String.format(Constants.LOCATION_PREVIOUS_IS_SAME_MESSAGE, this.getId(), location.getCityName()));
+            throw new InvalidLocationRouteException(String.format(Constants.LOCATION_PREVIOUS_IS_SAME_MESSAGE, this.getId(), location.getDisplayName()));
         } else if (this.isRouteEmpty()) {
             throw new RouteIsEmptyException(String.format(Constants.ROUTE_IS_EMPTY_WHILE_ADDING_AS_FIRST_LOCATION_MESSAGE, this.getId()));
         }
         route.add(new LocationImpl(location));
-        return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getCityName(), this.getId());
+        this.calculateSchedule();
+
+        return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getDisplayName(), this.getId());
     }
 
 
@@ -68,7 +70,7 @@ public class RouteImpl implements Route {
         return this.route.stream()
                 .filter(locationElement -> locationElement.getLocation() == location)
                 .findFirst()
-                .orElseThrow(() -> new LocationNotFoundException(String.format(Constants.LOCATION_NOT_FOUND_MESSAGE, location.getCityName())));
+                .orElseThrow(() -> new LocationNotFoundException(String.format(Constants.LOCATION_NOT_FOUND_MESSAGE, location.getDisplayName())));
     }
 
 
@@ -81,7 +83,7 @@ public class RouteImpl implements Route {
 
 
     @Override
-    public LinkedList<Location> getRoute() {
+    public LinkedList<Location> getRouteLocations() {
         return new LinkedList<>(this.route);
     }
 
@@ -117,7 +119,7 @@ public class RouteImpl implements Route {
         int startIndex = this.route.indexOf(startPoint);
         int endIndex = this.route.indexOf(endPoint);
         if (endIndex < startIndex) {
-            throw new InvalidLocationRouteException(String.format(Constants.LOCATION_ROUTE_INVALID_MESSAGE, this.getId(), startLocation.getCityName(), endLocation.getCityName()));
+            throw new InvalidLocationRouteException(String.format(Constants.LOCATION_ROUTE_INVALID_MESSAGE, this.getId(), startLocation.getDisplayName(), endLocation.getDisplayName()));
         }
 
         for (int i = startIndex; i < endIndex; i++) {

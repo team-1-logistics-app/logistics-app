@@ -25,7 +25,7 @@ class RouteImplTest {
     @Test
     public void constructor_Should_InitializeRoute_When_ArgumentsAreValid() {
         //Arrange,Act,Assert
-        Assertions.assertEquals(0, new RouteImpl(1).getRoute().size());
+        Assertions.assertEquals(0, new RouteImpl(1).getRouteLocations().size());
     }
 
     @Test
@@ -42,9 +42,9 @@ class RouteImplTest {
         route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
         //Act, Assert
         assertAll(
-                () -> assertEquals(1, route.getRoute().size()),
-                () -> assertEquals(Locations.BRI, route.getRoute().getFirst().getLocation()),
-                () -> assertEquals(FIXED_TIME, route.getRoute().getFirst().getEventTime())
+                () -> assertEquals(1, route.getRouteLocations().size()),
+                () -> assertEquals(Locations.BRI, route.getRouteLocations().getFirst().getLocation()),
+                () -> assertEquals(FIXED_TIME, route.getRouteLocations().getFirst().getEventTime())
         );
     }
 
@@ -63,8 +63,8 @@ class RouteImplTest {
 
         //Act,Assert
         assertAll(
-                () -> assertEquals(2, route.getRoute().size()),
-                () -> assertEquals(Locations.BRI, route.getRoute().get(1).getLocation())
+                () -> assertEquals(2, route.getRouteLocations().size()),
+                () -> assertEquals(Locations.BRI, route.getRouteLocations().get(1).getLocation())
         );
     }
 
@@ -120,7 +120,7 @@ class RouteImplTest {
         route.removeLocationFromRoute(Locations.BRI);
 
         //Act,Assert
-        assertEquals(2,route.getRoute().size());
+        assertEquals(2,route.getRouteLocations().size());
         assertEquals(Locations.DAR, route.findByCity(Locations.DAR).getLocation());
     }
 
@@ -135,9 +135,9 @@ class RouteImplTest {
     }
 
     @Test
-    void getRoute_ShouldReturnEmptyCollection_WhenRouteIsEmpty() {
+    void getRoute_ShouldReturnEmptyCollection_WhenRouteLocationsIsEmpty() {
         // Act
-        LinkedList<Location> result = route.getRoute();
+        LinkedList<Location> result = route.getRouteLocations();
 
         // Assert
         assertNotNull(result);
@@ -145,14 +145,14 @@ class RouteImplTest {
     }
 
     @Test
-    void getRoute_ShouldReturnAllLocations_InCorrectOrder() {
+    void getRoute_Locations_ShouldReturnAllLocations_InCorrectOrder() {
         // Arrange
         route.addFirstLocationToRoute(Locations.DAR,FIXED_TIME);
         route.addLocationToRoute(Locations.BRI);
         route.addLocationToRoute(Locations.SYD);
 
         // Act
-        LinkedList<Location> result = route.getRoute();
+        LinkedList<Location> result = route.getRouteLocations();
 
         // Assert
         assertAll(
@@ -267,8 +267,8 @@ class RouteImplTest {
         route.calculateSchedule();
 
         //Act, Assert
-        assertEquals(expectedArrival1, route.getRoute().get(1).getEventTime());
-        assertEquals(expectedArrival2, route.getRoute().get(2).getEventTime());
+        assertEquals(expectedArrival1, route.getRouteLocations().get(1).getEventTime());
+        assertEquals(expectedArrival2, route.getRouteLocations().get(2).getEventTime());
     }
 
 }

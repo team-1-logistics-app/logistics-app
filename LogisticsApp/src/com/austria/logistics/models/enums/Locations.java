@@ -12,19 +12,19 @@ public enum Locations {
     DAR("Darwin"),
     PER("Perth");
 
-    private final String cityName;
+    private final String displayName;
 
     Locations(String city){
-        this.cityName = city;
+        this.displayName = city;
     }
 
-    public String getCityName(){
-        return cityName;
+    public String getDisplayName(){
+        return displayName;
     }
 
     public static Locations getCityValue(String cityName){
         for(Locations city: values()){
-            if(city.cityName.equalsIgnoreCase(cityName)){
+            if(city.displayName.equalsIgnoreCase(cityName)){
                 return city;
             }
         }

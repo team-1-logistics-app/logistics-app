@@ -13,7 +13,7 @@ public interface Route extends Identifiable{
 
     boolean containsLocation(Locations location);
     Location findByCity(Locations location);
-    LinkedList<Location> getRoute();
+    LinkedList<Location> getRouteLocations();
     boolean isRouteEmpty();
     int calculateTotalDistance();
     int calculateDistanceBetween(Locations startLocation, Locations endLocation);
