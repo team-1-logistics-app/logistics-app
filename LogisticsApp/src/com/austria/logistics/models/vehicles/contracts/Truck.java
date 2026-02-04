@@ -9,7 +9,7 @@ import java.util.List;
 public interface Truck extends Identifiable {
     TruckType getTruckType();
     boolean isAssigned();
-    int getCurrentLoad();
+    int getCurrentWeight();
     int getMaxCapacity();
     Route getAssignedRoute();
     List<Integer> getAssignedPackagesIdList();

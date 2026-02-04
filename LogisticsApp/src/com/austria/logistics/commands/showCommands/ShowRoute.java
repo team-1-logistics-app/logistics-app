@@ -15,9 +15,7 @@ public class ShowRoute implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     private final Repository repository;
 
-    public ShowRoute(Repository repository) {
-        this.repository = repository;
-    }
+    public ShowRoute(Repository repository) {this.repository = repository;}
 
     @Override
     public String execute(List<String> parameters) {

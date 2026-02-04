@@ -39,7 +39,7 @@ public class TruckImpl implements Truck {
     }
 
     @Override
-    public int getCurrentLoad() {
+    public int getCurrentWeight() {
         return this.currentLoad;
     }
 

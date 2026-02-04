@@ -43,7 +43,7 @@ public class AssignPackage implements Command {
     }
 
     private String assignPackage(Package pkg, Truck truck){
-        if(truck.getCurrentLoad() + pkg.getWeight() > truck.getMaxCapacity()){
+        if(truck.getCurrentWeight() + pkg.getWeight() > truck.getMaxCapacity()){
             throw new MaxCapacityReachedException(String.format(Constants.TRUCK_MAXCAPACITY_REACHED_MESSAGE,truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
