@@ -42,12 +42,12 @@ public class ShowRoute implements Command {
             output.append("No assigned truck to the route.\n");
         }
         route.getRouteLocations().forEach(location -> {
-            output.append("City: ")
-                    .append(location.getLocation().getDisplayName())
-                    .append(" Scheduled time: ")
-                    .append(location.getEventTimeAsString())
-                    .append("\n");
+            output.append(String.format("City: %s,",location.getLocation().getDisplayName()))
+                    .append(String.format(" Scheduled time: %s\n",location.getEventTimeAsString()));
         });
+        if(route.getRouteLocations().isEmpty()){
+            output.append("No locations added to the route yet.\n");
+        }
         return output.toString();
     }
 }
