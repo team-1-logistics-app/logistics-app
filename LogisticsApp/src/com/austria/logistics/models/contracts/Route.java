@@ -20,4 +20,5 @@ public interface Route extends Identifiable{
     void calculateSchedule();
     Truck getAssignedTruck();
     void assignTruck(Truck truck);
+    boolean hasAssignedTruck();
 }
