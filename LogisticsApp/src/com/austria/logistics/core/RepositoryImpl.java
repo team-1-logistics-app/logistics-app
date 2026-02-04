@@ -57,7 +57,6 @@ public class RepositoryImpl implements Repository {
 
     private Truck createTruck(int id, TruckType truckType) {
         Truck truck = new TruckImpl(id,truckType);
-        this.trucks.add(truck);
         return truck;
     }
 
