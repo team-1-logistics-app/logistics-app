@@ -79,6 +79,22 @@ class RouteImplTest {
     }
 
     @Test
+    void addLocationToRoute_Should_Calculate_Schedule_When_LocationIsAdded() {
+        //Arrange
+        route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
+        LocalDateTime expectedArrival1 = LocalDateTime.of(2026, 1, 25, 10, 9);
+        LocalDateTime expectedArrival2 = LocalDateTime.of(2026, 1, 26, 8, 18);
+
+        //Act
+        route.addLocationToRoute(Locations.ADL);
+        route.addLocationToRoute(Locations.BRI);
+
+        //Assert
+        assertEquals(expectedArrival1, route.getRouteLocations().get(1).getEventTime());
+        assertEquals(expectedArrival2, route.getRouteLocations().get(2).getEventTime());
+    }
+
+    @Test
     void containsLocation() {
         //Arrange
         route.addFirstLocationToRoute(Locations.ADL,FIXED_TIME);
