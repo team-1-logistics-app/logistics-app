@@ -30,8 +30,7 @@ public class ShowTrucks implements Command {
 
         trucks.forEach(truck -> {
             output.append(truck.getTruckType().getDisplayName())
-                    .append(" with id ")
-                    .append(truck.getId());
+                    .append(String.format(" with id %d",truck.getId()));
 
             if (truck.isAssigned()) {
                 output.append(String.format(" is assigned to route with id %d, ", truck.getAssignedRoute().getId()))
