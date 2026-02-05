@@ -3,10 +3,7 @@ package com.austria.logistics.commands.assignCommands;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
-import com.austria.logistics.exceptions.ElementNotFoundException;
-import com.austria.logistics.exceptions.InvalidTruckTypeException;
-import com.austria.logistics.exceptions.InvalidValueException;
-import com.austria.logistics.exceptions.NoAvailableTruckException;
+import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.contracts.Truck;
@@ -45,16 +42,16 @@ public class AssignTruck implements Command {
 
     private String assignTruck(Route route, TruckType truckType) {
         Truck truck;
+        int routeId;
         try {
             truck = this.repository.getTrucks().stream()
                     .filter(element -> element.getTruckType() == truckType && !element.isAssigned())
                     .findFirst()
                     .orElseThrow(() -> new NoAvailableTruckException(String.format(Constants.TRUCK_TYPE_NOT_AVAILABLE_MESSAGE, truckType.getDisplayName())));
-        } catch (NoAvailableTruckException e) {
+            routeId = repository.assignTruckToRoute(truck, route).getId();
+        } catch (NoAvailableTruckException | RouteIsEmptyException  e) {
             return e.getMessage();
         }
-
-        int routeId = repository.assignTruckToRoute(truck, route).getId();
 
         return String.format(Constants.TRUCK_ASSIGNED_MESSAGE, truckType.getDisplayName(), truck.getId(), routeId);
     }
