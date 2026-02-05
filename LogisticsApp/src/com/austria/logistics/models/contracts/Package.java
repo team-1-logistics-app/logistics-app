@@ -18,4 +18,6 @@ public interface Package extends Identifiable {
 
     void setContactInformation(String contactInformation);
     String getContactInformation();
+
+    boolean isAssigned();
 }

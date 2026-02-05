@@ -69,6 +69,11 @@ public class PackageImpl implements Package {
     }
 
     @Override
+    public boolean isAssigned() {
+        return this.assignedToTruck != null;
+    }
+
+    @Override
     public int getId() {
         return this.id;
     }
