@@ -68,15 +68,22 @@ class ShowRouteTest {
         Assertions.assertEquals(expected, showRoute.execute(parameters));
     }
 
+
+
     @Test
     void showRouteCommand_Should_Return_Assigned_Truck() {
         //Arrange
+        route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
+        route.addLocationToRoute(Locations.ADL);
+        route.addLocationToRoute(Locations.BRI);
         this.repository.assignTruckToRoute(truck,route);
-        route.addFirstLocationToRoute(Locations.SYD, FIXED_TIME);
+
         String expected =
                 "Current schedule for route with id 1:\n" +
                         "The route has assigned truck Man with id 1012.\n" +
-                        "City: Sydney, Scheduled time: Jan 24 12:00\n";
+                        "City: Brisbane, Scheduled time: Jan 24 12:00\n" +
+                        "City: Adelaide, Scheduled time: Jan 25 10:09\n" +
+                        "City: Brisbane, Scheduled time: Jan 26 08:18\n";
 
         //Act,Assert
         Assertions.assertEquals(expected, showRoute.execute(parameters));

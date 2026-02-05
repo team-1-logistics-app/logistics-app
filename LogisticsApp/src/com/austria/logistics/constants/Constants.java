@@ -13,6 +13,7 @@ public class Constants {
     public static final String ROUTE_IS_NOT_EMPTY_MESSAGE = "Route with id %d already contains location with depart time(starting location).";
     public static final String ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE = "Route with id %d doesn't contain enough locations to calculate schedule. ";
     public static final String ROUTE_CREATED_MESSAGE = "Route with id %d was created!";
+    public static final String ROUTE_ASSIGN_ERROR_MESSAGE = "Route with id %d doesn't have enough locations assigned yet, please assign at least 2 locations before assigning truck to it.";
 
     public static final String WEIGHT_VALUE_INVALID_MESSAGE = "Weight can't be 0 or less kg.";
     public static final String VALUE_INVALID_FORMAT_MESSAGE = "%s has to be valid integer.";
@@ -25,12 +26,13 @@ public class Constants {
 
     public static final String PACKAGE_CREATED_MESSAGE = "Package with id %d was created!";
     public static final String PACKAGE_ASSIGNED_MESSAGE = "Package with id %d was assigned to truck %s with id %d!;";
+    public static final String PACKAGE_ASSIGN_ERROR_MESSAGE = "Package with id %d cannot be assigned to route with id %d because the route doesn't contain path from %s to %s.";
 
     public static final String TRUCK_INVALID_TYPE_MESSAGE = "%s is unsupported truck type, use one of those: Scania, Man or Actros";
     public static final String TRUCK_TYPE_NOT_AVAILABLE_MESSAGE = "All trucks %s are busy at the moment, try different truck";
     public static final String TRUCK_ASSIGNED_MESSAGE = "Truck %s with id %d was assigned to route with id %d!";
     public static final String TRUCK_MAXCAPACITY_REACHED_MESSAGE = "Truck %s with id %d has reached the max load capacity, please select another truck!";
-
+    public static final String TRUCK_NOT_ASSIGNED_MESSAGE = "Truck %s with id %d is not assigned to route yet, assign it to route before assigning packages to it.";
     public static final double AVERAGE_SPEED_KMH = 87;
 
     public static final int[][] distances = {

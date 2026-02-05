@@ -3,9 +3,8 @@ package com.austria.logistics.commands.assignCommands;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
-import com.austria.logistics.exceptions.ElementNotFoundException;
-import com.austria.logistics.exceptions.InvalidValueException;
-import com.austria.logistics.exceptions.MaxCapacityReachedException;
+import com.austria.logistics.exceptions.*;
+import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Parsers;
@@ -17,7 +16,9 @@ public class AssignPackage implements Command {
     public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private final Repository repository;
 
-    public AssignPackage(Repository repository){this.repository = repository;}
+    public AssignPackage(Repository repository) {
+        this.repository = repository;
+    }
 
     //EXPECTED ARGUMENTS ARE STRING PACKAGEID AND STRING TRUCKID
     @Override
@@ -29,27 +30,33 @@ public class AssignPackage implements Command {
         Truck truck;
         String result;
         try {
-            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
-            packageId = Parsers.parseToInteger("Package id",parameters.get(0));
-            truckId = Parsers.parseToInteger("Truck id",parameters.get(1));
-            pkg = this.repository.findElementById(this.repository.getPackages(),packageId);
+            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+            packageId = Parsers.parseToInteger("Package id", parameters.get(0));
+            truckId = Parsers.parseToInteger("Truck id", parameters.get(1));
+            pkg = this.repository.findElementById(this.repository.getPackages(), packageId);
             truck = this.repository.findElementById(this.repository.getTrucks(), truckId);
-            result = assignPackage(pkg,truck);
-        }catch(IllegalArgumentException | InvalidValueException | ElementNotFoundException | MaxCapacityReachedException e){
+            result = assignPackage(pkg, truck);
+        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException |
+                 MaxCapacityReachedException e) {
             return e.getMessage();
         }
 
         return result;
     }
 
-    private String assignPackage(Package pkg, Truck truck){
-        if(truck.getCurrentWeight() + pkg.getWeight() > truck.getMaxCapacity()){
-            throw new MaxCapacityReachedException(String.format(Constants.TRUCK_MAXCAPACITY_REACHED_MESSAGE,truck.getTruckType().getDisplayName(), truck.getId()));
+    private String assignPackage(Package pkg, Truck truck) {
+        if (truck.getCurrentWeight() + pkg.getWeight() > truck.getMaxCapacity()) {
+            throw new MaxCapacityReachedException(String.format(Constants.TRUCK_MAXCAPACITY_REACHED_MESSAGE, truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
         truck.addLoad(pkg.getWeight());
 
-        int truckId = this.repository.assignPackageToTruck(pkg,truck).getId();
+        int truckId;
+        try {
+            truckId = this.repository.assignPackageToTruck(pkg, truck).getId();
+        } catch (ElementNotFoundException | LocationNotFoundException | NoPathException e) {
+            return e.getMessage();
+        }
 
         return String.format(Constants.PACKAGE_ASSIGNED_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truckId);
     }
