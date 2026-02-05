@@ -1,5 +1,6 @@
 package com.austria.logistics.commands.showCommands;
 
+import com.austria.logistics.commands.assignCommands.AssignTruck;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
@@ -32,14 +33,15 @@ class ShowRouteTest {
     @BeforeEach
     void before(){
         repository = new RepositoryImpl();
+        truck = new TruckImpl(1012, TruckType.MAN);
+        showRoute = new ShowRoute(repository);
         createRouteCommand = new CreateRoute(repository);
-        parameters = new ArrayList<>();
-        createRouteCommand.execute(parameters);
+        createRouteCommand.execute(List.of());
+
         route = this.repository.getRoutes().get(0);
         id = route.getId();
-        showRoute = new ShowRoute(repository);
-        parameters.add(String.valueOf(id));
-        truck = new TruckImpl(1012, TruckType.MAN);
+
+        parameters = List.of(String.valueOf(id));
     }
 
     @Test
@@ -82,7 +84,7 @@ class ShowRouteTest {
     @Test
     void showRouteCommand_Should_Return_Error_When_ArgumentsAreInvalid() {
         //Arrange
-        parameters.add("Test");
+        parameters = List.of("Test", "Test");
         String expected = "Invalid number of arguments. Expected: 1, Received: 2.";
         //Act,Assert
         Assertions.assertEquals(expected,showRoute.execute(parameters));
