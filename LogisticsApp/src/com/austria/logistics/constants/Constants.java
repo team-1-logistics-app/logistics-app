@@ -25,7 +25,7 @@ public class Constants {
     public static final String INVALID_TIME_IS_PAST_MESSAGE = "The date-time is in the past, current date-time is %s.";
 
     public static final String PACKAGE_CREATED_MESSAGE = "Package with id %d was created!";
-    public static final String PACKAGE_ASSIGNED_MESSAGE = "Package with id %d was assigned to truck %s with id %d!;";
+    public static final String PACKAGE_ASSIGNED_MESSAGE = "Package with id %d was assigned to truck %s with id %d!";
     public static final String PACKAGE_ASSIGN_ERROR_MESSAGE = "Package with id %d cannot be assigned to route with id %d because the route doesn't contain path from %s to %s.";
 
     public static final String TRUCK_INVALID_TYPE_MESSAGE = "%s is unsupported truck type, use one of those: Scania, Man or Actros";

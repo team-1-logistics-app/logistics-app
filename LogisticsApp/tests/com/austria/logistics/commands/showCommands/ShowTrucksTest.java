@@ -55,7 +55,9 @@ class ShowTrucksTest {
 
     @Test
     void execute_Should_Return_Error_When_ArgumentsCount_isInvalid() {
+        //Act
         String result = showTrucks.execute(List.of("Test"));
+        //Assert
         Assertions.assertEquals("Invalid number of arguments. Expected: 0, Received: 1.", result);
     }
 }
