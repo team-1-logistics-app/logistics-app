@@ -8,15 +8,12 @@ import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
-import com.austria.logistics.models.enums.TruckType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ShowPackagesTest {
     private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2026, 1, 24, 12, 0);

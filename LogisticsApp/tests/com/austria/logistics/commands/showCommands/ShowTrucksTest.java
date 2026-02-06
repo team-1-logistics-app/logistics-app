@@ -7,15 +7,11 @@ import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
-import com.austria.logistics.models.enums.TruckType;
-import com.austria.logistics.models.vehicles.TruckImpl;
-import com.austria.logistics.models.vehicles.contracts.Truck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 class ShowTrucksTest {
