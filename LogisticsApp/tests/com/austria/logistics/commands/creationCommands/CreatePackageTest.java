@@ -56,7 +56,7 @@ class CreatePackageTest {
     }
 
     @Test
-    void execute_Should_Actually_Create_Package() {
+    void execute_Should_Create_Package_InRepo() {
         //Act
         createPackage.execute(List.of("Sydney", "Darwin" , "40" , "test@test.com"));
         // Assert
