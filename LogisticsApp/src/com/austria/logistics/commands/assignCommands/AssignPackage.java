@@ -54,7 +54,7 @@ public class AssignPackage implements Command {
         int truckId;
         try {
             truckId = this.repository.assignPackageToTruck(pkg, truck).getId();
-        } catch (ElementNotFoundException | LocationNotFoundException | NoPathException e) {
+        } catch (ElementNotFoundException | LocationNotFoundException | TruckNotAssignedToRouteException | NoPathException e) {
             return e.getMessage();
         }
 

@@ -93,7 +93,7 @@ public class RepositoryImpl implements Repository {
         Location startLocation = route.findByCity(pkg.getStartLocation());
         Location endLocation = route.findByCity(pkg.getEndLocation());
 
-        if (routeLocations.indexOf(startLocation) > routeLocations.indexOf(endLocation)) {
+        if (routeLocations.indexOf(startLocation) >= routeLocations.indexOf(endLocation)) {
             throw new NoPathException(this.generatePackageAssignErrorMessage(pkg, route));
         }
 
