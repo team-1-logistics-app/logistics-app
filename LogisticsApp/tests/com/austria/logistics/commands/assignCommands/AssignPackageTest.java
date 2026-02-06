@@ -70,6 +70,16 @@ class AssignPackageTest {
     }
 
     @Test
+    void execute_Should_Return_Error_When_Arguments_AreInvalid(){
+        //Act,Assert
+        Assertions.assertAll(
+                () -> Assertions.assertEquals("Package id has to be valid integer.", assignPackage.execute(List.of("asd","12"))),
+                () -> Assertions.assertEquals("Truck id has to be valid integer.", assignPackage.execute(List.of("1","asd")))
+        );
+
+    }
+
+    @Test
     void execute_Should_Return_Error_When_Truck_IsNotAssigned_To_Route(){
         //Arrange
         createPackage.execute(List.of("Brisbane", "Adelaide", "40", "test@test.com"));
