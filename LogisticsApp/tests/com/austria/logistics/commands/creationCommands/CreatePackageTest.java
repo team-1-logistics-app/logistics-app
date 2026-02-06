@@ -15,22 +15,23 @@ class CreatePackageTest {
     Command createPackage;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         repository = new RepositoryImpl();
         createPackage = new CreatePackage(repository);
     }
+
     @Test
     void execute_Should_Return_Error_When_ArgumentsCount_isInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 4, Received: 3.", createPackage.execute(List.of("Sydney", "Darwin" , "40")));
+        Assertions.assertEquals("Invalid number of arguments. Expected: 4, Received: 3.", createPackage.execute(List.of("Sydney", "Darwin", "40")));
     }
 
     @Test
     void execute_Should_Return_Error_When_Weight_IsLessOrEqual_To_Zero() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin" , "0","test@test.bg"))),
-                () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin" , "-1","test@test.bg")))
+                () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin", "0", "test@test.bg"))),
+                () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin", "-1", "test@test.bg")))
         );
 
     }
@@ -40,11 +41,11 @@ class CreatePackageTest {
         //Act,Assert
         Assertions.assertAll(
                 () -> Assertions.assertEquals("Test is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.",
-                        createPackage.execute(List.of("Test", "Darwin" , "40","test@test.com"))),
+                        createPackage.execute(List.of("Test", "Darwin", "40", "test@test.com"))),
                 () -> Assertions.assertEquals("Test is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.",
-                        createPackage.execute(List.of("Sydney", "Test" , "40","test@test.com"))),
+                        createPackage.execute(List.of("Sydney", "Test", "40", "test@test.com"))),
                 () -> Assertions.assertEquals("Weight has to be valid integer.",
-                        createPackage.execute(List.of("Sydney", "Darwin" , "asd","test@test.com")))
+                        createPackage.execute(List.of("Sydney", "Darwin", "asd", "test@test.com")))
 
         );
     }
@@ -52,13 +53,13 @@ class CreatePackageTest {
     @Test
     void execute_Should_Return_Info_Message_When_Package_IsCreated() {
         //Act,Assert
-        Assertions.assertEquals("Package with id 1 was created!", createPackage.execute(List.of("Sydney", "Darwin" , "40" , "test@test.com")));
+        Assertions.assertEquals("Package with id 1 was created!", createPackage.execute(List.of("Sydney", "Darwin", "40", "test@test.com")));
     }
 
     @Test
     void execute_Should_Create_Package_InRepo() {
         //Act
-        createPackage.execute(List.of("Sydney", "Darwin" , "40" , "test@test.com"));
+        createPackage.execute(List.of("Sydney", "Darwin", "40", "test@test.com"));
         // Assert
         Assertions.assertAll(
                 () -> Assertions.assertEquals(1, repository.getPackages().size()),

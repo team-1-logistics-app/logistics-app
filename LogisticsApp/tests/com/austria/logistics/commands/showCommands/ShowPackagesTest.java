@@ -19,14 +19,14 @@ class ShowPackagesTest {
     private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2026, 1, 24, 12, 0);
 
     private Repository repository;
-    private  Command showPackages;
+    private Command showPackages;
     private List<String> parameters;
     private Command createRoute;
     private Command assignTruck;
     private Command assignPackage;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         repository = new RepositoryImpl();
         showPackages = new ShowPackages(repository);
         parameters = List.of();
@@ -46,20 +46,20 @@ class ShowPackagesTest {
         route.addLocationToRoute(Locations.ADL);
         route.addLocationToRoute(Locations.DAR);
 
-        assignTruck.execute(List.of(String.valueOf(route.getId()),"Man"));
-        this.repository.createPackage(Locations.SYD,Locations.BRI,30,"test@test.com");
-        this.repository.createPackage(Locations.ADL,Locations.DAR,40,"test@test.bg");
+        assignTruck.execute(List.of(String.valueOf(route.getId()), "Man"));
+        this.repository.createPackage(Locations.SYD, Locations.BRI, 30, "test@test.com");
+        this.repository.createPackage(Locations.ADL, Locations.DAR, 40, "test@test.bg");
 
         String expected = "Package with id 2, start location Sydney, end location Brisbane, weight 30, contact info test@test.com is assigned to truck Man with id 1011\n" +
-                          "Package with id 3, start location Adelaide, end location Darwin, weight 40, contact info test@test.bg is not assigned to a truck yet.\n";
+                "Package with id 3, start location Adelaide, end location Darwin, weight 40, contact info test@test.bg is not assigned to a truck yet.\n";
 
-        assignPackage.execute(List.of("2","1011"));
+        assignPackage.execute(List.of("2", "1011"));
         //Act
 
         String result = showPackages.execute(parameters);
 
         //Assert
-        Assertions.assertEquals(expected,result);
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
@@ -72,6 +72,6 @@ class ShowPackagesTest {
         String result = showPackages.execute(parameters);
 
         //Assert
-        Assertions.assertEquals(expected,result);
+        Assertions.assertEquals(expected, result);
     }
 }

@@ -21,8 +21,8 @@ class LocationImplTest {
         LocalDateTime fixedTime = LocalDateTime.now();
         // Act,Assert
         Assertions.assertAll(
-                () ->  Assertions.assertEquals(Locations.DAR, new LocationImpl(Locations.DAR, fixedTime).getLocation()),
-                () ->  Assertions.assertEquals(fixedTime, new LocationImpl(Locations.DAR, fixedTime).getEventTime())
+                () -> Assertions.assertEquals(Locations.DAR, new LocationImpl(Locations.DAR, fixedTime).getLocation()),
+                () -> Assertions.assertEquals(fixedTime, new LocationImpl(Locations.DAR, fixedTime).getEventTime())
         );
     }
 

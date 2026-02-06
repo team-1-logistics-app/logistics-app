@@ -18,17 +18,18 @@ import java.util.List;
 
 
 class ShowRouteTest {
-    private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2026,1,24,12,0);
+    private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2026, 1, 24, 12, 0);
 
     private Repository repository;
-    private  Command createRouteCommand;
+    private Command createRouteCommand;
     private List<String> parameters;
     private int id;
     private Command showRoute;
     private Route route;
     private Truck truck;
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         repository = new RepositoryImpl();
         truck = new TruckImpl(1012, TruckType.MAN);
         showRoute = new ShowRoute(repository);
@@ -46,12 +47,13 @@ class ShowRouteTest {
         //Arrange
         String expected =
                 "Current schedule for route with id 1:\n" +
-                "No assigned truck to the route.\n" +
-                "No locations added to the route yet.\n";
+                        "No assigned truck to the route.\n" +
+                        "No locations added to the route yet.\n";
 
         //Act,Assert
         Assertions.assertEquals(expected, showRoute.execute(parameters));
     }
+
     @Test
     void showRouteCommand_Should_Return_Locations() {
         //Arrange
@@ -66,14 +68,13 @@ class ShowRouteTest {
     }
 
 
-
     @Test
     void showRouteCommand_Should_Return_Assigned_Truck() {
         //Arrange
-        route.addFirstLocationToRoute(Locations.BRI,FIXED_TIME);
+        route.addFirstLocationToRoute(Locations.BRI, FIXED_TIME);
         route.addLocationToRoute(Locations.ADL);
         route.addLocationToRoute(Locations.BRI);
-        this.repository.assignTruckToRoute(truck,route);
+        this.repository.assignTruckToRoute(truck, route);
 
         String expected =
                 "Current schedule for route with id 1:\n" +
@@ -85,12 +86,13 @@ class ShowRouteTest {
         //Act,Assert
         Assertions.assertEquals(expected, showRoute.execute(parameters));
     }
+
     @Test
     void showRouteCommand_Should_Return_Error_When_ArgumentsAreInvalid() {
         //Arrange
         parameters = List.of("Test", "Test");
         String expected = "Invalid number of arguments. Expected: 1, Received: 2.";
         //Act,Assert
-        Assertions.assertEquals(expected,showRoute.execute(parameters));
+        Assertions.assertEquals(expected, showRoute.execute(parameters));
     }
 }
