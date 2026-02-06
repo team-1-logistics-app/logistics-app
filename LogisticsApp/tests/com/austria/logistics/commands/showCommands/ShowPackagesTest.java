@@ -26,7 +26,7 @@ class ShowPackagesTest {
     private Command assignPackage;
 
     @BeforeEach
-    void before(){
+    void setUp(){
         repository = new RepositoryImpl();
         showPackages = new ShowPackages(repository);
         parameters = List.of();

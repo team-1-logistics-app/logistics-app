@@ -20,7 +20,7 @@ class RouteImplTest {
     private Route route;
 
     @BeforeEach
-    void before() {route = new RouteImpl(1);}
+    void setUp() {route = new RouteImpl(1);}
 
     @Test
     public void constructor_Should_InitializeRoute_When_ArgumentsAreValid() {

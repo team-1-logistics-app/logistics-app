@@ -15,7 +15,7 @@ class CreatePackageTest {
     Command createPackage;
 
     @BeforeEach
-    void before(){
+    void setUp(){
         repository = new RepositoryImpl();
         createPackage = new CreatePackage(repository);
     }

@@ -20,7 +20,7 @@ class ShowTrucksTest {
     private Command showTrucks;
 
     @BeforeEach
-    void before() {
+    void setUp() {
         repository = new RepositoryImpl();
 
         Command createRoute = new CreateRoute(repository);

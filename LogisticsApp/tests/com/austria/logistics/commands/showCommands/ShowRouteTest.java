@@ -28,7 +28,7 @@ class ShowRouteTest {
     private Route route;
     private Truck truck;
     @BeforeEach
-    void before(){
+    void setUp(){
         repository = new RepositoryImpl();
         truck = new TruckImpl(1012, TruckType.MAN);
         showRoute = new ShowRoute(repository);
