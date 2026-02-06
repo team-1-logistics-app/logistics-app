@@ -29,7 +29,7 @@ public class Constants {
     public static final String PACKAGE_ASSIGN_ERROR_MESSAGE = "Package with id %d cannot be assigned to route with id %d because the route doesn't contain path from %s to %s.";
 
     public static final String TRUCK_INVALID_TYPE_MESSAGE = "%s is unsupported truck type, use one of those: Scania, Man or Actros";
-    public static final String TRUCK_TYPE_NOT_AVAILABLE_MESSAGE = "All trucks %s are busy at the moment, try different truck";
+    public static final String TRUCK_TYPE_NOT_AVAILABLE_MESSAGE = "All trucks %s are busy at the moment, try different truck type.";
     public static final String TRUCK_ASSIGNED_MESSAGE = "Truck %s with id %d was assigned to route with id %d!";
     public static final String TRUCK_MAXCAPACITY_REACHED_MESSAGE = "Truck %s with id %d has reached the max load capacity, please select another truck!";
     public static final String TRUCK_NOT_ASSIGNED_MESSAGE = "Truck %s with id %d is not assigned to route yet, assign it to route before assigning packages to it.";

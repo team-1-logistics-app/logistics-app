@@ -30,7 +30,7 @@ public class AssignTruck implements Command {
 
         try {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-            id = Parsers.parseToInteger("ID", parameters.get(0));
+            id = Parsers.parseToInteger("Route id", parameters.get(0));
             route = this.repository.findElementById(this.repository.getRoutes(), id);
             truck = Parsers.parseTruck(parameters.get(1));
         } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException |

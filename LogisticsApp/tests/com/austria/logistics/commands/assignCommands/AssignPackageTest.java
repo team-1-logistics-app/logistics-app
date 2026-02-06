@@ -8,7 +8,6 @@ import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
-import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -135,5 +134,19 @@ class AssignPackageTest {
                 () -> Assertions.assertEquals("Package with id 3 cannot be assigned to route with id 1 because the route doesn't contain path from Adelaide to Brisbane.", commandOutput1),
                 () -> Assertions.assertEquals("Package with id 4 cannot be assigned to route with id 1 because the route doesn't contain path from Darwin to Brisbane.", commandOutput2)
         );
+    }
+
+    @Test
+    void execute_Should_Return_Error_When_MaxCapacity_isReached() {
+        //Arrange
+        createPackage.execute(List.of("Brisbane", "Adelaide", "90000", "test@test.com"));
+        Package pkg = repository.getPackages().get(0);
+        Truck truck = this.repository.findElementById(this.repository.getTrucks(), 1011);
+
+        //Act
+        String commandOutput = assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())));
+
+        // Assert
+        Assertions.assertEquals("Truck Man with id 1011 has reached the max load capacity, please select another truck!", commandOutput);
     }
 }
