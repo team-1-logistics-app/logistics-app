@@ -4,6 +4,7 @@ import com.austria.logistics.models.contracts.*;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,7 @@ public interface Repository {
     User addUser(User userToAdd);
     User getLoggedUser();
     boolean hasLoggedUser();
+    User createUser(String username,String firstName, String lastName, String password, UserRole userRole);
     void login(User username);
     void logout();
     User findUserByUsername(String username);

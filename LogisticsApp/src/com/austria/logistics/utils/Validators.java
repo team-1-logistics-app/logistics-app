@@ -10,7 +10,7 @@ public class Validators {
 
 
     public static void validateArgumentsCount(List<String> list, int expectedArgumentsCount) {
-        if (list.size() < expectedArgumentsCount || list.size() > expectedArgumentsCount) {
+        if (list.size() < expectedArgumentsCount) {
             throw new IllegalArgumentException(String.format(Constants.INVALID_NUMBER_OF_ARGUMENTS_MESSAGE, expectedArgumentsCount, list.size()));
         }
     }

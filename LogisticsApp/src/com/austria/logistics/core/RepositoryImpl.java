@@ -6,10 +6,12 @@ import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.LocationImpl;
 import com.austria.logistics.models.PackageImpl;
 import com.austria.logistics.models.RouteImpl;
+import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.*;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.TruckImpl;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
@@ -27,15 +29,19 @@ public class RepositoryImpl implements Repository {
     private int nextId;
     private User loggedUser;
 
-    private final List<Truck> trucks = new ArrayList<>();
-    private final List<Route> routes = new ArrayList<>();
-    private final List<Package> packages = new ArrayList<>();
-    private final List<User> users = new ArrayList<>();
+    private final List<Truck> trucks;
+    private final List<Route> routes;
+    private final List<Package> packages;
+    private final List<User> users;
 
 
     public RepositoryImpl() {
         this.nextId = 0;
         this.loggedUser = null;
+        trucks = new ArrayList<>();
+        routes = new ArrayList<>();
+        packages = new ArrayList<>();
+        users = new ArrayList<>();
         for (int id = 1001; id <= 1010; id++) this.trucks.add(this.createTruck(id, TruckType.SCANIA));
         for (int id = 1011; id <= 1025; id++) this.trucks.add(this.createTruck(id, TruckType.MAN));
         for (int id = 1026; id <= 1040; id++) this.trucks.add(this.createTruck(id, TruckType.ACTROS));
@@ -147,6 +153,11 @@ public class RepositoryImpl implements Repository {
     @Override
     public boolean hasLoggedUser() {
         return this.loggedUser != null;
+    }
+
+    @Override
+    public User createUser(String username, String firstName, String lastName, String password, UserRole userRole) {
+        return new UserImpl(username, firstName, lastName, password, userRole);
     }
 
     @Override

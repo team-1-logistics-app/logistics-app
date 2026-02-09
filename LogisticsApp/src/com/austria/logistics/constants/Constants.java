@@ -17,6 +17,7 @@ public class Constants {
 
     public static final String INVALID_WEIGHT_VALUE_MESSAGE = "Weight can't be 0 or less kg.";
     public static final String INVALID_VALUE_FORMAT_MESSAGE = "%s has to be valid integer.";
+    public static final String INVALID_ENUM_VALUE_FORMAT_MESSAGE = "%s has to be valid enum value.";
     public static final String INVALID_NUMBER_OF_ARGUMENTS_MESSAGE = "Invalid number of arguments. Expected: %d, Received: %d.";
     public static final String INVALID_TIME_FORMAT_MESSAGE = "Invalid event time format. Expected format: MMM d HH:mm.";
     public static final String INVALID_TIME_IS_PAST_MESSAGE = "The date-time is in the past, current date-time is %s.";
@@ -39,6 +40,8 @@ public class Constants {
     public final static String USER_LOGGED_IN = "User %s successfully logged in!";
     public final static String USER_LOGGED_OUT = "You logged out!";
     public final static String USER_LOGGED_IN_ALREADY = "User %s is logged in! Please log out first!";
+    public final static String USER_REGISTERED = "User %s registered successfully!";
+    public final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
 
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 

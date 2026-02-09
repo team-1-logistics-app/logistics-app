@@ -54,7 +54,7 @@ public class AssignLocation implements Command {
             return e.getMessage();
         }
     }
-
+    /// WILL REWORK THIS CORRECT CONNECTION IS REPO->ROUTE
     private String addFirstLocation(Route route, Locations location, LocalDateTime eventTime){
        return route.addFirstLocationToRoute(location,eventTime);
     }
