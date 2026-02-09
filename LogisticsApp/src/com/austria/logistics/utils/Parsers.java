@@ -39,6 +39,14 @@ public class Parsers {
         }
     }
 
+    public static <E extends Enum<E>> E tryParseEnum(String valueToParse, Class<E> type, String errorMessage) {
+        try {
+            return Enum.valueOf(type, valueToParse.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(String.format(errorMessage, valueToParse));
+        }
+    }
+
     public static LocalDateTime parseEventTime(String eventTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm", Locale.ENGLISH);
         LocalDateTime time;

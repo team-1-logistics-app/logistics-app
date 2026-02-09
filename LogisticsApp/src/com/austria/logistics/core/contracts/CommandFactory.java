@@ -1,5 +1,7 @@
 package com.austria.logistics.core.contracts;
 
+import com.austria.logistics.commands.contracts.Command;
+
 public interface CommandFactory {
-    //TO DO
+    Command createCommandFromCommandName(String commandTypeAsString, Repository repository);
 }
