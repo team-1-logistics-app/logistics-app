@@ -35,7 +35,7 @@ public class Constants {
 
     public final static String USER_NOT_LOGGED = "You are not logged in! Please login first!";
     public final static String USER_NOT_FOUND = "Cannot find user with username %s";
-    public final static String USER_PASSWORD_MISMATCH = "Incorrect password!";
+    public final static String USER_PASSWORD_MISMATCH = "Incorrect username or password!";
     public final static String USER_LOGGED_IN = "User %s successfully logged in!";
     public final static String USER_LOGGED_OUT = "You logged out!";
     public final static String USER_LOGGED_IN_ALREADY = "User %s is logged in! Please log out first!";
