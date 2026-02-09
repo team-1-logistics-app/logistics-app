@@ -18,6 +18,10 @@ public class Login extends BaseCommand {
 
     @Override
     protected String executeCommand(List<String> parameters) {
+        if(getRepository().hasLoggedUser()){
+            return Constants.USER_LOGGED_IN_ALREADY;
+        }
+
         String username;
         String password;
 

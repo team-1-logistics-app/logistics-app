@@ -38,6 +38,7 @@ public class Constants {
     public final static String USER_PASSWORD_MISMATCH = "Incorrect password!";
     public final static String USER_LOGGED_IN = "User %s successfully logged in!";
     public final static String USER_LOGGED_OUT = "You logged out!";
+    public final static String USER_LOGGED_IN_ALREADY = "User %s is logged in! Please log out first!";
 
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 
