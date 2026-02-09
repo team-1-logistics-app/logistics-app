@@ -11,7 +11,6 @@ import java.util.List;
 
 public class Login extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    private Repository repository;
 
     public Login(Repository repository) {
         super(repository);

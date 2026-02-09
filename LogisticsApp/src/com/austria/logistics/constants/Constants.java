@@ -37,6 +37,7 @@ public class Constants {
     public final static String USER_NOT_FOUND = "Cannot find user with username %s";
     public final static String USER_PASSWORD_MISMATCH = "Incorrect password!";
     public final static String USER_LOGGED_IN = "User %s successfully logged in!";
+    public final static String USER_LOGGED_OUT = "You logged out!";
 
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 
