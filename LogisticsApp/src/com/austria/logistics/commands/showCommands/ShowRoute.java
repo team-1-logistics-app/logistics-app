@@ -12,7 +12,7 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class ShowRoute implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
     private final Repository repository;
 
     public ShowRoute(Repository repository) {this.repository = repository;}

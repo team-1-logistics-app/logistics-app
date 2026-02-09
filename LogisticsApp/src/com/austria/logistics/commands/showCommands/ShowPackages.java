@@ -8,7 +8,7 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class ShowPackages implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
     private final Repository repository;
 
     public ShowPackages(Repository repository) {

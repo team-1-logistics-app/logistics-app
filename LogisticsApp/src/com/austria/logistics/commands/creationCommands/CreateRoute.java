@@ -8,7 +8,7 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class CreateRoute implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
     private final Repository repository;
     public CreateRoute(Repository repository){this.repository = repository;}
 

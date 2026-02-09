@@ -12,7 +12,7 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class CreatePackage implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
     private final Repository repository;
 
     public CreatePackage(Repository repository) {

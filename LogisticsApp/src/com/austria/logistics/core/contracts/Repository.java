@@ -8,6 +8,7 @@ import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface Repository {

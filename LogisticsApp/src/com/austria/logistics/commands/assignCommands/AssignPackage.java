@@ -13,7 +13,7 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class AssignPackage implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private final Repository repository;
 
     public AssignPackage(Repository repository) {

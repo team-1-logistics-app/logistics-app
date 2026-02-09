@@ -13,8 +13,8 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class AssignTruck implements Command {
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    public final Repository repository;
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
+    private final Repository repository;
 
     public AssignTruck(Repository repository) {
         this.repository = repository;

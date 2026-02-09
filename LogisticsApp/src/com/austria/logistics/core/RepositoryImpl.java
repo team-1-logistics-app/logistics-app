@@ -3,6 +3,7 @@ package com.austria.logistics.core;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.*;
+import com.austria.logistics.models.LocationImpl;
 import com.austria.logistics.models.PackageImpl;
 import com.austria.logistics.models.RouteImpl;
 import com.austria.logistics.models.contracts.Identifiable;
@@ -14,6 +15,7 @@ import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.TruckImpl;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,11 +24,9 @@ public class RepositoryImpl implements Repository {
     private int nextId;
 
     private final List<Truck> trucks = new ArrayList<>();
-    ;
     private final List<Route> routes = new ArrayList<>();
-    ;
     private final List<Package> packages = new ArrayList<>();
-    ;
+
 
     public RepositoryImpl() {
         this.nextId = 0;
