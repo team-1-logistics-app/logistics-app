@@ -29,7 +29,7 @@ public class Validators {
 
     public static void validateWeight(int weight){;
         if(weight <= 0){
-            throw new InvalidValueException(Constants.WEIGHT_VALUE_INVALID_MESSAGE);
+            throw new InvalidValueException(Constants.INVALID_WEIGHT_VALUE_MESSAGE);
         }
     }
 }

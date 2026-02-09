@@ -10,16 +10,17 @@ import com.austria.logistics.commands.enums.CommandType;
 import com.austria.logistics.commands.showCommands.ShowPackages;
 import com.austria.logistics.commands.showCommands.ShowRoute;
 import com.austria.logistics.commands.showCommands.ShowTrucks;
+import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.CommandFactory;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.utils.Parsers;
 
 public class CommandFactoryImpl implements CommandFactory {
-    private static final String INVALID_COMMAND = "Invalid command name: %s!";
+    ;
 
     @Override
     public Command createCommandFromCommandName(String commandTypeAsString, Repository repository) {
-        CommandType commandType = Parsers.tryParseEnum(commandTypeAsString, CommandType.class, String.format(INVALID_COMMAND,commandTypeAsString));
+        CommandType commandType = Parsers.tryParseEnum(commandTypeAsString, CommandType.class, String.format(Constants.INVALID_COMMAND,commandTypeAsString));
 
         switch (commandType){
             case ASSIGNLOCATION:
@@ -39,7 +40,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case SHOWTRUCKS:
                 return new ShowTrucks(repository);
             default:
-                throw new IllegalArgumentException(String.format(INVALID_COMMAND, commandTypeAsString));
+                throw new IllegalArgumentException(String.format(Constants.INVALID_COMMAND, commandTypeAsString));
         }
     }
 }

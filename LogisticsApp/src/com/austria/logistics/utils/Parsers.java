@@ -71,7 +71,7 @@ public class Parsers {
         try {
             valueInt = Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new InvalidValueException(String.format(Constants.VALUE_INVALID_FORMAT_MESSAGE, elementType));
+            throw new InvalidValueException(String.format(Constants.INVALID_VALUE_FORMAT_MESSAGE, elementType));
         }
         return valueInt;
     }

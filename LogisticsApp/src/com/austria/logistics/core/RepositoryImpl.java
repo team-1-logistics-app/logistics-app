@@ -40,7 +40,8 @@ public class RepositoryImpl implements Repository {
         for (int id = 1011; id <= 1025; id++) this.trucks.add(this.createTruck(id, TruckType.MAN));
         for (int id = 1026; id <= 1040; id++) this.trucks.add(this.createTruck(id, TruckType.ACTROS));
     }
-    ///Can do those with generic method
+
+    /// Can do those with generic method
     @Override
     public List<Truck> getTrucks() {
         return new ArrayList<>(this.trucks);
@@ -156,6 +157,14 @@ public class RepositoryImpl implements Repository {
     @Override
     public void logout() {
         this.loggedUser = null;
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return this.getUsers().stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .orElseThrow(() -> new UserNotFoundException(String.format(Constants.USER_NOT_FOUND, username)));
     }
 }
 

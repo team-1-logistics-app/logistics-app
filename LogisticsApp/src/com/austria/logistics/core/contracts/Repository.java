@@ -26,6 +26,6 @@ public interface Repository {
     boolean hasLoggedUser();
     void login(User username);
     void logout();
-
+    User findUserByUsername(String username);
 
 }

@@ -15,14 +15,12 @@ public class Constants {
     public static final String ROUTE_CREATED_MESSAGE = "Route with id %d was created!";
     public static final String ROUTE_ASSIGN_ERROR_MESSAGE = "Route with id %d doesn't have enough locations assigned yet, please assign at least 2 locations before assigning truck to it.";
 
-    public static final String WEIGHT_VALUE_INVALID_MESSAGE = "Weight can't be 0 or less kg.";
-    public static final String VALUE_INVALID_FORMAT_MESSAGE = "%s has to be valid integer.";
-
-    public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
-
+    public static final String INVALID_WEIGHT_VALUE_MESSAGE = "Weight can't be 0 or less kg.";
+    public static final String INVALID_VALUE_FORMAT_MESSAGE = "%s has to be valid integer.";
     public static final String INVALID_NUMBER_OF_ARGUMENTS_MESSAGE = "Invalid number of arguments. Expected: %d, Received: %d.";
     public static final String INVALID_TIME_FORMAT_MESSAGE = "Invalid event time format. Expected format: MMM d HH:mm.";
     public static final String INVALID_TIME_IS_PAST_MESSAGE = "The date-time is in the past, current date-time is %s.";
+    public static final String INVALID_COMMAND = "Invalid command name: %s!";
 
     public static final String PACKAGE_CREATED_MESSAGE = "Package with id %d was created!";
     public static final String PACKAGE_ASSIGNED_MESSAGE = "Package with id %d was assigned to truck %s with id %d!";
@@ -33,7 +31,14 @@ public class Constants {
     public static final String TRUCK_ASSIGNED_MESSAGE = "Truck %s with id %d was assigned to route with id %d!";
     public static final String TRUCK_MAXCAPACITY_REACHED_MESSAGE = "Truck %s with id %d has reached the max load capacity, please select another truck!";
     public static final String TRUCK_NOT_ASSIGNED_MESSAGE = "Truck %s with id %d is not assigned to route yet, assign it to route before assigning packages to it.";
-    public static final double AVERAGE_SPEED_KMH = 87;
+    public static final double TRUCK_AVERAGE_SPEED_KMH = 87;
+
+    public final static String USER_NOT_LOGGED = "You are not logged in! Please login first!";
+    public final static String USER_NOT_FOUND = "Cannot find user with username %s";
+    public final static String USER_PASSWORD_MISMATCH = "Incorrect password!";
+    public final static String USER_LOGGED_IN = "User %s successfully logged in!";
+
+    public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 
     public static final int[][] distances = {
             {   0,  877, 1376, 2762,  909, 3935, 4016 },
