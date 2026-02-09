@@ -6,10 +6,8 @@ import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.LocationImpl;
 import com.austria.logistics.models.PackageImpl;
 import com.austria.logistics.models.RouteImpl;
-import com.austria.logistics.models.contracts.Identifiable;
-import com.austria.logistics.models.contracts.Location;
+import com.austria.logistics.models.contracts.*;
 import com.austria.logistics.models.contracts.Package;
-import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.TruckImpl;
@@ -21,20 +19,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RepositoryImpl implements Repository {
+    private static final String NO_LOGGED_IN_USER = "There is no logged in user.";
+    private final static String NO_SUCH_USER = "There is no user with username %s!";
+    private final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
+
+
     private int nextId;
+    private User loggedUser;
 
     private final List<Truck> trucks = new ArrayList<>();
     private final List<Route> routes = new ArrayList<>();
     private final List<Package> packages = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
 
     public RepositoryImpl() {
         this.nextId = 0;
+        this.loggedUser = null;
         for (int id = 1001; id <= 1010; id++) this.trucks.add(this.createTruck(id, TruckType.SCANIA));
         for (int id = 1011; id <= 1025; id++) this.trucks.add(this.createTruck(id, TruckType.MAN));
         for (int id = 1026; id <= 1040; id++) this.trucks.add(this.createTruck(id, TruckType.ACTROS));
     }
-
+    ///Can do those with generic method
     @Override
     public List<Truck> getTrucks() {
         return new ArrayList<>(this.trucks);
@@ -49,6 +55,12 @@ public class RepositoryImpl implements Repository {
     public List<Package> getPackages() {
         return new ArrayList<>(this.packages);
     }
+
+    @Override
+    public List<User> getUsers() {
+        return new ArrayList<>(this.users);
+    }
+
 
     @Override
     public <E extends Identifiable> E findElementById(List<E> elements, int id) {
@@ -115,6 +127,35 @@ public class RepositoryImpl implements Repository {
         Package pkg = new PackageImpl(++this.nextId, startLocation, endLocation, weight, contactInformation);
         this.packages.add(pkg);
         return pkg;
+    }
+
+    @Override
+    public User addUser(User userToAdd) {
+        if (users.contains(userToAdd)) {
+            throw new IllegalArgumentException(String.format(USER_ALREADY_EXIST, userToAdd.getUsername()));
+        }
+        this.users.add(userToAdd);
+        return userToAdd;
+    }
+
+    @Override
+    public User getLoggedUser() {
+        return this.loggedUser;
+    }
+
+    @Override
+    public boolean hasLoggedUser() {
+        return this.loggedUser != null;
+    }
+
+    @Override
+    public void login(User username) {
+        this.loggedUser = username;
+    }
+
+    @Override
+    public void logout() {
+        this.loggedUser = null;
     }
 }
 

@@ -21,6 +21,12 @@ public class Validators {
         }
     }
 
+    public static void validateStringLenght(String value, int min,int max, String message) {
+        if(value.length() < min || value.length() > max){
+            throw new IllegalArgumentException(message);
+        }
+    }
+
     public static void validateWeight(int weight){;
         if(weight <= 0){
             throw new InvalidValueException(Constants.WEIGHT_VALUE_INVALID_MESSAGE);
