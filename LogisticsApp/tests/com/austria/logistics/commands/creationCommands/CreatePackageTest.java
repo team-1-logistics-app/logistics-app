@@ -3,6 +3,8 @@ package com.austria.logistics.commands.creationCommands;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.UserImpl;
+import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +19,15 @@ class CreatePackageTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
+        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.CUSTOMER));
         createPackage = new CreatePackage(repository);
+    }
+    @Test
+    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+        //Arrange
+        repository.logout();
+        //Act,Assert
+        Assertions.assertEquals("You are not logged in! Please login first!", createPackage.execute(List.of("Sydney", "Darwin", "40")));
     }
 
     @Test
@@ -33,7 +43,6 @@ class CreatePackageTest {
                 () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin", "0", "test@test.bg"))),
                 () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin", "-1", "test@test.bg")))
         );
-
     }
 
     @Test
@@ -46,7 +55,6 @@ class CreatePackageTest {
                         createPackage.execute(List.of("Sydney", "Test", "40", "test@test.com"))),
                 () -> Assertions.assertEquals("Weight has to be valid integer.",
                         createPackage.execute(List.of("Sydney", "Darwin", "asd", "test@test.com")))
-
         );
     }
 
