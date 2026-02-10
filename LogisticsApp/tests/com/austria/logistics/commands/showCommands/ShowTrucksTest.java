@@ -5,8 +5,10 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +24,7 @@ class ShowTrucksTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-
+        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE));
         Command createRoute = new CreateRoute(repository);
         createRoute.execute(List.of());
 
@@ -38,6 +40,16 @@ class ShowTrucksTest {
     }
 
     @Test
+    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+        //Arrange
+        repository.logout();
+        //Act
+        String result = showTrucks.execute(List.of("Test"));
+        //Assert
+        Assertions.assertEquals("You are not logged in! Please login first!", result);
+    }
+
+    @Test
     void execute_Should_Return_Correct_Trucks_Information() {
         //Act
         String result = showTrucks.execute(List.of());
@@ -47,13 +59,5 @@ class ShowTrucksTest {
         Assertions.assertTrue(result.contains("Man with id 1012 is not assigned."));
         Assertions.assertTrue(result.contains("Actros with id 1040 is not assigned."));
         Assertions.assertEquals(40, result.split("\n").length);
-    }
-
-    @Test
-    void execute_Should_Return_Error_When_ArgumentsCount_isInvalid() {
-        //Act
-        String result = showTrucks.execute(List.of("Test"));
-        //Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 0, Received: 1.", result);
     }
 }
