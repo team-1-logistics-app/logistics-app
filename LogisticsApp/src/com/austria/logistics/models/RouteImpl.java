@@ -10,15 +10,18 @@ import com.austria.logistics.models.vehicles.contracts.Truck;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 public class RouteImpl implements Route {
     private final int id;
     private final LinkedList<Location> route;
     private Truck truck;
+    private int loadedTruckId;
 
     public RouteImpl(int id) {
         this.id = id;
         this.route = new LinkedList<>();
+        this.loadedTruckId = -1;
     }
 
     @Override
@@ -27,8 +30,18 @@ public class RouteImpl implements Route {
     }
 
     @Override
+    public void setLoadedTruckId(int truckId){
+        this.loadedTruckId = truckId;
+    }
+
+    @Override
+    public int getLoadedTruckId() {
+        return this.loadedTruckId;
+    }
+
+    @Override
     public void assignTruck(Truck truck) {
-     this.truck = truck;
+        this.truck = truck;
     }
 
     @Override
@@ -61,6 +74,11 @@ public class RouteImpl implements Route {
         this.calculateSchedule();
 
         return String.format(Constants.LOCATION_ADDED_MESSAGE, location.getDisplayName(), this.getId());
+    }
+
+    @Override
+    public void addLocationFromLoad(Location location) {
+        this.route.add(location);
     }
 
 
@@ -151,5 +169,15 @@ public class RouteImpl implements Route {
             currentLocation.setEventTime(prevTime);
             prevLocation = currentLocation;
         }
+    }
+
+    @Override
+    public String toSaveString() {
+        return String.join("|",
+                String.valueOf(id),
+                route.isEmpty() ? "NONE" : route.stream().map(location -> location.getLocation().getDisplayName() + "@" + location.getEventTimeAsString())
+                        .collect(Collectors.joining(",")),
+                truck == null? "NONE" : String.valueOf(truck.getId())
+        );
     }
 }

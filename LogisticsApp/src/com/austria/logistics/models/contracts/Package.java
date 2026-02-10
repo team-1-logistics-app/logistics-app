@@ -3,7 +3,7 @@ package com.austria.logistics.models.contracts;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
-public interface Package extends Identifiable {
+public interface Package extends Identifiable,Savealbe {
     void setAssignedToTruck(Truck assignedToTruck);
     Truck getAssignedToTruck();
 

@@ -29,5 +29,7 @@ public interface Repository {
     void login(User username);
     void logout();
     User findUserByUsername(String username);
+    String saveToFile();
 
+    String loadFromFile();
 }

@@ -1,5 +1,8 @@
 package com.austria.logistics.constants;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Constants {
     public static final String LOCATION_INVALID_MESSAGE = "%s is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.";
     public static final String LOCATION_NOT_FOUND_MESSAGE = "%s is not in the route.";
@@ -44,7 +47,21 @@ public class Constants {
     public final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
     public final static String USER_NOT_EMPLOYEE = "You are not logged in as employee!";
 
+    public final static String STATE_DIR_TO_SAVE = "saves";
+    public final static String STATE_FILE_TO_SAVE_PACKAGES = "packages.txt";
+    public final static String STATE_FILE_TO_SAVE_TRUCKS = "trucks.txt";
+    public final static String STATE_FILE_TO_SAVE_ROUTES = "routes.txt";
+    public final static String STATE_SAVED_TO_FILE = "State successfully saved to file!";
+    public final static String STATE_FAILED_TO_SAVE = "State failed to save to file!";
+    public final static String STATE_FAILED_TO_LOAD = "State failed to load from file!";
+    public final static String STATE_LOADED_FROM_FILE = "Loaded state from file!";
+
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
+
+
+   public final static Path FILE_PATH_PACKAGES = Paths.get(Constants.STATE_DIR_TO_SAVE, Constants.STATE_FILE_TO_SAVE_PACKAGES);
+   public final static Path FILE_PATH_TRUCKS = Paths.get(Constants.STATE_DIR_TO_SAVE, Constants.STATE_FILE_TO_SAVE_TRUCKS);
+   public final static Path FILE_PATH_ROUTES = Paths.get(Constants.STATE_DIR_TO_SAVE, Constants.STATE_FILE_TO_SAVE_ROUTES);
 
     public static final int[][] distances = {
             {   0,  877, 1376, 2762,  909, 3935, 4016 },

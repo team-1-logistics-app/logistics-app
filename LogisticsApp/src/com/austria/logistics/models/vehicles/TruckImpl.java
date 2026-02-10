@@ -1,11 +1,13 @@
 package com.austria.logistics.models.vehicles;
 
 import com.austria.logistics.models.contracts.Route;
+import com.austria.logistics.models.contracts.Savealbe;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TruckImpl implements Truck {
     private final int id;
@@ -84,4 +86,16 @@ public class TruckImpl implements Truck {
         this.currentLoad = 0;
     }
 
+    @Override
+    public String toSaveString() {
+        return String.join("|",
+                String.valueOf(id),
+                truckType.getDisplayName(),
+               assignedPackagesIdList.isEmpty()? "NONE" : assignedPackagesIdList.stream()
+                        .map(String::valueOf)
+                        .collect(Collectors.joining(",")),
+                String.valueOf(isAssigned),
+                assignedRoute == null? "NONE" : String.valueOf(assignedRoute.getId()),
+                String.valueOf(currentLoad));
+    }
 }

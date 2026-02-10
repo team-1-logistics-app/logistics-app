@@ -77,4 +77,15 @@ public class PackageImpl implements Package {
     public int getId() {
         return this.id;
     }
+
+    @Override
+    public String toSaveString() {
+        return String.join("|",
+                String.valueOf(id),
+                startLocation.getDisplayName(),
+                endLocation.getDisplayName(),
+                String.valueOf(weight),
+                contactInformation,
+                assignedToTruck == null ? "NONE" : String.valueOf(assignedToTruck.getId()));
+    }
 }

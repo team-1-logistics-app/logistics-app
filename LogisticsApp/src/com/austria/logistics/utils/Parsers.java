@@ -1,22 +1,33 @@
 package com.austria.logistics.utils;
 
 import com.austria.logistics.constants.Constants;
+import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidLocationException;
 import com.austria.logistics.exceptions.InvalidTimeFormatException;
 import com.austria.logistics.exceptions.InvalidTruckTypeException;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.models.LocationImpl;
+import com.austria.logistics.models.PackageImpl;
+import com.austria.logistics.models.RouteImpl;
+import com.austria.logistics.models.contracts.Location;
+import com.austria.logistics.models.contracts.Package;
+import com.austria.logistics.models.contracts.Route;
+import com.austria.logistics.models.contracts.Savealbe;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
+import com.austria.logistics.models.vehicles.TruckImpl;
+import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class Parsers {
-    private Parsers() {
-    }
+    private Parsers() {}
 
     public static Locations parseLocation(String location) {
         switch (location) {
@@ -47,23 +58,19 @@ public class Parsers {
         }
     }
 
-    public static LocalDateTime parseEventTime(String eventTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy HH:mm", Locale.ENGLISH);
-        LocalDateTime time;
-
+    public static LocalDateTime parseEventTime(String value) {
         try {
-            time = LocalDateTime.parse(eventTime, formatter);
+            String cleaned = value.replace('\u00A0', ' ').trim();
+
+            int year = LocalDate.now().getYear();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d HH:mm yyyy", Locale.ENGLISH);
+
+            return LocalDateTime.parse(cleaned + " " + year, formatter);
+
         } catch (DateTimeException e) {
             throw new InvalidTimeFormatException(Constants.INVALID_TIME_FORMAT_MESSAGE);
         }
-
-        LocalDateTime now = LocalDateTime.now();
-
-        if (time.isBefore(now)) {
-            throw new InvalidTimeFormatException(String.format(Constants.INVALID_TIME_IS_PAST_MESSAGE, now.format(formatter)));
-        }
-
-        return time;
     }
 
     public static int parseToInteger(String elementType, String value) {
@@ -82,4 +89,79 @@ public class Parsers {
                 .findFirst()
                 .orElseThrow(() -> new InvalidTruckTypeException(String.format(Constants.TRUCK_INVALID_TYPE_MESSAGE, truck)));
     }
+
+    public static <T extends Savealbe> List<String> parseCollectionToStringList(List<T> collectionToParse) {
+        return collectionToParse.stream()
+                .map(Savealbe::toSaveString)
+                .toList();
+    }
+
+
+    public static Route routeFromSaveString(String line) {
+        String[] elements = line.split("\\|");
+        int id = Integer.parseInt(elements[0]);
+        Route route = new RouteImpl(id);
+        if (!elements[1].equals("NONE")) {
+            List<String> LocationAndEventTimeList = List.of(elements[1].split(","));
+            LocationAndEventTimeList.stream()
+                    .map(element -> {
+                        String[] parts = element.split("@");
+                        Locations location = Parsers.parseLocation(parts[0]);
+                        LocalDateTime eventTime = Parsers.parseEventTime(parts[1]);
+                        return (Location) new LocationImpl(location, eventTime);
+                    }).forEach(route::addLocationFromLoad);
+        }
+        if (!elements[2].equals("NONE")) {
+            route.setLoadedTruckId(Integer.parseInt(elements[2]));
+        }
+        return route;
+    }
+
+
+    public static Package packageFromSaveString(String line, Repository repository) {
+        String[] elements = line.split("\\|");
+        int id = Integer.parseInt(elements[0]);
+        Locations startLocation = Parsers.parseLocation(elements[1]);
+        Locations endLocation = Parsers.parseLocation(elements[2]);
+        int weight = Integer.parseInt(elements[3]);
+        String contactInfo = elements[4];
+
+        Package pkg = new PackageImpl(id, startLocation, endLocation, weight, contactInfo);
+
+        if (!elements[5].equals("NONE")) {
+            Truck assignedTruck = repository.findElementById(repository.getTrucks(), Integer.parseInt(elements[5]));
+            pkg.setAssignedToTruck(assignedTruck);
+        }
+        return pkg;
+    }
+
+    public static Truck truckFromSaveString(String line, Repository repository) {
+        String[] elements = line.split("\\|");
+        int id = Integer.parseInt(elements[0]);
+        TruckType truckType = Parsers.parseTruck(elements[1]);
+
+        Truck truck = new TruckImpl(id, truckType);
+
+        if (!elements[2].equals("NONE")) {
+            List<String> assignedPackagesIdStringList = List.of(elements[2].split(","));
+            assignedPackagesIdStringList.stream().map(Integer::parseInt).forEach(truck::addAssignedPackageId);
+        }
+        boolean isAssigned = Boolean.parseBoolean(elements[3]);
+        if (isAssigned) {
+            truck.assign();
+        } else {
+            truck.unassign();
+        }
+
+        if (!elements[4].equals("NONE")) {
+            Route route = repository.findElementById(repository.getRoutes(), Integer.parseInt(elements[4]));
+            truck.setAssignedRoute(route);
+        }
+
+        int currentLoad = Integer.parseInt(elements[5]);
+        truck.addLoad(currentLoad);
+
+        return truck;
+    }
+
 }

@@ -3,7 +3,6 @@ package com.austria.logistics.core;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.*;
-import com.austria.logistics.models.LocationImpl;
 import com.austria.logistics.models.PackageImpl;
 import com.austria.logistics.models.RouteImpl;
 import com.austria.logistics.models.UserImpl;
@@ -14,11 +13,16 @@ import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.TruckImpl;
 import com.austria.logistics.models.vehicles.contracts.Truck;
+import com.austria.logistics.utils.Helpers;
+import com.austria.logistics.utils.Parsers;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
 
 public class RepositoryImpl implements Repository {
     private static final String NO_LOGGED_IN_USER = "There is no logged in user.";
@@ -177,5 +181,44 @@ public class RepositoryImpl implements Repository {
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException(String.format(Constants.USER_NOT_FOUND, username)));
     }
+
+    @Override
+    public String saveToFile() {
+        try {
+            Files.createDirectories(Path.of(Constants.STATE_DIR_TO_SAVE));
+
+            Files.write(Constants.FILE_PATH_ROUTES, Parsers.parseCollectionToStringList(this.routes));
+            Files.write(Constants.FILE_PATH_TRUCKS, Parsers.parseCollectionToStringList(this.trucks));
+            Files.write(Constants.FILE_PATH_PACKAGES, Parsers.parseCollectionToStringList(this.packages));
+
+        } catch (IOException e) {
+            return Constants.STATE_FAILED_TO_SAVE;
+        }
+        return Constants.STATE_SAVED_TO_FILE;
+    }
+
+
+    @Override
+    public String loadFromFile() {
+        Helpers.readFileLines(Constants.FILE_PATH_ROUTES, this.routes, Parsers::routeFromSaveString);
+        Helpers.readFileLines(Constants.FILE_PATH_TRUCKS, this.trucks, line -> Parsers.truckFromSaveString(line, this));
+
+        resolveRouteTruckReferences();
+
+        Helpers.readFileLines(Constants.FILE_PATH_PACKAGES, this.packages, line -> Parsers.packageFromSaveString(line, this));
+
+        return Constants.STATE_LOADED_FROM_FILE;
+    }
+
+
+    private void resolveRouteTruckReferences() {
+        this.routes.forEach(route -> {
+            if (route.getLoadedTruckId() != -1) {
+                Truck truck = this.findElementById(this.trucks, route.getLoadedTruckId());
+                route.assignTruck(truck);
+            }
+        });
+    }
+
 }
 
