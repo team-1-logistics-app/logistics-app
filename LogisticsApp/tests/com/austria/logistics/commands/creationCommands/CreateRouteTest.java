@@ -3,6 +3,8 @@ package com.austria.logistics.commands.creationCommands;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.UserImpl;
+import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,13 +18,25 @@ class CreateRouteTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
+        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE));
         createRoute = new CreateRoute(repository);
     }
 
     @Test
-    void execute_Should_Return_Error_When_ArgumentCount_isInvalid() {
+    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+        //Arrange
+        repository.logout();
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 0, Received: 1.", createRoute.execute(List.of("Test")));
+        Assertions.assertEquals("You are not logged in! Please login first!", createRoute.execute(List.of("Test")));
+    }
+
+    @Test
+    void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
+        //Arrange
+        repository.logout();
+        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.CUSTOMER));
+        //Act,Assert
+        Assertions.assertEquals("You are not logged in as employee!", createRoute.execute(List.of("Test")));
     }
 
     @Test
