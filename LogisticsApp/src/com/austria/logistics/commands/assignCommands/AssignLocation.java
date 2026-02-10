@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AssignLocation extends BaseCommand{
-    public static final int EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY = 3;
+    public static final int EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY = 5;
     public static final int MIN_ARGUMENTS_COUNT  = 2;
 
     public AssignLocation(Repository repository) {
@@ -34,24 +34,25 @@ public class AssignLocation extends BaseCommand{
         int routeId;
         Route route;
         Locations location;
-        LocalDateTime eventTime= null;
-
-        if(parameters.size() < MIN_ARGUMENTS_COUNT){
-            return String.format(Constants.INVALID_NUMBER_OF_ARGUMENTS_MESSAGE, MIN_ARGUMENTS_COUNT,parameters.size());
-        }
+        LocalDateTime eventTime = null;
 
         try{
+            Validators.validateArgumentsCount(parameters, MIN_ARGUMENTS_COUNT);
             routeId = Parsers.parseToInteger("Route id",parameters.get(0));
             route = getRepository().findElementById(getRepository().getRoutes(),routeId);
-            if(route.isRouteEmpty()){
-                Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY);
-                eventTime = Parsers.parseEventTime(parameters.get(1));
-            } else {
-                Validators.validateArgumentsCount(parameters,MIN_ARGUMENTS_COUNT);
-            }
-            location = Parsers.parseLocation(parameters.get(2));
+            location = Parsers.parseLocation(parameters.get(1));
 
-            return parameters.size() == 3? addFirstLocation(route,location,eventTime) : addAnyOtherLocation(route,location);
+            if(route.isRouteEmpty() && parameters.size() > MIN_ARGUMENTS_COUNT){
+                Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY);
+                String eventTimeString = String.join(" ",
+                        parameters.get(2),
+                        parameters.get(3),
+                        parameters.get(4)
+                );
+                eventTime = Parsers.parseEventTime(eventTimeString);
+            }
+
+            return parameters.size() == EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY? addFirstLocation(route,location,eventTime) : addAnyOtherLocation(route,location);
         } catch (InvalidValueException |
                  ElementNotFoundException |
                  IllegalArgumentException |

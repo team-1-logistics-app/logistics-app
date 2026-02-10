@@ -33,7 +33,7 @@ public class EngineImpl implements Engine {
             if(inputLine.equalsIgnoreCase(Constants.TERMINATION_COMMAND)){
                 break;
             }
-
+            processCommand(inputLine);
         }
     }
 
@@ -45,8 +45,16 @@ public class EngineImpl implements Engine {
     private void processCommand(String inputLine){
         String commandName = extractCommandName(inputLine);
         List<String> parameters = extractParameters(inputLine);
-        Command command = commandFactory.createCommandFromCommandName(commandName,repository);
-        String execResult = command.execute(parameters);
+        Command command;
+        String execResult;
+        try {
+            command = commandFactory.createCommandFromCommandName(commandName,repository);
+            execResult = command.execute(parameters);
+        }catch (IllegalArgumentException e){
+            execResult = e.getMessage();
+        }
+
+
         print(execResult);
     }
 
