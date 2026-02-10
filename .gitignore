@@ -16,3 +16,6 @@ Thumbs.db
 
 ### VS Code (optional) ###
 .vscode/
+
+# Runtime save files
+saves/
