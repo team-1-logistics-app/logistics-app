@@ -13,14 +13,14 @@ import java.util.List;
 public class Register extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
 
-    protected Register(Repository repository) {
+    public Register(Repository repository) {
         super(repository);
     }
 
     @Override
     protected String executeCommand(List<String> parameters) {
         if (getRepository().hasLoggedUser()) {
-            return Constants.USER_LOGGED_IN_ALREADY;
+            return  String.format(Constants.USER_LOGGED_IN_ALREADY,getRepository().getLoggedUser().getUsername());
         }
 
         try {

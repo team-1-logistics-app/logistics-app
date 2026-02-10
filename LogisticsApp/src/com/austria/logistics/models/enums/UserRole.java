@@ -11,7 +11,7 @@ public enum UserRole {
             case CUSTOMER:
                 return "Customer";
             case EMPLOYEE:
-                return "Supervisor";
+                return "Employee";
             case MANAGER:
                 return "Manager";
             default:

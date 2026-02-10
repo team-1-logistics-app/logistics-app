@@ -2,9 +2,7 @@ package com.austria.logistics.commands.assignCommands;
 
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
-import com.austria.logistics.commands.showCommands.ShowPackages;
-import com.austria.logistics.commands.showCommands.ShowRoute;
-import com.austria.logistics.commands.showCommands.ShowTrucks;
+import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.UserImpl;

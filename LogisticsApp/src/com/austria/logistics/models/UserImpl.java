@@ -22,7 +22,7 @@ public class UserImpl implements User {
     private String password;
     private UserRole userRole;
 
-    public UserImpl(String username, String firstName, String lastName, String password, UserRole userRole){
+    public UserImpl(String username, String firstName, String lastName, String password, UserRole userRole) {
         this.setUsername(username);
         this.setFirstName(firstName);
         this.setLastName(lastName);
@@ -30,8 +30,8 @@ public class UserImpl implements User {
         this.setUserRole(userRole);
     }
 
-    private void setUsername(String username){
-        Validators.validateStringLenght(username,LEN_MIN,LEN_MAX,USERNAME_LEN_ERR);
+    private void setUsername(String username) {
+        Validators.validateStringLenght(username, LEN_MIN, LEN_MAX, USERNAME_LEN_ERR);
         this.username = username;
     }
 
@@ -40,8 +40,8 @@ public class UserImpl implements User {
         return this.username;
     }
 
-    private void setFirstName(String firstName){
-        Validators.validateStringLenght(firstName,LEN_MIN,LEN_MAX,FIRSTNAME_LEN_ERR);
+    private void setFirstName(String firstName) {
+        Validators.validateStringLenght(firstName, LEN_MIN, LEN_MAX, FIRSTNAME_LEN_ERR);
         this.firstName = firstName;
     }
 
@@ -50,8 +50,8 @@ public class UserImpl implements User {
         return this.firstName;
     }
 
-    private void setLastName(String lastName){
-        Validators.validateStringLenght(lastName,LEN_MIN,LEN_MAX,LASTNAME_LEN_ERR);
+    private void setLastName(String lastName) {
+        Validators.validateStringLenght(lastName, LEN_MIN, LEN_MAX, LASTNAME_LEN_ERR);
         this.lastName = lastName;
     }
 
@@ -60,8 +60,8 @@ public class UserImpl implements User {
         return this.lastName;
     }
 
-    private void setPassword(String password){
-        Validators.validateStringLenght(password,LEN_MIN,LEN_MAX,PASSWORD_LEN_ERR);
+    private void setPassword(String password) {
+        Validators.validateStringLenght(password, LEN_MIN, LEN_MAX, PASSWORD_LEN_ERR);
         this.password = password;
     }
 
@@ -70,7 +70,7 @@ public class UserImpl implements User {
         return this.password;
     }
 
-    private void setUserRole(UserRole userRole){
+    private void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
 
@@ -91,7 +91,6 @@ public class UserImpl implements User {
                 firstName,
                 lastName,
                 password,
-                userRole.toString()
-                );
+                userRole.toString());
     }
 }

@@ -9,12 +9,12 @@ import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.LocationImpl;
 import com.austria.logistics.models.PackageImpl;
 import com.austria.logistics.models.RouteImpl;
-import com.austria.logistics.models.contracts.Location;
+import com.austria.logistics.models.UserImpl;
+import com.austria.logistics.models.contracts.*;
 import com.austria.logistics.models.contracts.Package;
-import com.austria.logistics.models.contracts.Route;
-import com.austria.logistics.models.contracts.Savealbe;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.TruckImpl;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
@@ -164,4 +164,14 @@ public class Parsers {
         return truck;
     }
 
+    public static User userFromSaveString(String line, Repository repository){
+        String[] elements = line.split("\\|");
+        String username = elements[0];
+        String firstName = elements[1];
+        String lastName = elements[2];
+        String password = elements[3];
+        UserRole userRole = Parsers.tryParseEnum(elements[4],UserRole.class,String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, elements[4]));
+
+        return new UserImpl(username,firstName,lastName,password,userRole);
+    }
 }

@@ -190,6 +190,7 @@ public class RepositoryImpl implements Repository {
             Files.write(Constants.FILE_PATH_ROUTES, Parsers.parseCollectionToStringList(this.routes));
             Files.write(Constants.FILE_PATH_TRUCKS, Parsers.parseCollectionToStringList(this.trucks));
             Files.write(Constants.FILE_PATH_PACKAGES, Parsers.parseCollectionToStringList(this.packages));
+            Files.write(Constants.FILE_PATH_USERS, Parsers.parseCollectionToStringList(this.users));
 
         } catch (IOException e) {
             return Constants.STATE_FAILED_TO_SAVE;
@@ -206,6 +207,7 @@ public class RepositoryImpl implements Repository {
         resolveRouteTruckReferences();
 
         Helpers.readFileLines(Constants.FILE_PATH_PACKAGES, this.packages, line -> Parsers.packageFromSaveString(line, this));
+        Helpers.readFileLines(Constants.FILE_PATH_USERS,this.users,line -> Parsers.userFromSaveString(line,this));
 
         return Constants.STATE_LOADED_FROM_FILE;
     }
