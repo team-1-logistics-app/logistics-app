@@ -54,6 +54,6 @@ public class ShowRoute extends BaseCommand {
 
     @Override
     protected boolean requiresLogin() {
-        return false;
+        return true;
     }
 }
