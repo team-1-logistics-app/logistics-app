@@ -7,7 +7,7 @@ import com.austria.logistics.core.contracts.Repository;
 import java.util.List;
 
 public class Logout extends BaseCommand {
-    protected Logout(Repository repository) {
+    public Logout(Repository repository) {
         super(repository);
     }
 

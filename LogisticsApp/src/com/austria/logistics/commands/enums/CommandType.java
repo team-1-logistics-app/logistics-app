@@ -8,5 +8,8 @@ public enum CommandType {
     CREATEROUTE,
     SHOWPACKAGES,
     SHOWROUTE,
-    SHOWTRUCKS
+    SHOWTRUCKS,
+    LOGIN,
+    LOGOUT,
+    REGISTER
 }

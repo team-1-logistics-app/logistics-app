@@ -10,6 +10,9 @@ import com.austria.logistics.commands.enums.CommandType;
 import com.austria.logistics.commands.showCommands.ShowPackages;
 import com.austria.logistics.commands.showCommands.ShowRoute;
 import com.austria.logistics.commands.showCommands.ShowTrucks;
+import com.austria.logistics.commands.userCommands.Login;
+import com.austria.logistics.commands.userCommands.Logout;
+import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.CommandFactory;
 import com.austria.logistics.core.contracts.Repository;
@@ -39,6 +42,12 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowRoute(repository);
             case SHOWTRUCKS:
                 return new ShowTrucks(repository);
+            case LOGIN:
+                return new Login(repository);
+            case LOGOUT:
+                return new Logout(repository);
+            case REGISTER:
+                return new Register(repository);
             default:
                 throw new IllegalArgumentException(String.format(Constants.INVALID_COMMAND, commandTypeAsString));
         }
