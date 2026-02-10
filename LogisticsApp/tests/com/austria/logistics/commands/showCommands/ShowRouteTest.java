@@ -4,9 +4,11 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.TruckType;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.TruckImpl;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import org.junit.jupiter.api.Assertions;
@@ -31,6 +33,7 @@ class ShowRouteTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
+        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE));
         truck = new TruckImpl(1012, TruckType.MAN);
         showRoute = new ShowRoute(repository);
         createRouteCommand = new CreateRoute(repository);
@@ -40,6 +43,16 @@ class ShowRouteTest {
         id = route.getId();
 
         parameters = List.of(String.valueOf(id));
+    }
+
+    @Test
+    void showRouteCommand_Should_Return_Error_When_User_Not_LoggedIn() {
+        //Arrange
+        repository.logout();
+        String expected = "You are not logged in! Please login first!";
+
+        //Act,Assert
+        Assertions.assertEquals(expected, showRoute.execute(parameters));
     }
 
     @Test
@@ -91,7 +104,7 @@ class ShowRouteTest {
     void showRouteCommand_Should_Return_Error_When_ArgumentsAreInvalid() {
         //Arrange
         parameters = List.of("Test", "Test");
-        String expected = "Invalid number of arguments. Expected: 1, Received: 2.";
+        String expected = "Route id has to be valid integer.";
         //Act,Assert
         Assertions.assertEquals(expected, showRoute.execute(parameters));
     }
