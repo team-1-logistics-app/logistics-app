@@ -77,7 +77,7 @@ class AssignPackageTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_User_Not_AsEmployee() {
+    void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
         //Arrange
         repository.logout();
         user = new UserImpl("Test","Test","Test","Test", UserRole.CUSTOMER);
