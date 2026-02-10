@@ -6,8 +6,10 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,11 +30,25 @@ class ShowPackagesTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
+        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE));
         showPackages = new ShowPackages(repository);
         parameters = List.of();
         createRoute = new CreateRoute(repository);
         assignTruck = new AssignTruck(repository);
         assignPackage = new AssignPackage(repository);
+    }
+
+    @Test
+    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+        //Arrange
+        repository.logout();
+        String expected = "You are not logged in! Please login first!";
+
+        //Act
+        String result = showPackages.execute(parameters);
+
+        //Assert
+        Assertions.assertEquals(expected, result);
     }
 
     @Test
