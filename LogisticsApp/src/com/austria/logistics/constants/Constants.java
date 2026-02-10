@@ -42,6 +42,7 @@ public class Constants {
     public final static String USER_LOGGED_IN_ALREADY = "User %s is logged in! Please log out first!";
     public final static String USER_REGISTERED = "User %s registered successfully!";
     public final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
+    public final static String USER_NOT_EMPLOYEE = "You are not logged in as employee!";
 
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 

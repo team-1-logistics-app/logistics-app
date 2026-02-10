@@ -1,22 +1,22 @@
 package com.austria.logistics.commands.showCommands;
 
-import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class ShowPackages implements Command {
+public class ShowPackages extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
-    private final Repository repository;
 
     public ShowPackages(Repository repository) {
-        this.repository = repository;
+        super(repository);
     }
 
+
     @Override
-    public String execute(List<String> parameters) {
+    public String executeCommand(List<String> parameters) {
         try {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         } catch (IllegalArgumentException e) {
@@ -27,7 +27,7 @@ public class ShowPackages implements Command {
 
     private String showPackages() {
         StringBuilder output = new StringBuilder();
-        List<Package> packages = this.repository.getPackages();
+        List<Package> packages = getRepository().getPackages();
         if (!packages.isEmpty()) {
             packages.forEach(pkg -> {
                 output.append(String.format("Package with id %d, start location %s, end location %s, weight %d, contact info %s ",
@@ -49,5 +49,10 @@ public class ShowPackages implements Command {
             output.append("No packages in the repo created yet.\n");
         }
         return output.toString();
+    }
+
+    @Override
+    protected boolean requiresLogin() {
+        return false;
     }
 }

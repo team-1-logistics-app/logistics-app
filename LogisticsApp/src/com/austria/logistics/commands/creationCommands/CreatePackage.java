@@ -1,6 +1,6 @@
 package com.austria.logistics.commands.creationCommands;
 
-import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidLocationException;
@@ -11,17 +11,17 @@ import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class CreatePackage implements Command {
+public class CreatePackage extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 4;
-    private final Repository repository;
 
     public CreatePackage(Repository repository) {
-        this.repository = repository;
+        super(repository);
     }
+
 
     //EXPECTED ARGUMENTS ARE STRING STARTLOCATION, STRING ENDLOCATION, STRING WEIGHT, STRING CONTACTINFO
     @Override
-    public String execute(List<String> parameters) {
+    public String executeCommand(List<String> parameters) {
         Locations startLocation;
         Locations endLocation;
         int weight;
@@ -42,8 +42,13 @@ public class CreatePackage implements Command {
     }
 
     private String createPackage(Locations startLocation, Locations endLocation, int weight, String contactInfo) {
-        int id = this.repository.createPackage(startLocation, endLocation, weight, contactInfo).getId();
+        int id = getRepository().createPackage(startLocation, endLocation, weight, contactInfo).getId();
 
         return String.format(Constants.PACKAGE_CREATED_MESSAGE, id);
+    }
+
+    @Override
+    protected boolean requiresLogin() {
+        return true;
     }
 }

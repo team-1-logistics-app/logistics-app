@@ -1,20 +1,30 @@
 package com.austria.logistics.commands.creationCommands;
 
-import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.contracts.User;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class CreateRoute implements Command {
+public class CreateRoute extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
-    private final Repository repository;
-    public CreateRoute(Repository repository){this.repository = repository;}
+
+    public CreateRoute(Repository repository) {
+        super(repository);
+    }
 
     //NO ARGUMENTS ARE EXPECTED
     @Override
-    public String execute(List<String> parameters) {
+    public String executeCommand(List<String> parameters) {
+        User loggedUser = getRepository().getLoggedUser();
+
+        if(loggedUser.getUserRole() != UserRole.EMPLOYEE){
+            return Constants.USER_NOT_EMPLOYEE;
+        }
+
         try {
             Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
         } catch (IllegalArgumentException e){
@@ -25,7 +35,12 @@ public class CreateRoute implements Command {
     }
 
     private String createRoute(){
-        int id = this.repository.createRoute().getId();
+        int id = getRepository().createRoute().getId();
         return String.format(Constants.ROUTE_CREATED_MESSAGE,id);
+    }
+
+    @Override
+    protected boolean requiresLogin() {
+        return true;
     }
 }

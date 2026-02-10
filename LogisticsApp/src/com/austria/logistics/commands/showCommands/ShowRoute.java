@@ -1,6 +1,6 @@
 package com.austria.logistics.commands.showCommands;
 
-import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.ElementNotFoundException;
 import com.austria.logistics.exceptions.InvalidValueException;
@@ -11,20 +11,21 @@ import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class ShowRoute implements Command {
+public class ShowRoute extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
-    private final Repository repository;
 
-    public ShowRoute(Repository repository) {this.repository = repository;}
+    public ShowRoute(Repository repository) {
+        super(repository);
+    }
 
     @Override
-    public String execute(List<String> parameters) {
+    public String executeCommand(List<String> parameters) {
         int id;
         Route route;
         try {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
             id = Parsers.parseToInteger("Route id", parameters.get(0));
-            route = this.repository.findElementById(this.repository.getRoutes(), id);
+            route = getRepository().findElementById(getRepository().getRoutes(), id);
         } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException e) {
             return e.getMessage();
         }
@@ -49,5 +50,10 @@ public class ShowRoute implements Command {
             output.append("No locations added to the route yet.\n");
         }
         return output.toString();
+    }
+
+    @Override
+    protected boolean requiresLogin() {
+        return false;
     }
 }

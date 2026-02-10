@@ -1,28 +1,35 @@
 package com.austria.logistics.commands.assignCommands;
 
-import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.*;
-import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Package;
+import com.austria.logistics.models.contracts.User;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class AssignPackage implements Command {
+public class AssignPackage extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
-    private final Repository repository;
 
     public AssignPackage(Repository repository) {
-        this.repository = repository;
+        super(repository);
     }
+
 
     //EXPECTED ARGUMENTS ARE STRING PACKAGEID AND STRING TRUCKID
     @Override
-    public String execute(List<String> parameters) {
+    public String executeCommand(List<String> parameters) {
+        User loggedUser = getRepository().getLoggedUser();
+
+        if(loggedUser.getUserRole() != UserRole.EMPLOYEE){
+            return Constants.USER_NOT_EMPLOYEE;
+        }
+
         int packageId;
         int truckId;
 
@@ -33,8 +40,8 @@ public class AssignPackage implements Command {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
             packageId = Parsers.parseToInteger("Package id", parameters.get(0));
             truckId = Parsers.parseToInteger("Truck id", parameters.get(1));
-            pkg = this.repository.findElementById(this.repository.getPackages(), packageId);
-            truck = this.repository.findElementById(this.repository.getTrucks(), truckId);
+            pkg = getRepository().findElementById(getRepository().getPackages(), packageId);
+            truck = getRepository().findElementById(getRepository().getTrucks(), truckId);
             result = assignPackage(pkg, truck);
         } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException |
                  MaxCapacityReachedException e) {
@@ -53,11 +60,16 @@ public class AssignPackage implements Command {
 
         int truckId;
         try {
-            truckId = this.repository.assignPackageToTruck(pkg, truck).getId();
+            truckId = getRepository().assignPackageToTruck(pkg, truck).getId();
         } catch (ElementNotFoundException | LocationNotFoundException | TruckNotAssignedToRouteException | NoPathException e) {
             return e.getMessage();
         }
 
         return String.format(Constants.PACKAGE_ASSIGNED_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truckId);
+    }
+
+    @Override
+    protected boolean requiresLogin() {
+        return true;
     }
 }

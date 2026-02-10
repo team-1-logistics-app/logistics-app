@@ -2,7 +2,7 @@ package com.austria.logistics.models.enums;
 
 public enum UserRole {
     CUSTOMER,
-    SUPERVISOR,
+    EMPLOYEE ,
     MANAGER;
 
     @Override
@@ -10,7 +10,7 @@ public enum UserRole {
         switch (this) {
             case CUSTOMER:
                 return "Customer";
-            case SUPERVISOR:
+            case EMPLOYEE:
                 return "Supervisor";
             case MANAGER:
                 return "Manager";

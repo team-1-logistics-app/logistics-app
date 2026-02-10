@@ -1,20 +1,20 @@
 package com.austria.logistics.commands.showCommands;
 
-import com.austria.logistics.commands.contracts.Command;
+import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class ShowTrucks implements Command {
+public class ShowTrucks extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
-    private final Repository repository;
 
-    public ShowTrucks(Repository repository) {this.repository = repository;}
+    public ShowTrucks(Repository repository) {
+        super(repository);}
 
     @Override
-    public String execute(List<String> parameters) {
+    public String executeCommand(List<String> parameters) {
         try {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         } catch (IllegalArgumentException e) {
@@ -26,7 +26,7 @@ public class ShowTrucks implements Command {
 
     private String showTrucks() {
         StringBuilder output = new StringBuilder();
-        List<Truck> trucks = this.repository.getTrucks();
+        List<Truck> trucks = getRepository().getTrucks();
 
         trucks.forEach(truck -> {
             output.append(truck.getTruckType().getDisplayName())
@@ -44,4 +44,9 @@ public class ShowTrucks implements Command {
 
         return output.toString();
     }
+    @Override
+    protected boolean requiresLogin() {
+        return true;
+    }
+
 }
