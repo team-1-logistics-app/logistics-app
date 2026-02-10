@@ -5,9 +5,12 @@ import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.contracts.Route;
+import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +27,13 @@ class AssignPackageTest {
     private Command createRoute;
     private Command assignTruck;
     private Route route;
+    private User user;
 
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
+        user = new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE);
+        repository.login(user);
         assignPackage = new AssignPackage(repository);
         createRoute = new CreateRoute(repository);
         createPackage = new CreatePackage(repository);
@@ -61,6 +67,25 @@ class AssignPackageTest {
                 () -> Assertions.assertEquals("Package with id 2 was assigned to truck Man with id 1011!", commandOutput)
         );
     }
+
+    @Test
+    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+        //Arrange
+        repository.logout();
+        //Act,Assert
+        Assertions.assertEquals("You are not logged in! Please login first!", assignPackage.execute(List.of()));
+    }
+
+    @Test
+    void execute_Should_Return_Error_When_User_Not_AsEmployee() {
+        //Arrange
+        repository.logout();
+        user = new UserImpl("Test","Test","Test","Test", UserRole.CUSTOMER);
+        repository.login(user);
+        //Act,Assert
+        Assertions.assertEquals("You are not logged in as employee!", assignPackage.execute(List.of()));
+    }
+
 
     @Test
     void execute_Should_Return_Error_When_ArgumentsCount_IsInvalid() {

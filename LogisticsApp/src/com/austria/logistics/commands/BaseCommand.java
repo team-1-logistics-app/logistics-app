@@ -14,7 +14,7 @@ public abstract class BaseCommand implements Command {
     @Override
     public String execute(List<String> parameters){
         if(requiresLogin() && !this.repository.hasLoggedUser()){
-            throw new NotLoggedInException(Constants.USER_NOT_LOGGED);
+            return Constants.USER_NOT_LOGGED;
         }
         return executeCommand(parameters);
     }
