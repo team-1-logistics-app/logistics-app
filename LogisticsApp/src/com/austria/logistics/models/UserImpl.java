@@ -83,4 +83,15 @@ public class UserImpl implements User {
     public boolean isManager() {
         return this.userRole == UserRole.MANAGER;
     }
+
+    @Override
+    public String toSaveString() {
+        return String.join("|",
+                username,
+                firstName,
+                lastName,
+                password,
+                userRole.toString()
+                );
+    }
 }
