@@ -5,6 +5,7 @@ import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.ElementNotFoundException;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.UserNotFoundException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.utils.Parsers;
@@ -47,7 +48,7 @@ public class ShowPackage extends BaseCommand {
         try {
            pkgToPrint = repo.findElementById(repo.getPackages(), pkgId);
            userToReceiveEmail = repo.findUserByEmail(pkgToPrint.getContactInformation());
-        }catch (ElementNotFoundException e){
+        }catch (ElementNotFoundException | UserNotFoundException e){
             return e.getMessage();
         }
         userToReceiveEmail.receiveLetter(pkgToPrint.toString());

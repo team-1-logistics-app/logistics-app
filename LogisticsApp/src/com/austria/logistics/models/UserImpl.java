@@ -104,7 +104,7 @@ public class UserImpl implements User {
     public String printMailBox() {
         StringBuilder output = new StringBuilder();
         for (int i = 1; i <= this.mailbox.size(); i++) {
-            output.append(String.format("%d. %s\n",i, mailbox.get(i-1)));
+            output.append(String.format("MESSAGE#%d - %s\n",i, mailbox.get(i-1)));
         }
         return output.toString();
     }
@@ -116,7 +116,7 @@ public class UserImpl implements User {
 
     @Override
     public String toString(){
-        return String.format("Username: %s, First Name: %s, Last Name: %s, Password: %s, Email: %s, User Role: %s\n",
+        return String.format("Username: %s, First Name: %s, Last Name: %s, Password: %s, Email: %s, User Role: %s",
                 this.username,
                 this.firstName,
                 this.lastName,
@@ -134,6 +134,6 @@ public class UserImpl implements User {
                 password,
                 email,
                 userRole.toString(),
-                mailbox.isEmpty()? "NONE" : String.join(",",mailbox));
+                mailbox.isEmpty()? "NONE" : String.join("^",mailbox));
     }
 }

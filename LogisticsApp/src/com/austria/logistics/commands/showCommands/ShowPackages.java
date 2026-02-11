@@ -30,9 +30,10 @@ public class ShowPackages extends BaseCommand {
         StringBuilder output = new StringBuilder();
         List<Package> packages = getRepository().getPackages();
         if (!packages.isEmpty()) {
-            packages.forEach(pkg -> output.append(pkg.toString()).append(Constants.REPORT_SEPARATOR));
+            packages.forEach(pkg ->
+                    output.append(pkg.toString()).append(System.lineSeparator()));
         } else {
-            output.append("No packages in the repo created yet.\n");
+            output.append("No packages in the repo created yet.").append(System.lineSeparator());
         }
         return output.toString();
     }

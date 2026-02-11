@@ -18,7 +18,7 @@ public class Helpers {
         loadToList.clear();
         try {
             List<String> lines = Files.readAllLines(pathOfTheFile);
-            lines.forEach(line -> loadToList.add(objectFromString.apply(line)));
+            lines.stream().map(String::trim).filter(line -> !line.isEmpty()).forEach(line -> loadToList.add(objectFromString.apply(line)));
         } catch (IOException e) {
             throw new FailedToLoadFromFileException(Constants.STATE_FAILED_TO_LOAD);
         }

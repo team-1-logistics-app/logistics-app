@@ -13,6 +13,7 @@ public enum CommandType {
     SHOWUSERS,
     LOGIN,
     LOGOUT,
+    READMAIL,
     REGISTER,
     SAVE,
     LOAD

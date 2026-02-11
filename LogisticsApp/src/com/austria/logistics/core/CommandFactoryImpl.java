@@ -12,6 +12,7 @@ import com.austria.logistics.commands.persistenceCommands.Save;
 import com.austria.logistics.commands.showCommands.*;
 import com.austria.logistics.commands.userCommands.Login;
 import com.austria.logistics.commands.userCommands.Logout;
+import com.austria.logistics.commands.userCommands.ReadMail;
 import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.CommandFactory;
@@ -50,6 +51,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new Login(repository);
             case LOGOUT:
                 return new Logout(repository);
+            case READMAIL:
+                return new ReadMail(repository);
             case REGISTER:
                 return new Register(repository);
             case SAVE:

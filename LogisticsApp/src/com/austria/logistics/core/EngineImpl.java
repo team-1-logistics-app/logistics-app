@@ -26,7 +26,6 @@ public class EngineImpl implements Engine {
         while (true){
             String inputLine = input.nextLine();
             if(inputLine.isEmpty()){
-                print(Constants.EMPTY_COMMAND_ERROR);
                 continue;
             }
             if(inputLine.equalsIgnoreCase(Constants.TERMINATION_COMMAND)){
@@ -37,7 +36,7 @@ public class EngineImpl implements Engine {
     }
 
     private void print(String output){
-        System.out.println(output);
+        System.out.println(output.trim());
         System.out.println(Constants.REPORT_SEPARATOR);
     }
 

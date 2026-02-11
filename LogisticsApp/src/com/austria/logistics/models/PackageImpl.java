@@ -105,12 +105,12 @@ public class PackageImpl implements Package {
                 this.weight,
                 this.contactInformation));
         if (this.isAssigned()) {
-            output.append(String.format("is assigned to truck %s with id %d\n",
+            output.append(String.format("is assigned to truck %s with id %d.",
                     this.assignedTruck.getTruckType().getDisplayName(),
                     this.assignedTruck.getId()));
-            output.append(String.format("Estimated arrival time is: %s\n",Parsers.parseEventTimeToString(estimatedArrivalTime)));
+            output.append(String.format(" Estimated arrival time is: %s",Parsers.parseEventTimeToString(estimatedArrivalTime)));
         } else {
-            output.append("is not assigned to a truck yet.\n");
+            output.append("is not assigned to a truck yet.");
         }
         return output.toString();
     }
