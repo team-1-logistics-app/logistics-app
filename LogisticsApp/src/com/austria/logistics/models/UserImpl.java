@@ -106,6 +106,9 @@ public class UserImpl implements User {
         for (int i = 1; i <= this.mailbox.size(); i++) {
             output.append(String.format("MESSAGE#%d - %s\n",i, mailbox.get(i-1)));
         }
+        if(this.mailbox.isEmpty()){
+            output.append("No messages in the mailbox!");
+        }
         return output.toString();
     }
 

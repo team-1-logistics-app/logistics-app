@@ -83,7 +83,7 @@ class AssignPackageTest {
         user = new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER);
         repository.login(user);
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as employee!", assignPackage.execute(List.of()));
+        Assertions.assertEquals("You are not logged in as manager or employee!", assignPackage.execute(List.of()));
     }
 
 

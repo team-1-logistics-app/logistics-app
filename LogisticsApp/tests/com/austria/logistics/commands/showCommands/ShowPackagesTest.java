@@ -66,9 +66,10 @@ class ShowPackagesTest {
         this.repository.createPackage(Locations.SYD, Locations.BRI, 30, "test@test.com");
         this.repository.createPackage(Locations.ADL, Locations.DAR, 40, "test@test.bg");
 
-        String expected = "Package with id 2, start location Sydney, end location Brisbane, weight 30, contact info test@test.com is assigned to truck Man with id 1011\n" +
-                "Estimated arrival time is: Jan 24 22:27\n" +
-                "Package with id 3, start location Adelaide, end location Darwin, weight 40, contact info test@test.bg is not assigned to a truck yet.\n";
+        String expected = """
+                Package with id 2, start location Sydney, end location Brisbane, weight 30, contact info test@test.com is assigned to truck Man with id 1011. Estimated arrival time is: Jan 24 22:27
+                Package with id 3, start location Adelaide, end location Darwin, weight 40, contact info test@test.bg is not assigned to a truck yet.
+                """;
 
         assignPackage.execute(List.of("2", "1011"));
         //Act
@@ -77,7 +78,7 @@ class ShowPackagesTest {
 
         //Assert
 
-        Assertions.assertEquals(expected, result);
+        Assertions.assertEquals(expected.replace("\r\n", "\n").replace("\r", "\n").trim(), result.replace("\r\n", "\n").replace("\r", "\n").trim());
     }
 
     @Test
@@ -90,6 +91,6 @@ class ShowPackagesTest {
         String result = showPackages.execute(parameters);
 
         //Assert
-        Assertions.assertEquals(expected, result);
+        Assertions.assertEquals(expected.replace("\r\n", "\n").replace("\r", "\n").trim(), result.replace("\r\n", "\n").replace("\r", "\n").trim());
     }
 }

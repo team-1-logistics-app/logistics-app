@@ -52,6 +52,11 @@ public class Register extends BaseCommand {
         if (repo.getUsers().stream().anyMatch(user -> user.getUsername().equals(username))) {
             return String.format(Constants.USER_ALREADY_EXIST, username);
         }
+
+        if (repo.getUsers().stream().anyMatch(user -> user.getUsername().equals(email))) {
+            return String.format(Constants.USER_EMAIL_ALREADY_USED, email);
+        }
+
         User user;
         try {
             user = repo.createUser(username, firstName, lastName, password,email, userRole);

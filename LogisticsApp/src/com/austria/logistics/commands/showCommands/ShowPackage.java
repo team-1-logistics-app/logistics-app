@@ -17,7 +17,7 @@ import java.util.List;
 public class ShowPackage extends BaseCommand {
     private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
 
-    public ShowPackage(Repository repository){
+    public ShowPackage(Repository repository) {
         super(repository);
     }
 
@@ -26,30 +26,30 @@ public class ShowPackage extends BaseCommand {
     protected String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER || loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
         int pkgId;
         try {
-            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
+            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
             pkgId = Parsers.parseToInteger("Package id", parameters.get(0));
-        }catch (IllegalArgumentException | InvalidValueException e){
+        } catch (IllegalArgumentException | InvalidValueException e) {
             return e.getMessage();
         }
 
         return showPackage(pkgId);
     }
 
-    private String showPackage(int pkgId){
+    private String showPackage(int pkgId) {
         Repository repo = getRepository();
         Package pkgToPrint;
         User userToReceiveEmail;
 
         try {
-           pkgToPrint = repo.findElementById(repo.getPackages(), pkgId);
-           userToReceiveEmail = repo.findUserByEmail(pkgToPrint.getContactInformation());
-        }catch (ElementNotFoundException | UserNotFoundException e){
+            pkgToPrint = repo.findElementById(repo.getPackages(), pkgId);
+            userToReceiveEmail = repo.findUserByEmail(pkgToPrint.getContactInformation());
+        } catch (ElementNotFoundException | UserNotFoundException e) {
             return e.getMessage();
         }
         userToReceiveEmail.receiveLetter(pkgToPrint.toString());

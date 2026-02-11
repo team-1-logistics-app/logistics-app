@@ -51,11 +51,11 @@ public class Constants {
     public final static String USER_LOGGED_IN_ALREADY = "User %s is logged in! Please log out first!";
     public final static String USER_REGISTERED = "User %s registered successfully!";
     public final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
-    public final static String USER_NOT_EMPLOYEE = "You are not logged in as employee!";
     public final static String USER_NOT_MANAGER = "You are not logged in as manager!";
     public final static String USER_NOT_MANAGER_AND_NOT_EMPLOYEE = "You are not logged in as manager or employee!";
     public final static String USER_EMAIL_INVALID = "Invalid value for email, it has to be in the format example@example.example!";
     public final static String USER_EMAIL_EMPTY = "Email not specified, please type email in the format example@example.example!";
+    public final static String USER_EMAIL_ALREADY_USED = "The email %s is already used by another user!";
 
     public final static String STATE_DIR_TO_SAVE = "saves";
     public final static String STATE_FILE_TO_SAVE_PACKAGES = "packages.txt";

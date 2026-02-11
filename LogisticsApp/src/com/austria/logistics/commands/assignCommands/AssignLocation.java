@@ -27,7 +27,7 @@ public class AssignLocation extends BaseCommand{
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER || loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 

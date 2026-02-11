@@ -66,7 +66,12 @@ public class Parsers {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d HH:mm yyyy", Locale.ENGLISH);
 
-            return LocalDateTime.parse(cleaned + " " + year, formatter);
+            LocalDateTime parsedTime = LocalDateTime.parse(cleaned + " " + year, formatter);
+
+            if (parsedTime.isBefore(LocalDateTime.now())) {
+                throw new InvalidTimeFormatException(Constants.INVALID_TIME_IS_PAST_MESSAGE);
+            }
+            return parsedTime;
 
         } catch (DateTimeException e) {
             throw new InvalidTimeFormatException(Constants.INVALID_TIME_FORMAT_MESSAGE);

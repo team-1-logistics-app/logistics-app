@@ -36,7 +36,7 @@ class CreateRouteTest {
         repository.logout();
         repository.login(new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER));
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as employee!", createRoute.execute(List.of("Test")));
+        Assertions.assertEquals("You are not logged in as manager or employee!", createRoute.execute(List.of("Test")));
     }
 
     @Test
