@@ -32,4 +32,14 @@ public class Validators {
             throw new InvalidValueException(Constants.INVALID_WEIGHT_VALUE_MESSAGE);
         }
     }
+    public static void isValidEmail(String email) {
+        if (email == null || email.isBlank()) {
+            throw new InvalidValueException(Constants.USER_EMAIL_EMPTY);
+        }
+
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$";
+        if(!email.matches(emailRegex)){
+            throw new InvalidValueException(Constants.USER_EMAIL_INVALID);
+        }
+    }
 }

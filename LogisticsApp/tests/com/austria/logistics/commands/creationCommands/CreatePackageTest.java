@@ -19,7 +19,7 @@ class CreatePackageTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.CUSTOMER));
+        repository.login(new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER));
         createPackage = new CreatePackage(repository);
     }
     @Test

@@ -32,7 +32,7 @@ class AssignPackageTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        user = new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE);
+        user = new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.EMPLOYEE);
         repository.login(user);
         assignPackage = new AssignPackage(repository);
         createRoute = new CreateRoute(repository);
@@ -80,7 +80,7 @@ class AssignPackageTest {
     void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
         //Arrange
         repository.logout();
-        user = new UserImpl("Test","Test","Test","Test", UserRole.CUSTOMER);
+        user = new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER);
         repository.login(user);
         //Act,Assert
         Assertions.assertEquals("You are not logged in as employee!", assignPackage.execute(List.of()));

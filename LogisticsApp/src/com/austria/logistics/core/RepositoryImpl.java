@@ -164,8 +164,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public User createUser(String username, String firstName, String lastName, String password, UserRole userRole) {
-        return new UserImpl(username, firstName, lastName, password, userRole);
+    public User createUser(String username, String firstName, String lastName, String password, String email, UserRole userRole) {
+        return new UserImpl(username, firstName, lastName, password, email, userRole);
     }
 
     @Override

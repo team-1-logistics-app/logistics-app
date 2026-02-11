@@ -5,6 +5,9 @@ import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.lang.String.format;
 
 public class UserImpl implements User {
@@ -16,18 +19,22 @@ public class UserImpl implements User {
     private static final String LASTNAME_LEN_ERR = format("Lastname must be between %s and %s characters long!", LEN_MIN, LEN_MAX);
     private static final String PASSWORD_LEN_ERR = format("Password must be between %s and %s characters long!", LEN_MIN, LEN_MAX);
 
+    private final List<String> mailbox;
+    private String email;
     private String username;
     private String firstName;
     private String lastName;
     private String password;
     private UserRole userRole;
 
-    public UserImpl(String username, String firstName, String lastName, String password, UserRole userRole) {
+    public UserImpl(String username, String firstName, String lastName, String password, String email, UserRole userRole) {
         this.setUsername(username);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setPassword(password);
+        this.setEmail(email);
         this.setUserRole(userRole);
+        this.mailbox = new ArrayList<>();
     }
 
     private void setUsername(String username) {
@@ -70,6 +77,16 @@ public class UserImpl implements User {
         return this.password;
     }
 
+    private void setEmail(String email){
+        Validators.isValidEmail(email);
+        this.email = email;
+    }
+
+    @Override
+    public String getEmail() {
+        return this.email;
+    }
+
     private void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
@@ -82,6 +99,30 @@ public class UserImpl implements User {
     @Override
     public boolean isManager() {
         return this.userRole == UserRole.MANAGER;
+    }
+
+    @Override
+    public String printMailBox() {
+        StringBuilder output = new StringBuilder();
+        for (int i = 1; i <= this.mailbox.size(); i++) {
+            output.append(String.format("%d. %s\n",i, mailbox.get(i-1)));
+        }
+        return output.toString();
+    }
+
+    @Override
+    public void receiveLetter(String letter) {
+        this.mailbox.add(letter);
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Username: %s, First Name: %s, Last Name: %s, Password: %s, User Role: %s",
+                this.username,
+                this.firstName,
+                this.lastName,
+                this.password,
+                this.userRole.toString());
     }
 
     @Override

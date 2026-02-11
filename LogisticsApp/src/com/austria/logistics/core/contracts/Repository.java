@@ -25,7 +25,7 @@ public interface Repository {
     User addUser(User userToAdd);
     User getLoggedUser();
     boolean hasLoggedUser();
-    User createUser(String username,String firstName, String lastName, String password, UserRole userRole);
+    User createUser(String username,String firstName, String lastName, String password,String email, UserRole userRole);
     void login(User username);
     void logout();
     User findUserByUsername(String username);

@@ -170,8 +170,9 @@ public class Parsers {
         String firstName = elements[1];
         String lastName = elements[2];
         String password = elements[3];
-        UserRole userRole = Parsers.tryParseEnum(elements[4],UserRole.class,String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, elements[4]));
+        String email = elements[4];
+        UserRole userRole = Parsers.tryParseEnum(elements[5],UserRole.class,String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, elements[4]));
 
-        return new UserImpl(username,firstName,lastName,password,userRole);
+        return new UserImpl(username,firstName,lastName,password,email,userRole);
     }
 }

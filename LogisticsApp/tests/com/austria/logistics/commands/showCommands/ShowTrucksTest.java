@@ -24,7 +24,7 @@ class ShowTrucksTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        repository.login(new UserImpl("Test","Test","Test","Test", UserRole.EMPLOYEE));
+        repository.login(new UserImpl("Test","Test","Test","Test","test@test.bg", UserRole.EMPLOYEE));
         Command createRoute = new CreateRoute(repository);
         createRoute.execute(List.of());
 
