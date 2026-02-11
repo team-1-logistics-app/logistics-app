@@ -133,6 +133,7 @@ public class UserImpl implements User {
                 lastName,
                 password,
                 email,
-                userRole.toString());
+                userRole.toString(),
+                mailbox.isEmpty()? "NONE" : String.join(",",mailbox));
     }
 }

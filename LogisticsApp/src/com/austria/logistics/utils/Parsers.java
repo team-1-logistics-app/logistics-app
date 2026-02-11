@@ -181,7 +181,11 @@ public class Parsers {
         String password = elements[3];
         String email = elements[4];
         UserRole userRole = Parsers.tryParseEnum(elements[5],UserRole.class,String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, elements[5]));
-
-        return new UserImpl(username,firstName,lastName,password,email,userRole);
+        User user = new UserImpl(username,firstName,lastName,password,email,userRole);
+        if(!elements[6].equals("NONE")){
+            List<String> mailbox = List.of(elements[5].split(","));
+            mailbox.forEach(user::receiveLetter);
+        }
+        return user;
     }
 }
