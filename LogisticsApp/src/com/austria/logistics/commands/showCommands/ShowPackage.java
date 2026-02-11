@@ -42,11 +42,15 @@ public class ShowPackage extends BaseCommand {
     private String showPackage(int pkgId){
         Repository repo = getRepository();
         Package pkgToPrint;
+        User userToReceiveEmail;
+
         try {
            pkgToPrint = repo.findElementById(repo.getPackages(), pkgId);
+           userToReceiveEmail = repo.findUserByEmail(pkgToPrint.getContactInformation());
         }catch (ElementNotFoundException e){
             return e.getMessage();
         }
+        userToReceiveEmail.receiveLetter(pkgToPrint.toString());
         return pkgToPrint.toString();
     }
 

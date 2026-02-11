@@ -1,5 +1,6 @@
 package com.austria.logistics.constants;
 
+import javax.swing.plaf.PanelUI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -39,7 +40,8 @@ public class Constants {
     public static final double TRUCK_AVERAGE_SPEED_KMH = 87;
 
     public final static String USER_NOT_LOGGED = "You are not logged in! Please login first!";
-    public final static String USER_NOT_FOUND = "Cannot find user with username %s";
+    public final static String USER_USERNAME_NOT_FOUND = "Cannot find user with username %s";
+    public final static String USER_EMAIL_NOT_FOUND = "Cannot find user with email %s";
     public final static String USER_PASSWORD_MISMATCH = "Incorrect username or password!";
     public final static String USER_LOGGED_IN = "User %s successfully logged in!";
     public final static String USER_LOGGED_OUT = "You logged out!";

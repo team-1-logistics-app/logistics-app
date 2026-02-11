@@ -183,7 +183,15 @@ public class RepositoryImpl implements Repository {
         return this.getUsers().stream()
                 .filter(user -> user.getUsername().equals(username))
                 .findFirst()
-                .orElseThrow(() -> new UserNotFoundException(String.format(Constants.USER_NOT_FOUND, username)));
+                .orElseThrow(() -> new UserNotFoundException(String.format(Constants.USER_USERNAME_NOT_FOUND, username)));
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return this.getUsers().stream()
+                .filter(user -> user.getEmail().equals(email))
+                .findFirst()
+                .orElseThrow(() -> new UserNotFoundException(String.format(Constants.USER_EMAIL_NOT_FOUND, email)));
     }
 
     @Override
