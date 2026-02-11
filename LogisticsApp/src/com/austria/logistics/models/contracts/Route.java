@@ -24,5 +24,6 @@ public interface Route extends Identifiable, Savealbe{
     void setLoadedTruckId(int truckId);
     int getLoadedTruckId();
     void assignTruck(Truck truck);
+    void unassignTruck();
     boolean hasAssignedTruck();
 }

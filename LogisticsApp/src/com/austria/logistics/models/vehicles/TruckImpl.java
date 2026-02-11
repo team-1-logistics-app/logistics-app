@@ -83,6 +83,7 @@ public class TruckImpl implements Truck {
     @Override
     public void unassign() {
         this.isAssigned =  false;
+        this.assignedRoute = null;
         this.currentLoad = 0;
     }
 

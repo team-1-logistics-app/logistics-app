@@ -11,7 +11,6 @@ import com.austria.logistics.utils.Validators;
 import java.util.List;
 
 public class ShowTrucks extends BaseCommand {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 0;
 
     public ShowTrucks(Repository repository) {
         super(repository);}
@@ -22,12 +21,6 @@ public class ShowTrucks extends BaseCommand {
 
         if(loggedUser.getUserRole() != UserRole.MANAGER || loggedUser.getUserRole() != UserRole.EMPLOYEE){
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
-        }
-
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
         }
 
         return showTrucks();

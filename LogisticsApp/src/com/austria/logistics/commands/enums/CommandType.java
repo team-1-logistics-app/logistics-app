@@ -11,6 +11,7 @@ public enum CommandType {
     SHOWROUTE,
     SHOWTRUCKS,
     SHOWUSERS,
+    UNASSIGNTRUCK,
     LOGIN,
     LOGOUT,
     READMAIL,

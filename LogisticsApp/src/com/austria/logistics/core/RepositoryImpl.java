@@ -106,13 +106,25 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public void unassignTruckFromRoute(Truck truck, Route route) {
+        if (truck.getAssignedRoute().getId() != route.getId()) {
+            throw new TruckNotAssignedToRouteException(String.format(Constants.TRUCK_NOT_ASSIGNED_TO_THIS_ROUTE_MESSAGE,
+                    truck.getTruckType().getDisplayName(),
+                    truck.getId(),
+                    route.getId()));
+        }
+        truck.unassign();
+        route.unassignTruck();
+    }
+
+    @Override
     public Truck assignPackageToTruck(Package pkg, Truck truck) {
         if (!truck.isAssigned()) {
             throw new TruckNotAssignedToRouteException(String.format(Constants.TRUCK_NOT_ASSIGNED_MESSAGE, truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
-        if(truck.getAssignedPackagesIdList().contains(pkg.getId())){
-            throw new PackageIsAlreadyAssignedException(String.format(Constants.PACKAGE_ALREADY_ASSIGNED_ERROR_MESSAGE,pkg.getId(),truck.getTruckType().getDisplayName(),truck.getId()));
+        if (truck.getAssignedPackagesIdList().contains(pkg.getId())) {
+            throw new PackageIsAlreadyAssignedException(String.format(Constants.PACKAGE_ALREADY_ASSIGNED_ERROR_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
         Route route = this.findElementById(this.getRoutes(), truck.getAssignedRoute().getId());
@@ -131,7 +143,7 @@ public class RepositoryImpl implements Repository {
         pkg.setAssignedTruck(truck);
         truck.addAssignedPackageId(pkg.getId());
 
-        if(endLocationIndex > 0){
+        if (endLocationIndex > 0) {
             LocalDateTime pkgArrivalTime = endLocation.getEventTime();
             pkg.setEstimatedArrivalTime(pkgArrivalTime);
         }
@@ -229,7 +241,7 @@ public class RepositoryImpl implements Repository {
         resolveRouteTruckReferences();
 
         Helpers.readFileLines(Constants.FILE_PATH_PACKAGES, this.packages, line -> Parsers.packageFromSaveString(line, this));
-        Helpers.readFileLines(Constants.FILE_PATH_USERS,this.users,line -> Parsers.userFromSaveString(line,this));
+        Helpers.readFileLines(Constants.FILE_PATH_USERS, this.users, line -> Parsers.userFromSaveString(line, this));
 
         return Constants.STATE_LOADED_FROM_FILE;
     }

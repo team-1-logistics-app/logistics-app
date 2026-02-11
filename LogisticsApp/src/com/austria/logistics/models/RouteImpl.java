@@ -30,7 +30,7 @@ public class RouteImpl implements Route {
     }
 
     @Override
-    public void setLoadedTruckId(int truckId){
+    public void setLoadedTruckId(int truckId) {
         this.loadedTruckId = truckId;
     }
 
@@ -43,6 +43,9 @@ public class RouteImpl implements Route {
     public void assignTruck(Truck truck) {
         this.truck = truck;
     }
+
+    @Override
+    public void unassignTruck() { this.truck = null; }
 
     @Override
     public boolean hasAssignedTruck() {
@@ -177,7 +180,7 @@ public class RouteImpl implements Route {
                 String.valueOf(id),
                 route.isEmpty() ? "NONE" : route.stream().map(location -> location.getLocation().getDisplayName() + "@" + location.getEventTimeAsString())
                         .collect(Collectors.joining(",")),
-                truck == null? "NONE" : String.valueOf(truck.getId())
+                truck == null ? "NONE" : String.valueOf(truck.getId())
         );
     }
 }

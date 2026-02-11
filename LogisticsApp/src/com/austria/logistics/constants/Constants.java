@@ -38,6 +38,8 @@ public class Constants {
     public static final String TRUCK_ASSIGNED_MESSAGE = "Truck %s with id %d was assigned to route with id %d!";
     public static final String TRUCK_MAXCAPACITY_REACHED_MESSAGE = "Truck %s with id %d has reached the max load capacity, please select another truck!";
     public static final String TRUCK_NOT_ASSIGNED_MESSAGE = "Truck %s with id %d is not assigned to route yet, assign it to route before assigning packages to it.";
+    public static final String TRUCK_NOT_ASSIGNED_TO_THIS_ROUTE_MESSAGE = "Truck %s with id %d is not assigned to route with id %d";
+    public static final String TRUCK_SUCCESSFULLY_UNASSIGNED_FROM_ROUTE = "Truck %s with id %d is successfully unassigned to route with id %d";
     public static final double TRUCK_AVERAGE_SPEED_KMH = 87;
 
     public final static String USER_NOT_LOGGED = "You are not logged in! Please login first!";
