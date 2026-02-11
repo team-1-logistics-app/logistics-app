@@ -19,7 +19,6 @@ public class EngineImpl implements Engine {
         this.commandFactory = new CommandFactoryImpl();
     }
 
-
     @Override
     public void start() {
         Scanner input = new Scanner(System.in);
@@ -53,8 +52,6 @@ public class EngineImpl implements Engine {
         }catch (IllegalArgumentException e){
             execResult = e.getMessage();
         }
-
-
         print(execResult);
     }
 

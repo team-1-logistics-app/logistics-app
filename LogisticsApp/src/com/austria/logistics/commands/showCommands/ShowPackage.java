@@ -3,12 +3,13 @@ package com.austria.logistics.commands.showCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.ElementNotFoundException;
 import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
-
+import com.austria.logistics.models.contracts.Package;
 
 import java.util.List;
 
@@ -35,13 +36,19 @@ public class ShowPackage extends BaseCommand {
             return e.getMessage();
         }
 
-
-        return "";
+        return showPackage(pkgId);
     }
 
-//    private String showPackage(int pkg){
-//
-//    }
+    private String showPackage(int pkgId){
+        Repository repo = getRepository();
+        Package pkgToPrint;
+        try {
+           pkgToPrint = repo.findElementById(repo.getPackages(), pkgId);
+        }catch (ElementNotFoundException e){
+            return e.getMessage();
+        }
+        return pkgToPrint.toString();
+    }
 
     @Override
     protected boolean requiresLogin() {

@@ -7,6 +7,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.commands.enums.CommandType;
+import com.austria.logistics.commands.showCommands.ShowPackage;
 import com.austria.logistics.commands.showCommands.ShowPackages;
 import com.austria.logistics.commands.showCommands.ShowRoute;
 import com.austria.logistics.commands.showCommands.ShowTrucks;
@@ -38,6 +39,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new CreateRoute(repository);
             case SHOWPACKAGES:
                 return new ShowPackages(repository);
+            case SHOWPACKAGE:
+                return new ShowPackage(repository);
             case SHOWROUTE:
                 return new ShowRoute(repository);
             case SHOWTRUCKS:

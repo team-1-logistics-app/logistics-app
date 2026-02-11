@@ -7,6 +7,7 @@ public enum CommandType {
     CREATEPACKAGE,
     CREATEROUTE,
     SHOWPACKAGES,
+    SHOWPACKAGE,
     SHOWROUTE,
     SHOWTRUCKS,
     LOGIN,
