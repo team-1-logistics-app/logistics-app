@@ -33,10 +33,11 @@ public class CreatePackage extends BaseCommand {
             endLocation = Parsers.parseLocation(parameters.get(1));
             weight = Parsers.parseToInteger("Weight", parameters.get(2));
             Validators.validateWeight(weight);
+            contactInfo = parameters.get(3);
+            Validators.validateEmail(contactInfo);
         } catch (IllegalArgumentException | InvalidLocationException | InvalidValueException e) {
             return e.getMessage();
         }
-        contactInfo = parameters.get(3);
 
         return createPackage(startLocation, endLocation, weight, contactInfo);
     }

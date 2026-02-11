@@ -32,7 +32,7 @@ public class Validators {
             throw new InvalidValueException(Constants.INVALID_WEIGHT_VALUE_MESSAGE);
         }
     }
-    public static void isValidEmail(String email) {
+    public static void validateEmail(String email) {
         if (email == null || email.isBlank()) {
             throw new InvalidValueException(Constants.USER_EMAIL_EMPTY);
         }

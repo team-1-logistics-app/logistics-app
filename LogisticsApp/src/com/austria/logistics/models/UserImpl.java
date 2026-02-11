@@ -2,7 +2,6 @@ package com.austria.logistics.models;
 
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
-import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
 
 import java.util.ArrayList;
@@ -78,7 +77,7 @@ public class UserImpl implements User {
     }
 
     private void setEmail(String email){
-        Validators.isValidEmail(email);
+        Validators.validateEmail(email);
         this.email = email;
     }
 
