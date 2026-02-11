@@ -26,7 +26,7 @@ public class AssignPackage extends BaseCommand {
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_EMPLOYEE;
         }
 
@@ -61,7 +61,11 @@ public class AssignPackage extends BaseCommand {
         int truckId;
         try {
             truckId = getRepository().assignPackageToTruck(pkg, truck).getId();
-        } catch (ElementNotFoundException | LocationNotFoundException | TruckNotAssignedToRouteException | NoPathException e) {
+        } catch (ElementNotFoundException |
+                 LocationNotFoundException |
+                 TruckNotAssignedToRouteException |
+                 NoPathException |
+                 PackageIsAlreadyAssignedException e) {
             return e.getMessage();
         }
 

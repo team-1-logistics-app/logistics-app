@@ -110,6 +110,11 @@ public class RepositoryImpl implements Repository {
         if (!truck.isAssigned()) {
             throw new TruckNotAssignedToRouteException(String.format(Constants.TRUCK_NOT_ASSIGNED_MESSAGE, truck.getTruckType().getDisplayName(), truck.getId()));
         }
+
+        if(truck.getAssignedPackagesIdList().contains(pkg.getId())){
+            throw new PackageIsAlreadyAssignedException(String.format(Constants.PACKAGE_ALREADY_ASSIGNED_ERROR_MESSAGE,pkg.getId(),truck.getTruckType().getDisplayName(),truck.getId()));
+        }
+
         Route route = this.findElementById(this.getRoutes(), truck.getAssignedRoute().getId());
         List<Location> routeLocations = route.getRouteLocations();
 
