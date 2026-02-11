@@ -7,6 +7,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.commands.enums.CommandType;
+import com.austria.logistics.commands.persistenceCommands.Load;
 import com.austria.logistics.commands.persistenceCommands.Save;
 import com.austria.logistics.commands.showCommands.ShowPackage;
 import com.austria.logistics.commands.showCommands.ShowPackages;
@@ -54,6 +55,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new Register(repository);
             case SAVE:
                 return new Save(repository);
+            case LOAD:
+                return new Load(repository);
             default:
                 throw new IllegalArgumentException(String.format(Constants.INVALID_COMMAND, commandTypeAsString));
         }

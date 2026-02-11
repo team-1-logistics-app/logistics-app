@@ -13,5 +13,6 @@ public enum CommandType {
     LOGIN,
     LOGOUT,
     REGISTER,
-    SAVE
+    SAVE,
+    LOAD
 }
