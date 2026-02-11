@@ -131,6 +131,7 @@ public class UserImpl implements User {
                 firstName,
                 lastName,
                 password,
+                email,
                 userRole.toString());
     }
 }

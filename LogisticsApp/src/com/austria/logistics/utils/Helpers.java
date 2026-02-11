@@ -11,13 +11,16 @@ import java.util.List;
 import java.util.function.Function;
 
 public class Helpers {
-    private Helpers(){}
+    private Helpers() {
+    }
 
-    public static  <T extends Savealbe> void readFileLines(Path pathOfTheFile, List<T> loadToList, Function<String, T> objectFromString) {
+    public static <T extends Savealbe> void readFileLines(Path pathOfTheFile, List<T> loadToList, Function<String, T> objectFromString) {
         loadToList.clear();
         try {
             List<String> lines = Files.readAllLines(pathOfTheFile);
-            lines.forEach(line -> loadToList.add(objectFromString.apply(line)));
+            if (!lines.isEmpty()) {
+                lines.forEach(line -> loadToList.add(objectFromString.apply(line)));
+            }
         } catch (IOException e) {
             throw new FailedToLoadFromFileException(Constants.STATE_FAILED_TO_LOAD);
         }
