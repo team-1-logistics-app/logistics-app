@@ -19,6 +19,7 @@ import com.austria.logistics.utils.Parsers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,12 +121,21 @@ public class RepositoryImpl implements Repository {
         Location startLocation = route.findByCity(pkg.getStartLocation());
         Location endLocation = route.findByCity(pkg.getEndLocation());
 
-        if (routeLocations.indexOf(startLocation) >= routeLocations.indexOf(endLocation)) {
+        int startLocationIndex = routeLocations.indexOf(startLocation);
+        int endLocationIndex = routeLocations.indexOf(endLocation);
+
+        if (startLocationIndex >= endLocationIndex) {
             throw new NoPathException(this.generatePackageAssignErrorMessage(pkg, route));
         }
 
         pkg.setAssignedTruck(truck);
         truck.addAssignedPackageId(pkg.getId());
+
+        if(endLocationIndex > 0){
+            LocalDateTime pkgArrivalTime = endLocation.getEventTime();
+            pkg.setEstimatedArrivalTime(pkgArrivalTime);
+        }
+
         return truck;
     }
 

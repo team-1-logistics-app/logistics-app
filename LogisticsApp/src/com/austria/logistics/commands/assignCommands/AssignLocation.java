@@ -49,7 +49,7 @@ public class AssignLocation extends BaseCommand{
                         parameters.get(3),
                         parameters.get(4)
                 );
-                eventTime = Parsers.parseEventTime(eventTimeString);
+                eventTime = Parsers.parseEventTimeToLocalDateTime(eventTimeString);
             }
 
             return parameters.size() == EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY? addFirstLocation(route,location,eventTime) : addAnyOtherLocation(route,location);

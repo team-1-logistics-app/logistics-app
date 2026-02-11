@@ -3,6 +3,9 @@ package com.austria.logistics.models;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.vehicles.contracts.Truck;
+import com.austria.logistics.utils.Parsers;
+
+import java.time.LocalDateTime;
 
 public class PackageImpl implements Package {
     private final int id;
@@ -11,6 +14,7 @@ public class PackageImpl implements Package {
     private int weight;
     private String contactInformation;
     private Truck assignedTruck;
+    private LocalDateTime estimatedArrivalTime;
 
     public PackageImpl(int id, Locations startLocation, Locations endLocation, int weight, String contactInformation) {
         this.id = id;
@@ -24,7 +28,6 @@ public class PackageImpl implements Package {
     public void setAssignedTruck(Truck assignedTruck) {
         this.assignedTruck = assignedTruck;
     }
-
     @Override
     public Truck getAssignedTruck() {
         return this.assignedTruck;
@@ -76,9 +79,21 @@ public class PackageImpl implements Package {
     }
 
     @Override
+    public void setEstimatedArrivalTime(LocalDateTime eventTime) {
+        this.estimatedArrivalTime = eventTime;
+    }
+
+    @Override
+    public LocalDateTime getEstimatedArrivalTime() {
+        return this.estimatedArrivalTime;
+    }
+
+    @Override
     public int getId() {
         return this.id;
     }
+
+
 
     @Override
     public String toString() {
@@ -93,6 +108,7 @@ public class PackageImpl implements Package {
             output.append(String.format("is assigned to truck %s with id %d\n",
                     this.assignedTruck.getTruckType().getDisplayName(),
                     this.assignedTruck.getId()));
+            output.append(String.format("Estimated arrival time is: %s\n",Parsers.parseEventTimeToString(estimatedArrivalTime)));
         } else {
             output.append("is not assigned to a truck yet.\n");
         }
@@ -107,6 +123,7 @@ public class PackageImpl implements Package {
                 endLocation.getDisplayName(),
                 String.valueOf(weight),
                 contactInformation,
+                estimatedArrivalTime == null? "NONE" : Parsers.parseEventTimeToString(estimatedArrivalTime),
                 assignedTruck == null ? "NONE" : String.valueOf(assignedTruck.getId()));
     }
 }

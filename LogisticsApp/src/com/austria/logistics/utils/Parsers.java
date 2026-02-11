@@ -58,7 +58,7 @@ public class Parsers {
         }
     }
 
-    public static LocalDateTime parseEventTime(String value) {
+    public static LocalDateTime parseEventTimeToLocalDateTime(String value) {
         try {
             String cleaned = value.replace('\u00A0', ' ').trim();
 
@@ -71,6 +71,11 @@ public class Parsers {
         } catch (DateTimeException e) {
             throw new InvalidTimeFormatException(Constants.INVALID_TIME_FORMAT_MESSAGE);
         }
+    }
+
+    public static String parseEventTimeToString(LocalDateTime eventTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d HH:mm", Locale.ENGLISH);
+        return eventTime.format(formatter);
     }
 
     public static int parseToInteger(String elementType, String value) {
@@ -107,7 +112,7 @@ public class Parsers {
                     .map(element -> {
                         String[] parts = element.split("@");
                         Locations location = Parsers.parseLocation(parts[0]);
-                        LocalDateTime eventTime = Parsers.parseEventTime(parts[1]);
+                        LocalDateTime eventTime = Parsers.parseEventTimeToLocalDateTime(parts[1]);
                         return (Location) new LocationImpl(location, eventTime);
                     }).forEach(route::addLocationFromLoad);
         }
@@ -128,7 +133,11 @@ public class Parsers {
 
         Package pkg = new PackageImpl(id, startLocation, endLocation, weight, contactInfo);
 
-        if (!elements[5].equals("NONE")) {
+        if(!elements[5].equals("NONE")){
+            pkg.setEstimatedArrivalTime(Parsers.parseEventTimeToLocalDateTime(elements[5]));
+        }
+
+        if (!elements[6].equals("NONE")) {
             Truck assignedTruck = repository.findElementById(repository.getTrucks(), Integer.parseInt(elements[5]));
             pkg.setAssignedTruck(assignedTruck);
         }

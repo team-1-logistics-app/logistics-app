@@ -3,6 +3,8 @@ package com.austria.logistics.models.contracts;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
+import java.time.LocalDateTime;
+
 public interface Package extends Identifiable, Printable, Savealbe {
     void setAssignedTruck(Truck assignedTruck);
     Truck getAssignedTruck();
@@ -20,4 +22,6 @@ public interface Package extends Identifiable, Printable, Savealbe {
     String getContactInformation();
 
     boolean isAssigned();
+    void setEstimatedArrivalTime(LocalDateTime eventTime);
+    LocalDateTime getEstimatedArrivalTime();
 }

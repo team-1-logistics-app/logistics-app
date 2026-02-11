@@ -30,7 +30,7 @@ class ShowPackagesTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        repository.login(new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.EMPLOYEE));
+        repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE));
         showPackages = new ShowPackages(repository);
         parameters = List.of();
         createRoute = new CreateRoute(repository);
@@ -67,6 +67,7 @@ class ShowPackagesTest {
         this.repository.createPackage(Locations.ADL, Locations.DAR, 40, "test@test.bg");
 
         String expected = "Package with id 2, start location Sydney, end location Brisbane, weight 30, contact info test@test.com is assigned to truck Man with id 1011\n" +
+                "Estimated arrival time is: Jan 24 22:27\n" +
                 "Package with id 3, start location Adelaide, end location Darwin, weight 40, contact info test@test.bg is not assigned to a truck yet.\n";
 
         assignPackage.execute(List.of("2", "1011"));
@@ -75,6 +76,7 @@ class ShowPackagesTest {
         String result = showPackages.execute(parameters);
 
         //Assert
+
         Assertions.assertEquals(expected, result);
     }
 

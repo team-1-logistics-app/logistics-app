@@ -1,6 +1,7 @@
 package com.austria.logistics.commands.showCommands;
 
 import com.austria.logistics.commands.BaseCommand;
+import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.utils.Validators;
@@ -29,7 +30,7 @@ public class ShowPackages extends BaseCommand {
         StringBuilder output = new StringBuilder();
         List<Package> packages = getRepository().getPackages();
         if (!packages.isEmpty()) {
-            packages.forEach(pkg -> output.append(pkg.toString()));
+            packages.forEach(pkg -> output.append(pkg.toString()).append(Constants.REPORT_SEPARATOR));
         } else {
             output.append("No packages in the repo created yet.\n");
         }
