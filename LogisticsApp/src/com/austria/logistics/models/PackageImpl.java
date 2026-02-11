@@ -10,9 +10,9 @@ public class PackageImpl implements Package {
     private Locations endLocation;
     private int weight;
     private String contactInformation;
-    private Truck assignedToTruck;
+    private Truck assignedTruck;
 
-    public PackageImpl(int id, Locations startLocation, Locations endLocation, int weight, String contactInformation){
+    public PackageImpl(int id, Locations startLocation, Locations endLocation, int weight, String contactInformation) {
         this.id = id;
         this.setStartLocation(startLocation);
         this.setEndLocation(endLocation);
@@ -21,11 +21,13 @@ public class PackageImpl implements Package {
     }
 
     @Override
-    public void setAssignedToTruck(Truck assignedToTruck) {this.assignedToTruck = assignedToTruck;}
+    public void setAssignedTruck(Truck assignedTruck) {
+        this.assignedTruck = assignedTruck;
+    }
 
     @Override
-    public Truck getAssignedToTruck() {
-        return this.assignedToTruck;
+    public Truck getAssignedTruck() {
+        return this.assignedTruck;
     }
 
     @Override
@@ -70,12 +72,31 @@ public class PackageImpl implements Package {
 
     @Override
     public boolean isAssigned() {
-        return this.assignedToTruck != null;
+        return this.assignedTruck != null;
     }
 
     @Override
     public int getId() {
         return this.id;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        output.append(String.format("Package with id %d, start location %s, end location %s, weight %d, contact info %s ",
+                this.id,
+                this.startLocation.getDisplayName(),
+                this.endLocation.getDisplayName(),
+                this.weight,
+                this.contactInformation));
+        if (this.isAssigned()) {
+            output.append(String.format("is assigned to truck %s with id %d\n",
+                    this.assignedTruck.getTruckType().getDisplayName(),
+                    this.assignedTruck.getId()));
+        } else {
+            output.append("is not assigned to a truck yet.\n");
+        }
+        return output.toString();
     }
 
     @Override
@@ -86,6 +107,6 @@ public class PackageImpl implements Package {
                 endLocation.getDisplayName(),
                 String.valueOf(weight),
                 contactInformation,
-                assignedToTruck == null ? "NONE" : String.valueOf(assignedToTruck.getId()));
+                assignedTruck == null ? "NONE" : String.valueOf(assignedTruck.getId()));
     }
 }

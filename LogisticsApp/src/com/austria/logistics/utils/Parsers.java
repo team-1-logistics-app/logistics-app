@@ -130,7 +130,7 @@ public class Parsers {
 
         if (!elements[5].equals("NONE")) {
             Truck assignedTruck = repository.findElementById(repository.getTrucks(), Integer.parseInt(elements[5]));
-            pkg.setAssignedToTruck(assignedTruck);
+            pkg.setAssignedTruck(assignedTruck);
         }
         return pkg;
     }

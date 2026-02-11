@@ -29,22 +29,7 @@ public class ShowPackages extends BaseCommand {
         StringBuilder output = new StringBuilder();
         List<Package> packages = getRepository().getPackages();
         if (!packages.isEmpty()) {
-            packages.forEach(pkg -> {
-                output.append(String.format("Package with id %d, start location %s, end location %s, weight %d, contact info %s ",
-                        pkg.getId(),
-                        pkg.getStartLocation().getDisplayName(),
-                        pkg.getEndLocation().getDisplayName(),
-                        pkg.getWeight(),
-                        pkg.getContactInformation()));
-
-                if (pkg.isAssigned()) {
-                    output.append(String.format("is assigned to truck %s with id %d\n",
-                            pkg.getAssignedToTruck().getTruckType().getDisplayName(),
-                            pkg.getAssignedToTruck().getId()));
-                } else {
-                    output.append("is not assigned to a truck yet.\n");
-                }
-            });
+            packages.forEach(pkg -> output.append(pkg.toString()));
         } else {
             output.append("No packages in the repo created yet.\n");
         }

@@ -19,7 +19,6 @@ import com.austria.logistics.utils.Parsers;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,7 +124,7 @@ public class RepositoryImpl implements Repository {
             throw new NoPathException(this.generatePackageAssignErrorMessage(pkg, route));
         }
 
-        pkg.setAssignedToTruck(truck);
+        pkg.setAssignedTruck(truck);
         truck.addAssignedPackageId(pkg.getId());
         return truck;
     }
