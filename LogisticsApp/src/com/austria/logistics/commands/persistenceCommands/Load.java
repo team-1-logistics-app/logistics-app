@@ -15,17 +15,11 @@ public class Load extends BaseCommand {
 
     @Override
     protected String executeCommand(List<String> parameters) {
-        User loggedUser = getRepository().getLoggedUser();
-
-        if(loggedUser.getUserRole() != UserRole.EMPLOYEE){
-            return Constants.USER_NOT_EMPLOYEE;
-        }
-
         return getRepository().loadFromFile();
     }
 
     @Override
     protected boolean requiresLogin() {
-        return true;
+        return false;
     }
 }

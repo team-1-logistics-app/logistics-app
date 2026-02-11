@@ -9,10 +9,7 @@ import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.commands.enums.CommandType;
 import com.austria.logistics.commands.persistenceCommands.Load;
 import com.austria.logistics.commands.persistenceCommands.Save;
-import com.austria.logistics.commands.showCommands.ShowPackage;
-import com.austria.logistics.commands.showCommands.ShowPackages;
-import com.austria.logistics.commands.showCommands.ShowRoute;
-import com.austria.logistics.commands.showCommands.ShowTrucks;
+import com.austria.logistics.commands.showCommands.*;
 import com.austria.logistics.commands.userCommands.Login;
 import com.austria.logistics.commands.userCommands.Logout;
 import com.austria.logistics.commands.userCommands.Register;
@@ -47,6 +44,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new ShowRoute(repository);
             case SHOWTRUCKS:
                 return new ShowTrucks(repository);
+            case SHOWUSERS:
+                return new ShowUsers(repository);
             case LOGIN:
                 return new Login(repository);
             case LOGOUT:

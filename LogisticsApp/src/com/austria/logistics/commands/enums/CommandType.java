@@ -10,6 +10,7 @@ public enum CommandType {
     SHOWPACKAGE,
     SHOWROUTE,
     SHOWTRUCKS,
+    SHOWUSERS,
     LOGIN,
     LOGOUT,
     REGISTER,

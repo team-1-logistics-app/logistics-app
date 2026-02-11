@@ -116,11 +116,12 @@ public class UserImpl implements User {
 
     @Override
     public String toString(){
-        return String.format("Username: %s, First Name: %s, Last Name: %s, Password: %s, User Role: %s",
+        return String.format("Username: %s, First Name: %s, Last Name: %s, Password: %s, Email: %s, User Role: %s\n",
                 this.username,
                 this.firstName,
                 this.lastName,
                 this.password,
+                this.email,
                 this.userRole.toString());
     }
 
