@@ -1,7 +1,10 @@
 package com.austria.logistics.commands.showCommands;
 
 import com.austria.logistics.commands.BaseCommand;
+import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.models.contracts.User;
+import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Validators;
 
@@ -15,6 +18,12 @@ public class ShowTrucks extends BaseCommand {
 
     @Override
     public String executeCommand(List<String> parameters) {
+        User loggedUser = getRepository().getLoggedUser();
+
+        if(loggedUser.getUserRole() != UserRole.MANAGER || loggedUser.getUserRole() != UserRole.EMPLOYEE){
+            return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
+        }
+
         try {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
         } catch (IllegalArgumentException e) {

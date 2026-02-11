@@ -51,6 +51,7 @@ public class Constants {
     public final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
     public final static String USER_NOT_EMPLOYEE = "You are not logged in as employee!";
     public final static String USER_NOT_MANAGER = "You are not logged in as manager!";
+    public final static String USER_NOT_MANAGER_AND_NOT_EMPLOYEE = "You are not logged in as manager or employee!";
     public final static String USER_EMAIL_INVALID = "Invalid value for email, it has to be in the format example@example.example!";
     public final static String USER_EMAIL_EMPTY = "Email not specified, please type email in the format example@example.example!";
 
