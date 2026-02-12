@@ -19,6 +19,7 @@ public class Constants {
     public static final String ROUTE_NOT_ENOUGH_LOCATIONS_MESSAGE = "Route with id %d doesn't contain enough locations to calculate schedule. ";
     public static final String ROUTE_CREATED_MESSAGE = "Route with id %d was created!";
     public static final String ROUTE_ASSIGN_ERROR_MESSAGE = "Route with id %d doesn't have enough locations assigned yet, please assign at least 2 locations before assigning truck to it.";
+    public static final String ROUTE_REMOVE_STARTLOCATION_ERROR_MESSAGE = "You cannot remove the starting location in the route, before every other location is removed!";
 
     public static final String INVALID_WEIGHT_VALUE_MESSAGE = "Weight can't be 0 or less kg.";
     public static final String INVALID_VALUE_FORMAT_MESSAGE = "%s has to be valid integer.";

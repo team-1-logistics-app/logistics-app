@@ -7,6 +7,7 @@ import com.austria.logistics.exceptions.ElementNotFoundException;
 import com.austria.logistics.exceptions.InvalidLocationException;
 import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.exceptions.LocationNotFoundException;
+import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.Locations;
@@ -37,7 +38,7 @@ public class UnassignLocation extends BaseCommand {
         try {
             Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
             int routeId = Parsers.parseToInteger("Route id",parameters.get(0));
-            location = Parsers.parseLocation(parameters.get(0));
+            location = Parsers.parseLocation(parameters.get(1));
             route = repo.findElementById(repo.getRoutes(),routeId);
         }catch (IllegalArgumentException |
                 InvalidValueException |
@@ -51,10 +52,14 @@ public class UnassignLocation extends BaseCommand {
     }
 
     private String unassignLocation(Route route, Locations location){
+        Location locationToCheck;
         try{
-            route.findByCity(location);
+          locationToCheck = route.findByCity(location);
         }catch (LocationNotFoundException e){
             return e.getMessage();
+        }
+        if(route.getRouteLocations().indexOf(locationToCheck) == 0 && route.getRouteLocations().size() > 1){
+            return Constants.ROUTE_REMOVE_STARTLOCATION_ERROR_MESSAGE;
         }
 
         return route.removeLocationFromRoute(location);
