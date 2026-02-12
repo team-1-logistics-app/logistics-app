@@ -10,6 +10,7 @@ import com.austria.logistics.commands.enums.CommandType;
 import com.austria.logistics.commands.persistenceCommands.Load;
 import com.austria.logistics.commands.persistenceCommands.Save;
 import com.austria.logistics.commands.showCommands.*;
+import com.austria.logistics.commands.unassignCommands.UnassignLocation;
 import com.austria.logistics.commands.unassignCommands.UnassignPackage;
 import com.austria.logistics.commands.unassignCommands.UnassignTruck;
 import com.austria.logistics.commands.userCommands.Login;
@@ -53,6 +54,8 @@ public class CommandFactoryImpl implements CommandFactory {
                 return new UnassignTruck(repository);
             case UNASSIGNPACKAGE:
                 return new UnassignPackage(repository);
+            case UNASSIGNLOCATION:
+                return new UnassignLocation(repository);
             case LOGIN:
                 return new Login(repository);
             case LOGOUT:

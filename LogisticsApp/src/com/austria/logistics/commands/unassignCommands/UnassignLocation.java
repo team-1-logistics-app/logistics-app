@@ -4,21 +4,23 @@ import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.ElementNotFoundException;
+import com.austria.logistics.exceptions.InvalidLocationException;
 import com.austria.logistics.exceptions.InvalidValueException;
-import com.austria.logistics.models.contracts.Package;
+import com.austria.logistics.exceptions.LocationNotFoundException;
+import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
+import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.models.enums.UserRole;
-import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
-public class UnassignPackage extends BaseCommand {
-    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 1;
+public class UnassignLocation extends BaseCommand {
+    private static final int EXPECTED_NUMBER_OF_ARGUMENTS = 2;
     private Repository repo = getRepository();
 
-    public UnassignPackage(Repository repository) {
+    public UnassignLocation(Repository repository) {
         super(repository);
     }
 
@@ -30,26 +32,32 @@ public class UnassignPackage extends BaseCommand {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
-        Package pkg;
+        Route route;
+        Locations location;
         try {
             Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
-            int pkgId = Parsers.parseToInteger("Package id",parameters.get(0));
-            pkg = repo.findElementById(repo.getPackages(),pkgId);
-        }catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException e){
-            return e.getMessage();
+            int routeId = Parsers.parseToInteger("Route id",parameters.get(0));
+            location = Parsers.parseLocation(parameters.get(0));
+            route = repo.findElementById(repo.getRoutes(),routeId);
+        }catch (IllegalArgumentException |
+                InvalidValueException |
+                InvalidLocationException |
+                ElementNotFoundException e){
+
+            return  e.getMessage();
         }
-        return unassignPackage(pkg);
+
+        return unassignLocation(route,location);
     }
 
-    private String unassignPackage(Package pkg){
-        if(!pkg.isAssigned()){
-            return String.format(Constants.PACKAGE_IS_NOT_ASSIGNED_MESSAGE,pkg.getId());
+    private String unassignLocation(Route route, Locations location){
+        try{
+            route.findByCity(location);
+        }catch (LocationNotFoundException e){
+            return e.getMessage();
         }
 
-        Truck truck = repo.findElementById(repo.getTrucks(),pkg.getAssignedTruck().getId());
-        repo.unassignPackageFromTruck(pkg,truck);
-
-        return String.format(Constants.PACKAGE_SUCCESSFULLY_UNASSIGNED_MESSAGE,pkg.getId());
+        return route.removeLocationFromRoute(location);
     }
 
     @Override

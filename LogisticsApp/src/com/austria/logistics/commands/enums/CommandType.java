@@ -13,6 +13,7 @@ public enum CommandType {
     SHOWUSERS,
     UNASSIGNTRUCK,
     UNASSIGNPACKAGE,
+    UNASSIGNLOCATION,
     LOGIN,
     LOGOUT,
     READMAIL,
