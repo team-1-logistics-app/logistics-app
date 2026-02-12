@@ -39,6 +39,7 @@ public class Validators {
         }
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9-]+\\.[A-Za-z]{2,}$";
+
         if(!email.matches(emailRegex)){
             throw new InvalidValueException(Constants.USER_EMAIL_INVALID);
         }

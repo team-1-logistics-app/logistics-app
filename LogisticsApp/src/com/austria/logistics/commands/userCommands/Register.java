@@ -38,7 +38,7 @@ public class Register extends BaseCommand {
         UserRole userRole = UserRole.CUSTOMER;
         if (parameters.size() == EXPECTED_NUMBER_OF_ARGUMENTS + 1) {
             try {
-                userRole = Parsers.tryParseEnum(parameters.get(5), UserRole.class, String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, parameters.get(4)));
+                userRole = Parsers.tryParseEnum(parameters.get(5), UserRole.class, String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, parameters.get(5)));
             } catch (IllegalArgumentException e) {
                 return e.getMessage();
             }
@@ -53,7 +53,7 @@ public class Register extends BaseCommand {
             return String.format(Constants.USER_ALREADY_EXIST, username);
         }
 
-        if (repo.getUsers().stream().anyMatch(user -> user.getUsername().equals(email))) {
+        if (repo.getUsers().stream().anyMatch(user -> user.getEmail().equals(email))) {
             return String.format(Constants.USER_EMAIL_ALREADY_USED, email);
         }
 
