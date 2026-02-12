@@ -82,13 +82,13 @@ class UnassignPackageTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Packge_Is_NotFound() {
+    void executeCommand_Should_Return_Error_When_Package_Is_NotFound() {
         //Act,Assert
         Assertions.assertEquals("No record with id 23 in the repository", unassignPackage.execute(List.of("23")));
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Packge_Is_NotAssigned() {
+    void executeCommand_Should_Return_Error_When_Package_Is_NotAssigned() {
         //Arrange
         createPackage.execute(List.of("Brisbane", "Adelaide", "60", "test@test.com"));
         //Act,Assert
