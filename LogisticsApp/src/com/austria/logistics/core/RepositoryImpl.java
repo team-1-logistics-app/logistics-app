@@ -122,7 +122,7 @@ public class RepositoryImpl implements Repository {
             throw new TruckNotAssignedToRouteException(String.format(Constants.TRUCK_NOT_ASSIGNED_MESSAGE, truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
-        if (truck.getAssignedPackagesIdList().contains(pkg.getId())) {
+        if (truck.getAssignedPackagesIdList().contains(pkg.getId()) || pkg.isAssigned()) {
             throw new PackageIsAlreadyAssignedException(String.format(Constants.PACKAGE_ALREADY_ASSIGNED_ERROR_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
@@ -148,6 +148,15 @@ public class RepositoryImpl implements Repository {
         }
 
         return truck;
+    }
+
+    @Override
+    public void unassignPackageFromTruck(Package pkg, Truck truck) {
+        if(truck.getAssignedPackagesIdList().contains(pkg.getId())){
+            truck.removeAssignedPackageId(pkg.getId());
+            truck.removeLoad(pkg.getWeight());
+            pkg.unassign();
+        }
     }
 
     private String generatePackageAssignErrorMessage(Package pkg, Route route) {

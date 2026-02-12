@@ -66,6 +66,9 @@ public class TruckImpl implements Truck {
     }
 
     @Override
+    public void removeAssignedPackageId(int id) { this.assignedPackagesIdList.remove(Integer.valueOf(id)); }
+
+    @Override
     public void addLoad(int weight) {
         this.currentLoad += weight;
     }

@@ -22,6 +22,7 @@ public interface Repository {
     Route assignTruckToRoute(Truck truck, Route route);
     void unassignTruckFromRoute(Truck truck, Route route);
     Truck assignPackageToTruck(Package pkg, Truck truck);
+    void unassignPackageFromTruck(Package pkg, Truck truck);
     Package createPackage(Locations startLocation, Locations endLocation, int weight, String contactInformation);
     User addUser(User userToAdd);
     User getLoggedUser();

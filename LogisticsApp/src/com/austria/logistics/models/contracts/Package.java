@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public interface Package extends Identifiable, Printable, Savealbe {
     void setAssignedTruck(Truck assignedTruck);
     Truck getAssignedTruck();
+    void unassign();
 
     void setStartLocation(Locations startLocation);
     Locations getStartLocation();

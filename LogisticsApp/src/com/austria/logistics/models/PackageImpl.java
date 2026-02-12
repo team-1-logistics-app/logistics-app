@@ -34,6 +34,9 @@ public class PackageImpl implements Package {
     }
 
     @Override
+    public void unassign() { this.assignedTruck = null; }
+
+    @Override
     public void setStartLocation(Locations startLocation) {
         this.startLocation = startLocation;
     }
