@@ -27,7 +27,7 @@ public class ShowUsers extends BaseCommand {
     private String showUsers(){
         StringBuilder output = new StringBuilder();
         Repository repo = getRepository();
-        repo.getUsers().forEach(user -> output.append(user.toString()));
+        repo.getUsers().forEach(user -> output.append(user.toString()).append(System.lineSeparator()));
         return output.toString();
     }
 

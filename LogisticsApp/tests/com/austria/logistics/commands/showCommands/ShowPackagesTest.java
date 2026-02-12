@@ -78,7 +78,8 @@ class ShowPackagesTest {
 
         //Assert
 
-        Assertions.assertEquals(expected.replace("\r\n", "\n").replace("\r", "\n").trim(), result.replace("\r\n", "\n").replace("\r", "\n").trim());
+        Assertions.assertEquals(expected.replace("\r\n", "\n").replace("\r", "\n").trim(),
+                result.replace("\r\n", "\n").replace("\r", "\n").trim());
     }
 
     @Test
@@ -91,6 +92,7 @@ class ShowPackagesTest {
         String result = showPackages.execute(parameters);
 
         //Assert
-        Assertions.assertEquals(expected.replace("\r\n", "\n").replace("\r", "\n").trim(), result.replace("\r\n", "\n").replace("\r", "\n").trim());
+        Assertions.assertEquals(expected.replace("\r\n", "\n").replace("\r", "\n").trim(),
+                result.replace("\r\n", "\n").replace("\r", "\n").trim());
     }
 }
