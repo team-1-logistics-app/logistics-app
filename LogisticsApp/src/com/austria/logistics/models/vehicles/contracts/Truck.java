@@ -17,6 +17,7 @@ public interface Truck extends Identifiable, Savealbe  {
 
     void addAssignedPackageId(int id);
     void addLoad(int weight);
+    void removeLoad(int weight);
     void setAssignedRoute(Route assignedRoute);
     void assign();
     void unassign();

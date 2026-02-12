@@ -71,6 +71,9 @@ public class TruckImpl implements Truck {
     }
 
     @Override
+    public void removeLoad(int weight) { this.currentLoad -= weight; }
+
+    @Override
     public void setAssignedRoute(Route assignedRoute) {
         this.assignedRoute = assignedRoute;
     }
