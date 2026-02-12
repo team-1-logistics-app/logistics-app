@@ -64,7 +64,7 @@ class RegisterTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentLenght_Is_Invalid() {
+    void executeCommand_Should_Return_Error_When_ArgumentLength_Is_Invalid() {
         //Act,Assert
         Assertions.assertAll(
                 () -> Assertions.assertEquals("Username must be between 2 and 20 characters long!",

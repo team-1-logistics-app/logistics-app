@@ -37,7 +37,7 @@ public class UserImpl implements User {
     }
 
     private void setUsername(String username) {
-        Validators.validateStringLenght(username, LEN_MIN, LEN_MAX, USERNAME_LEN_ERR);
+        Validators.validateStringLength(username, LEN_MIN, LEN_MAX, USERNAME_LEN_ERR);
         this.username = username;
     }
 
@@ -47,7 +47,7 @@ public class UserImpl implements User {
     }
 
     private void setFirstName(String firstName) {
-        Validators.validateStringLenght(firstName, LEN_MIN, LEN_MAX, FIRSTNAME_LEN_ERR);
+        Validators.validateStringLength(firstName, LEN_MIN, LEN_MAX, FIRSTNAME_LEN_ERR);
         this.firstName = firstName;
     }
 
@@ -57,7 +57,7 @@ public class UserImpl implements User {
     }
 
     private void setLastName(String lastName) {
-        Validators.validateStringLenght(lastName, LEN_MIN, LEN_MAX, LASTNAME_LEN_ERR);
+        Validators.validateStringLength(lastName, LEN_MIN, LEN_MAX, LASTNAME_LEN_ERR);
         this.lastName = lastName;
     }
 
@@ -67,7 +67,7 @@ public class UserImpl implements User {
     }
 
     private void setPassword(String password) {
-        Validators.validateStringLenght(password, LEN_MIN, LEN_MAX, PASSWORD_LEN_ERR);
+        Validators.validateStringLength(password, LEN_MIN, LEN_MAX, PASSWORD_LEN_ERR);
         this.password = password;
     }
 

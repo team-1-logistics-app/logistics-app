@@ -22,7 +22,7 @@ public class Validators {
         }
     }
 
-    public static void validateStringLenght(String value, int min,int max, String message) {
+    public static void validateStringLength(String value, int min, int max, String message) {
         if(value.length() < min || value.length() > max){
             throw new IllegalArgumentException(message);
         }

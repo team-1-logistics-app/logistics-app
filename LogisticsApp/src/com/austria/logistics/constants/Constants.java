@@ -78,7 +78,6 @@ public class Constants {
 
 
     public static final String REPORT_SEPARATOR = "####################";
-    public static final String EMPTY_COMMAND_ERROR = "Command cannot be empty.";
     public static final String TERMINATION_COMMAND = "Exit";
 
     public static final int[][] distances = {
