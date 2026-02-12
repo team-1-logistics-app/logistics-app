@@ -93,7 +93,6 @@ public class RepositoryImpl implements Repository {
         return route;
     }
 
-
     @Override
     public Route assignTruckToRoute(Truck truck, Route route) {
         if (route.getRouteLocations().size() < 2) {
@@ -107,7 +106,7 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public void unassignTruckFromRoute(Truck truck, Route route) {
-        if (truck.getAssignedRoute().getId() != route.getId()) {
+        if (truck.getAssignedRoute() == null || truck.getAssignedRoute().getId() != route.getId()) {
             throw new TruckNotAssignedToRouteException(String.format(Constants.TRUCK_NOT_ASSIGNED_TO_THIS_ROUTE_MESSAGE,
                     truck.getTruckType().getDisplayName(),
                     truck.getId(),

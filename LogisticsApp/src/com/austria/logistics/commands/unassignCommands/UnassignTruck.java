@@ -11,6 +11,7 @@ import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Parsers;
+import com.austria.logistics.utils.Validators;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UnassignTruck extends BaseCommand {
     protected String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if (loggedUser.getUserRole() != UserRole.MANAGER || loggedUser.getUserRole() != UserRole.EMPLOYEE) {
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
@@ -36,11 +37,12 @@ public class UnassignTruck extends BaseCommand {
         Route route;
 
         try {
+            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
             truckId = Parsers.parseToInteger("Truck id", parameters.get(0));
             routeId = Parsers.parseToInteger("Route id", parameters.get(1));
             truck = repo.findElementById(repo.getTrucks(), truckId);
             route = repo.findElementById(repo.getRoutes(), routeId);
-        } catch (InvalidValueException | ElementNotFoundException e) {
+        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException e) {
             return e.getMessage();
         }
 
