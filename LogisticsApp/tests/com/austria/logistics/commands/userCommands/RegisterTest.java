@@ -14,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 class RegisterTest {
-    Repository repository;
-    Command register;
-    User user;
+    private Repository repository;
+    private Command register;
+    private User user;
 
     @BeforeEach
     void setUp(){

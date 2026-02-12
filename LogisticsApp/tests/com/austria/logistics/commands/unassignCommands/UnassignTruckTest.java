@@ -3,7 +3,6 @@ package com.austria.logistics.commands.unassignCommands;
 import com.austria.logistics.commands.assignCommands.AssignTruck;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
-import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.UserImpl;
