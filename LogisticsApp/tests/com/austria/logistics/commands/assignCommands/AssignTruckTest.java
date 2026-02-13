@@ -32,7 +32,7 @@ class AssignTruckTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        repository.login(new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.EMPLOYEE));
+        repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE));
         assignTruck = new AssignTruck(repository);
         createRoute = new CreateRoute(repository);
         createRoute.execute(List.of());
@@ -55,7 +55,7 @@ class AssignTruckTest {
     void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
         //Arrange
         repository.logout();
-        user = new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER);
+        user = new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER);
         repository.login(user);
         //Act,Assert
         Assertions.assertEquals("You are not logged in as manager or employee!", assignTruck.execute(List.of(String.valueOf(route.getId()))));
@@ -71,9 +71,9 @@ class AssignTruckTest {
     void execute_Should_Throw_Error_When_Arguments_AreInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () ->Assertions.assertThrows(InvalidValueException.class, () -> assignTruck.execute(List.of("asd",String.valueOf(route.getId())))),
-                () ->Assertions.assertThrows(ElementNotFoundException.class, () -> assignTruck.execute(List.of(String.valueOf(2),TruckType.MAN.getDisplayName()))),
-                () ->Assertions.assertThrows(InvalidTruckTypeException.class, () -> assignTruck.execute(List.of(String.valueOf(route.getId()),"TEST")))
+                () -> Assertions.assertThrows(InvalidValueException.class, () -> assignTruck.execute(List.of("asd", String.valueOf(route.getId())))),
+                () -> Assertions.assertThrows(ElementNotFoundException.class, () -> assignTruck.execute(List.of(String.valueOf(2), TruckType.MAN.getDisplayName()))),
+                () -> Assertions.assertThrows(InvalidTruckTypeException.class, () -> assignTruck.execute(List.of(String.valueOf(route.getId()), "TEST")))
         );
     }
 
@@ -99,13 +99,13 @@ class AssignTruckTest {
     void execute_Should_Throw_Error_When_NoAvailable_Trucks_Left() {
         //Arrange
         this.repository.getTrucks()
-                .forEach(truck ->{
-                    if(truck.getTruckType() == TruckType.MAN){
+                .forEach(truck -> {
+                    if (truck.getTruckType() == TruckType.MAN) {
                         truck.assign();
                     }
                 });
         //Act,Assert
-        Assertions.assertThrows(NoAvailableTruckException.class,() ->
+        Assertions.assertThrows(NoAvailableTruckException.class, () ->
                 assignTruck.execute(List.of(String.valueOf(route.getId()),
                         TruckType.MAN.getDisplayName())));
     }

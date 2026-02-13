@@ -22,22 +22,17 @@ public class CreatePackage extends BaseCommand {
     //EXPECTED ARGUMENTS ARE STRING STARTLOCATION, STRING ENDLOCATION, STRING WEIGHT, STRING CONTACTINFO
     @Override
     public String executeCommand(List<String> parameters) {
-        Locations startLocation;
-        Locations endLocation;
-        int weight;
-        String contactInfo;
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-            startLocation = Parsers.parseLocation(parameters.get(0));
-            endLocation = Parsers.parseLocation(parameters.get(1));
-            weight = Parsers.parseToInteger("Weight", parameters.get(2));
-            Validators.validateWeight(weight);
-            contactInfo = parameters.get(3);
-            Validators.validateEmail(contactInfo);
-        } catch (IllegalArgumentException | InvalidLocationException | InvalidValueException e) {
-            return e.getMessage();
-        }
+        Locations startLocation = Parsers.parseLocation(parameters.get(0));
+        Locations endLocation = Parsers.parseLocation(parameters.get(1));
+        int weight = Parsers.parseToInteger("Weight", parameters.get(2));
+
+        Validators.validateWeight(weight);
+
+        String contactInfo = parameters.get(3);
+
+        Validators.validateEmail(contactInfo);
 
         return createPackage(startLocation, endLocation, weight, contactInfo);
     }

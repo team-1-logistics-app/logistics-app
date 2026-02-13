@@ -33,7 +33,7 @@ class AssignPackageTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        user = new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.EMPLOYEE);
+        user = new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE);
         repository.login(user);
         assignPackage = new AssignPackage(repository);
         createRoute = new CreateRoute(repository);
@@ -81,7 +81,7 @@ class AssignPackageTest {
     void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
         //Arrange
         repository.logout();
-        user = new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER);
+        user = new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER);
         repository.login(user);
         //Act,Assert
         Assertions.assertEquals("You are not logged in as manager or employee!", assignPackage.execute(List.of()));
@@ -98,8 +98,8 @@ class AssignPackageTest {
     void execute_Should_Throw_Error_When_Arguments_AreInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertThrows(InvalidValueException.class,() -> assignPackage.execute(List.of("asd", "12"))),
-                () -> Assertions.assertThrows(InvalidValueException.class,() ->assignPackage.execute(List.of("1", "asd")))
+                () -> Assertions.assertThrows(InvalidValueException.class, () -> assignPackage.execute(List.of("asd", "12"))),
+                () -> Assertions.assertThrows(InvalidValueException.class, () -> assignPackage.execute(List.of("1", "asd")))
         );
 
     }
@@ -124,8 +124,8 @@ class AssignPackageTest {
         Truck truck = this.repository.findElementById(this.repository.getTrucks(), 1011);
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertThrows(LocationNotFoundException.class,() -> assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())))),
-                () -> Assertions.assertThrows(LocationNotFoundException.class,() -> assignPackage.execute(List.of(String.valueOf(pkg1.getId()), String.valueOf(truck.getId()))))
+                () -> Assertions.assertThrows(LocationNotFoundException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())))),
+                () -> Assertions.assertThrows(LocationNotFoundException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg1.getId()), String.valueOf(truck.getId()))))
         );
     }
 

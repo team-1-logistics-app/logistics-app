@@ -3,6 +3,8 @@ package com.austria.logistics.commands.creationCommands;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.InvalidLocationException;
+import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
@@ -19,9 +21,10 @@ class CreatePackageTest {
     @BeforeEach
     void setUp() {
         repository = new RepositoryImpl();
-        repository.login(new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER));
+        repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER));
         createPackage = new CreatePackage(repository);
     }
+
     @Test
     void execute_Should_Return_Error_When_User_Not_LoggedIn() {
         //Arrange
@@ -31,29 +34,29 @@ class CreatePackageTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_ArgumentsCount_isInvalid() {
+    void execute_Should_Throws_Error_When_ArgumentsCount_isInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 4, Received: 3.", createPackage.execute(List.of("Sydney", "Darwin", "40")));
+        Assertions.assertThrows(InvalidValueException.class, () -> createPackage.execute(List.of("Sydney", "Darwin", "40")));
     }
 
     @Test
     void execute_Should_Return_Error_When_Weight_IsLessOrEqual_To_Zero() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin", "0", "test@test.bg"))),
-                () -> Assertions.assertEquals("Weight can't be 0 or less kg.", createPackage.execute(List.of("Sydney", "Darwin", "-1", "test@test.bg")))
+                () -> Assertions.assertThrows(InvalidValueException.class, () -> createPackage.execute(List.of("Sydney", "Darwin", "0", "test@test.bg"))),
+                () -> Assertions.assertThrows(InvalidValueException.class, () -> createPackage.execute(List.of("Sydney", "Darwin", "-1", "test@test.bg")))
         );
     }
 
     @Test
-    void execute_Should_Return_Error_When_Argument_isInvalid() {
+    void execute_Should_Throw_Error_When_Argument_isInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Test is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.",
+                () -> Assertions.assertThrows(InvalidLocationException.class, () ->
                         createPackage.execute(List.of("Test", "Darwin", "40", "test@test.com"))),
-                () -> Assertions.assertEquals("Test is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.",
+                () -> Assertions.assertThrows(InvalidLocationException.class, () ->
                         createPackage.execute(List.of("Sydney", "Test", "40", "test@test.com"))),
-                () -> Assertions.assertEquals("Weight has to be valid integer.",
+                () -> Assertions.assertThrows(InvalidValueException.class, () ->
                         createPackage.execute(List.of("Sydney", "Darwin", "asd", "test@test.com")))
         );
     }

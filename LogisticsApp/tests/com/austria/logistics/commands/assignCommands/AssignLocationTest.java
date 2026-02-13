@@ -89,7 +89,7 @@ class AssignLocationTest {
     void executeCommand_Should_Throw_Error_When_RouteId_Is_NotFound() {
         //Act,Assert
         Assertions.assertThrows(ElementNotFoundException.class,
-                () ->  assignLocation.execute(List.of("23", "Sydney", "Feb", "20", "13:00")));
+                () -> assignLocation.execute(List.of("23", "Sydney", "Feb", "20", "13:00")));
 
     }
 
@@ -97,7 +97,7 @@ class AssignLocationTest {
     void executeCommand_Should_Throw_Error_When_RouteIsEmpty_And_DepartTime_IsNot_Provided() {
         //Act,Assert
         Assertions.assertThrows(RouteIsEmptyException.class,
-                () ->  assignLocation.execute(List.of("1", "Sydney")));
+                () -> assignLocation.execute(List.of("1", "Sydney")));
     }
 
     @Test
@@ -106,9 +106,9 @@ class AssignLocationTest {
         assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00"));
         //Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals(1,route.getRouteLocations().size()),
-                () -> Assertions.assertEquals("Sydney",route.getRouteLocations().get(0).getLocation().getDisplayName()),
-                () -> Assertions.assertEquals("Feb 20 13:00",route.getRouteLocations().get(0).getEventTimeAsString())
+                () -> Assertions.assertEquals(1, route.getRouteLocations().size()),
+                () -> Assertions.assertEquals("Sydney", route.getRouteLocations().get(0).getLocation().getDisplayName()),
+                () -> Assertions.assertEquals("Feb 20 13:00", route.getRouteLocations().get(0).getEventTimeAsString())
         );
     }
 
@@ -117,7 +117,7 @@ class AssignLocationTest {
         //Arrange
         assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00"));
         //Act,Assert
-        Assertions.assertThrows(RouteIsNotEmptyException.class,() -> assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00")));
+        Assertions.assertThrows(RouteIsNotEmptyException.class, () -> assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00")));
     }
 
     @Test
@@ -128,9 +128,9 @@ class AssignLocationTest {
         assignLocation.execute(List.of("1", "Darwin"));
         //Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals(2,route.getRouteLocations().size()),
-                () -> Assertions.assertEquals("Darwin",route.getRouteLocations().get(1).getLocation().getDisplayName()),
-                () -> Assertions.assertEquals("Feb 22 10:14",route.getRouteLocations().get(1).getEventTimeAsString())
+                () -> Assertions.assertEquals(2, route.getRouteLocations().size()),
+                () -> Assertions.assertEquals("Darwin", route.getRouteLocations().get(1).getLocation().getDisplayName()),
+                () -> Assertions.assertEquals("Feb 22 10:14", route.getRouteLocations().get(1).getEventTimeAsString())
         );
     }
 
@@ -140,6 +140,6 @@ class AssignLocationTest {
         assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00"));
         assignLocation.execute(List.of("1", "Darwin"));
         //Act, Assert
-        Assertions.assertThrows(InvalidLocationRouteException.class,() -> assignLocation.execute(List.of("1", "Darwin")));
+        Assertions.assertThrows(InvalidLocationRouteException.class, () -> assignLocation.execute(List.of("1", "Darwin")));
     }
 }
