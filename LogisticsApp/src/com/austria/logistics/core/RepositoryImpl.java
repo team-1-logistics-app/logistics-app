@@ -174,7 +174,7 @@ public class RepositoryImpl implements Repository {
     @Override
     public User addUser(User userToAdd) {
         if (users.contains(userToAdd)) {
-            throw new IllegalArgumentException(String.format(USER_ALREADY_EXIST, userToAdd.getUsername()));
+            throw new UserAlreadyExistsException(String.format(USER_ALREADY_EXIST, userToAdd.getUsername()));
         }
         this.users.add(userToAdd);
         return userToAdd;

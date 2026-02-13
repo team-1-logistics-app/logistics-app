@@ -3,7 +3,6 @@ package com.austria.logistics.commands.userCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
-import com.austria.logistics.exceptions.UserNotFoundException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.utils.Validators;
 
@@ -15,37 +14,25 @@ public class Login extends BaseCommand {
     public Login(Repository repository) {
         super(repository);
     }
+
     //EXPECTED STRING USERNAME AND STRING PASSWORD
     @Override
     protected String executeCommand(List<String> parameters) {
-        if(getRepository().hasLoggedUser()){
-            return String.format(Constants.USER_LOGGED_IN_ALREADY,getRepository().getLoggedUser().getUsername());
+        if (getRepository().hasLoggedUser()) {
+            return String.format(Constants.USER_LOGGED_IN_ALREADY, getRepository().getLoggedUser().getUsername());
         }
 
-        String username;
-        String password;
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        }
-
-        username = parameters.get(0);
-        password = parameters.get(1);
+        String username = parameters.get(0);
+        String password = parameters.get(1);
 
         return login(username, password);
     }
 
     private String login(String username, String password) {
         Repository repo = getRepository();
-        User user;
-
-        try {
-            user = repo.findUserByUsername(username);
-        } catch (UserNotFoundException e) {
-            return e.getMessage();
-        }
+        User user = repo.findUserByUsername(username);
 
         if (!user.getPassword().equals(password)) {
             return Constants.USER_PASSWORD_MISMATCH;

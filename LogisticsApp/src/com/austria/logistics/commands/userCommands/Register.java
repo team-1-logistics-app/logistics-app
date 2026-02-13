@@ -17,18 +17,14 @@ public class Register extends BaseCommand {
     public Register(Repository repository) {
         super(repository);
     }
+
     //EXPECTED USERNAME,FIRSTNAME,LASTNAME,PASSWORD,EMAIL AND USER ROLE(OPTIONAL)
     @Override
     protected String executeCommand(List<String> parameters) {
         if (getRepository().hasLoggedUser()) {
-            return  String.format(Constants.USER_LOGGED_IN_ALREADY,getRepository().getLoggedUser().getUsername());
+            return String.format(Constants.USER_LOGGED_IN_ALREADY, getRepository().getLoggedUser().getUsername());
         }
-
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        }
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
         String username = parameters.get(0);
         String firstName = parameters.get(1);
@@ -37,16 +33,12 @@ public class Register extends BaseCommand {
         String email = parameters.get(4);
         UserRole userRole = UserRole.CUSTOMER;
         if (parameters.size() == EXPECTED_NUMBER_OF_ARGUMENTS + 1) {
-            try {
-                userRole = Parsers.tryParseEnum(parameters.get(5), UserRole.class, String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, parameters.get(5)));
-            } catch (IllegalArgumentException e) {
-                return e.getMessage();
-            }
+            userRole = Parsers.tryParseEnum(parameters.get(5), UserRole.class, String.format(Constants.INVALID_ENUM_VALUE_FORMAT_MESSAGE, parameters.get(5)));
         }
         return register(username, firstName, lastName, password, email, userRole);
     }
 
-    private String register(String username, String firstName, String lastName, String password,String email, UserRole userRole) {
+    private String register(String username, String firstName, String lastName, String password, String email, UserRole userRole) {
         Repository repo = getRepository();
 
         if (repo.getUsers().stream().anyMatch(user -> user.getUsername().equals(username))) {
@@ -57,13 +49,10 @@ public class Register extends BaseCommand {
             return String.format(Constants.USER_EMAIL_ALREADY_USED, email);
         }
 
-        User user;
-        try {
-            user = repo.createUser(username, firstName, lastName, password,email, userRole);
-            repo.addUser(user);
-        }catch (IllegalArgumentException | InvalidValueException e){
-            return e.getMessage();
-        }
+
+        User user = repo.createUser(username, firstName, lastName, password, email, userRole);
+        repo.addUser(user);
+
         return String.format(Constants.USER_REGISTERED, username);
     }
 

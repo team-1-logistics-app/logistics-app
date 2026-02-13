@@ -3,8 +3,6 @@ package com.austria.logistics.commands.creationCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
-import com.austria.logistics.exceptions.InvalidLocationException;
-import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.enums.Locations;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
