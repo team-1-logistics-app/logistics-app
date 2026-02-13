@@ -33,16 +33,12 @@ public class AssignLocation extends BaseCommand {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
-        int routeId;
-        Route route;
-        Locations location;
         LocalDateTime eventTime = null;
 
-
         Validators.validateArgumentsCount(parameters, MIN_ARGUMENTS_COUNT);
-        routeId = Parsers.parseToInteger("Route id", parameters.get(0));
-        route = getRepository().findElementById(getRepository().getRoutes(), routeId);
-        location = Parsers.parseLocation(parameters.get(1));
+        int routeId = Parsers.parseToInteger("Route id", parameters.get(0));
+        Route route = getRepository().findElementById(getRepository().getRoutes(), routeId);
+        Locations location = Parsers.parseLocation(parameters.get(1));
 
         if (route.isRouteEmpty() && parameters.size() > MIN_ARGUMENTS_COUNT) {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY);

@@ -5,6 +5,7 @@ import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Package;
 import com.austria.logistics.models.contracts.Route;
@@ -88,57 +89,48 @@ class AssignPackageTest {
 
 
     @Test
-    void execute_Should_Return_Error_When_ArgumentsCount_IsInvalid() {
+    void execute_Should_Throw_Error_When_ArgumentsCount_IsInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 2, Received: 0.", assignPackage.execute(List.of()));
+        Assertions.assertThrows(InvalidValueException.class, () -> assignPackage.execute(List.of()));
     }
 
     @Test
-    void execute_Should_Return_Error_When_Arguments_AreInvalid() {
+    void execute_Should_Throw_Error_When_Arguments_AreInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Package id has to be valid integer.", assignPackage.execute(List.of("asd", "12"))),
-                () -> Assertions.assertEquals("Truck id has to be valid integer.", assignPackage.execute(List.of("1", "asd")))
+                () -> Assertions.assertThrows(InvalidValueException.class,() -> assignPackage.execute(List.of("asd", "12"))),
+                () -> Assertions.assertThrows(InvalidValueException.class,() ->assignPackage.execute(List.of("1", "asd")))
         );
 
     }
 
     @Test
-    void execute_Should_Return_Error_When_Truck_IsNotAssigned_To_Route() {
+    void execute_Should_Throw_Error_When_Truck_IsNotAssigned_To_Route() {
         //Arrange
         createPackage.execute(List.of("Brisbane", "Adelaide", "40", "test@test.com"));
         Package pkg = repository.getPackages().get(0);
         Truck truck = this.repository.findElementById(this.repository.getTrucks(), 1012);
-
-        //Act
-        String commandOutput = assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())));
-
-        //Assert
-        Assertions.assertEquals("Truck Man with id 1012 is not assigned to route yet, assign it to route before assigning packages to it.", commandOutput);
+        //Act,Assert
+        Assertions.assertThrows(TruckNotAssignedToRouteException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId()))));
     }
 
     @Test
-    void execute_Should_Return_Error_When_DepartLocation_Or_ArriveLocation_Location_IsNot_In_Route() {
+    void execute_Should_Throw_Error_When_DepartLocation_Or_ArriveLocation_Location_IsNot_In_Route() {
         //Arrange
         createPackage.execute(List.of("Sydney", "Adelaide", "40", "test@test.com"));
         createPackage.execute(List.of("Adelaide", "Sydney", "40", "test@test.com"));
         Package pkg = repository.getPackages().get(0);
         Package pkg1 = repository.getPackages().get(1);
         Truck truck = this.repository.findElementById(this.repository.getTrucks(), 1011);
-
-        //Act
-        String commandOutput = assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())));
-        String commandOutput1 = assignPackage.execute(List.of(String.valueOf(pkg1.getId()), String.valueOf(truck.getId())));
-
-        //Assert
+        //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Sydney is not in the route.", commandOutput),
-                () -> Assertions.assertEquals("Sydney is not in the route.", commandOutput1)
+                () -> Assertions.assertThrows(LocationNotFoundException.class,() -> assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())))),
+                () -> Assertions.assertThrows(LocationNotFoundException.class,() -> assignPackage.execute(List.of(String.valueOf(pkg1.getId()), String.valueOf(truck.getId()))))
         );
     }
 
     @Test
-    void execute_Should_Return_Error_When_DepartLocation_And_ArriveLocation_Location_Have_NoPath_InRoute() {
+    void execute_Should_Throw_Error_When_DepartLocation_And_ArriveLocation_Location_Have_NoPath_InRoute() {
         //Arrange
         createPackage.execute(List.of("Adelaide", "Adelaide", "40", "test@test.com"));
         createPackage.execute(List.of("Adelaide", "Brisbane", "40", "test@test.com"));
@@ -147,31 +139,21 @@ class AssignPackageTest {
         Package pkg1 = repository.getPackages().get(1);
         Package pkg2 = repository.getPackages().get(2);
         Truck truck = this.repository.findElementById(this.repository.getTrucks(), 1011);
-
-        //Act
-        String commandOutput = assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())));
-        String commandOutput1 = assignPackage.execute(List.of(String.valueOf(pkg1.getId()), String.valueOf(truck.getId())));
-        String commandOutput2 = assignPackage.execute(List.of(String.valueOf(pkg2.getId()), String.valueOf(truck.getId())));
-
-        //Assert
+        //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Package with id 2 cannot be assigned to route with id 1 because the route doesn't contain path from Adelaide to Adelaide.", commandOutput),
-                () -> Assertions.assertEquals("Package with id 3 cannot be assigned to route with id 1 because the route doesn't contain path from Adelaide to Brisbane.", commandOutput1),
-                () -> Assertions.assertEquals("Package with id 4 cannot be assigned to route with id 1 because the route doesn't contain path from Darwin to Brisbane.", commandOutput2)
+                () -> Assertions.assertThrows(NoPathException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())))),
+                () -> Assertions.assertThrows(NoPathException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg1.getId()), String.valueOf(truck.getId())))),
+                () -> Assertions.assertThrows(NoPathException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg2.getId()), String.valueOf(truck.getId()))))
         );
     }
 
     @Test
-    void execute_Should_Return_Error_When_MaxCapacity_isReached() {
+    void execute_Should_Throw_Error_When_MaxCapacity_isReached() {
         //Arrange
         createPackage.execute(List.of("Brisbane", "Adelaide", "90000", "test@test.com"));
         Package pkg = repository.getPackages().get(0);
         Truck truck = this.repository.findElementById(this.repository.getTrucks(), 1011);
-
-        //Act
-        String commandOutput = assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId())));
-
-        // Assert
-        Assertions.assertEquals("Truck Man with id 1011 has reached the max load capacity, please select another truck!", commandOutput);
+        //Act,Assert
+        Assertions.assertThrows(MaxCapacityReachedException.class, () -> assignPackage.execute(List.of(String.valueOf(pkg.getId()), String.valueOf(truck.getId()))));
     }
 }

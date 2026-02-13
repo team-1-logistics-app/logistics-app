@@ -26,28 +26,19 @@ public class AssignPackage extends BaseCommand {
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
-        int packageId;
-        int truckId;
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        Package pkg;
-        Truck truck;
-        String result;
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-            packageId = Parsers.parseToInteger("Package id", parameters.get(0));
-            truckId = Parsers.parseToInteger("Truck id", parameters.get(1));
-            pkg = getRepository().findElementById(getRepository().getPackages(), packageId);
-            truck = getRepository().findElementById(getRepository().getTrucks(), truckId);
-            result = assignPackage(pkg, truck);
-        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException |
-                 MaxCapacityReachedException e) {
-            return e.getMessage();
-        }
+        int packageId = Parsers.parseToInteger("Package id", parameters.get(0));
+        int truckId = Parsers.parseToInteger("Truck id", parameters.get(1));
 
+        Package pkg = getRepository().findElementById(getRepository().getPackages(), packageId);
+        Truck truck = getRepository().findElementById(getRepository().getTrucks(), truckId);
+
+        String result = assignPackage(pkg, truck);
         return result;
     }
 
@@ -58,16 +49,7 @@ public class AssignPackage extends BaseCommand {
 
         truck.addLoad(pkg.getWeight());
 
-        int truckId;
-        try {
-            truckId = getRepository().assignPackageToTruck(pkg, truck).getId();
-        } catch (ElementNotFoundException |
-                 LocationNotFoundException |
-                 TruckNotAssignedToRouteException |
-                 NoPathException |
-                 PackageIsAlreadyAssignedException e) {
-            return e.getMessage();
-        }
+        int truckId = getRepository().assignPackageToTruck(pkg, truck).getId();
 
         return String.format(Constants.PACKAGE_ASSIGNED_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truckId);
     }
