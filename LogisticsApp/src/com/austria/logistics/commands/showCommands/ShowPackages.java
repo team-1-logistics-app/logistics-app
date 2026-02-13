@@ -22,15 +22,12 @@ public class ShowPackages extends BaseCommand {
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-        } catch (IllegalArgumentException e) {
-            return e.getMessage();
-        }
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+
         return showPackages();
     }
 
