@@ -71,6 +71,7 @@ public class Parsers {
             if (parsedTime.isBefore(LocalDateTime.now())) {
                 throw new InvalidTimeFormatException(Constants.INVALID_TIME_IS_PAST_MESSAGE);
             }
+
             return parsedTime;
 
         } catch (DateTimeException e) {
@@ -143,7 +144,7 @@ public class Parsers {
         }
 
         if (!elements[6].equals("NONE")) {
-            Truck assignedTruck = repository.findElementById(repository.getTrucks(), Integer.parseInt(elements[5]));
+            Truck assignedTruck = repository.findElementById(repository.getTrucks(), Integer.parseInt(elements[6]));
             pkg.setAssignedTruck(assignedTruck);
         }
         return pkg;

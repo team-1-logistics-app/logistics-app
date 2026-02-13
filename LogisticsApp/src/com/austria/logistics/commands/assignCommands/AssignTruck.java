@@ -40,6 +40,10 @@ public class AssignTruck extends BaseCommand {
     }
 
     private String assignTruck(Route route, TruckType truckType) {
+        if (route.getAssignedTruck() != null) {
+            throw new TruckAlreadyAssignedException(String.format(Constants.ROUTE_ALREADY_HAVE_ASSIGNED_TRUCK_MESSAGE,route.getId()));
+        }
+
         Truck truck = getRepository().getTrucks().stream()
                     .filter(element -> element.getTruckType() == truckType && !element.isAssigned())
                     .findFirst()
