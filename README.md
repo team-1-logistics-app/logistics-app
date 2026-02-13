@@ -43,6 +43,17 @@ Core architectural components:
 - Domain Models - Encapsulate business logic and validation
 - Custom Exception Hierarchy - Centralized error handling
 
+##  How to Run
+
+1. Clone the repository
+2. Open the project in IntelliJ IDEA
+3. Run `Startup.java`
+4. Use console commands to interact with the system
+
+## Operational Workflow
+- Customer → CreatePackage
+- Employee/Manager → CreateRoute → AssignLocations to the route → AssignTruck to the route → AssignPackage to the route
+
 ## Supported Commands
 
 ## Creation
@@ -196,6 +207,20 @@ Register <Username> <FirstName> <LastName> <Password> <Email> [UserRole]
 If no UserRole is provided, the system assigns CUSTOMER by default.
 
 ---
+### `Login`
+```
+Login <Username> <Password>
+```
+
+### `Logout`
+```
+Logout
+```
+
+### `ReadMail`
+```
+ReadMail
+```
 
 ## Persistence
 
@@ -229,8 +254,9 @@ The system enforces role-based access control for command execution.
 
 ### Customer
 - `CreatePackage`
+- `ReadMail`
 
-Customers are allowed to create packages but cannot manage routes,
+Customers are allowed to create packages and read their mail but cannot manage routes,
 assign trucks, or execute administrative operations.
 
 ---
@@ -268,7 +294,9 @@ Managers can oversee system-wide user information and logistics operations.
 ### Commands That Do NOT Require Login
 
 The following commands can be executed without authentication:
-
+- `Register`
+- `Login`
+- `Logout`
 - `Save`
 - `Load`
 
@@ -278,7 +306,7 @@ These commands handle file-based persistence and do not require user privileges.
 
 ### Authentication Rule
 
-To execute any operational command (except `Save` and `Load`),
+To execute any operational command (except `Register`,`Login`,`Logout`,`Save`,`Load`),
 a valid login session is required.
 
 If no user is logged in, the system denies command execution.
