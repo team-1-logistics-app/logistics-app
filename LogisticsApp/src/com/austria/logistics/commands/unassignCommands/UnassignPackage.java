@@ -21,6 +21,7 @@ public class UnassignPackage extends BaseCommand {
     public UnassignPackage(Repository repository) {
         super(repository);
     }
+
     //EXPECTED STRING PACKAGE ID
     @Override
     protected String executeCommand(List<String> parameters) {
@@ -29,27 +30,23 @@ public class UnassignPackage extends BaseCommand {
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        Package pkg;
-        try {
-            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
-            int pkgId = Parsers.parseToInteger("Package id",parameters.get(0));
-            pkg = repo.findElementById(repo.getPackages(),pkgId);
-        }catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException e){
-            return e.getMessage();
-        }
+        int pkgId = Parsers.parseToInteger("Package id", parameters.get(0));
+        Package pkg = repo.findElementById(repo.getPackages(), pkgId);
+
         return unassignPackage(pkg);
     }
 
-    private String unassignPackage(Package pkg){
-        if(!pkg.isAssigned()){
-            return String.format(Constants.PACKAGE_IS_NOT_ASSIGNED_MESSAGE,pkg.getId());
+    private String unassignPackage(Package pkg) {
+        if (!pkg.isAssigned()) {
+            return String.format(Constants.PACKAGE_IS_NOT_ASSIGNED_MESSAGE, pkg.getId());
         }
 
-        Truck truck = repo.findElementById(repo.getTrucks(),pkg.getAssignedTruck().getId());
-        repo.unassignPackageFromTruck(pkg,truck);
+        Truck truck = repo.findElementById(repo.getTrucks(), pkg.getAssignedTruck().getId());
+        repo.unassignPackageFromTruck(pkg, truck);
 
-        return String.format(Constants.PACKAGE_SUCCESSFULLY_UNASSIGNED_MESSAGE,pkg.getId());
+        return String.format(Constants.PACKAGE_SUCCESSFULLY_UNASSIGNED_MESSAGE, pkg.getId());
     }
 
     @Override

@@ -8,6 +8,8 @@ import com.austria.logistics.commands.creationCommands.CreatePackage;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.ElementNotFoundException;
+import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
@@ -31,7 +33,7 @@ class UnassignPackageTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         repository = new RepositoryImpl();
         user = new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE);
         repository.login(user);
@@ -43,11 +45,11 @@ class UnassignPackageTest {
         unassignPackage = new UnassignPackage(repository);
         createRoute.execute(List.of());
         route = repository.getRoutes().get(0);
-        assignLocation.execute(List.of("1","Sydney","Feb","20","13:00"));
-        assignLocation.execute(List.of("1","Darwin"));
+        assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00"));
+        assignLocation.execute(List.of("1", "Darwin"));
         assignTruck.execute(List.of("1", "Man"));
-        createPackage.execute(List.of("Brisbane", "Adelaide", "40", "test@test.com"));
-        assignPackage.execute(List.of("2","1011"));
+        createPackage.execute(List.of("Sydney", "Darwin", "40", "test@test.com"));
+        assignPackage.execute(List.of("2", "1011"));
 
     }
 
@@ -58,6 +60,7 @@ class UnassignPackageTest {
         //Act,Assert
         Assertions.assertEquals("You are not logged in! Please login first!", unassignPackage.execute(List.of()));
     }
+
     @Test
     void executeCommand_Should_Return_Error_When_Not_LoggedIn_As_Employee_Or_Manager() {
         //Arrange
@@ -68,21 +71,21 @@ class UnassignPackageTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentCount_IsInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentCount_IsInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 1, Received: 0.", unassignPackage.execute(List.of()));
+        Assertions.assertThrows(InvalidValueException.class, () -> unassignPackage.execute(List.of()));
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentValue_IsInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentValue_IsInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Package id has to be valid integer.", unassignPackage.execute(List.of("asd")));
+        Assertions.assertThrows(InvalidValueException.class, () -> unassignPackage.execute(List.of("asd")));
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Package_Is_NotFound() {
+    void executeCommand_Should_Throw_Error_When_Package_Is_NotFound() {
         //Act,Assert
-        Assertions.assertEquals("No record with id 23 in the repository", unassignPackage.execute(List.of("23")));
+        Assertions.assertThrows(ElementNotFoundException.class, () -> unassignPackage.execute(List.of("23")));
     }
 
     @Test
@@ -101,7 +104,7 @@ class UnassignPackageTest {
         Assertions.assertAll(
                 () -> Assertions.assertFalse(repository.getPackages().get(0).isAssigned()),
                 () -> Assertions.assertNull(repository.getPackages().get(0).getAssignedTruck()),
-                () -> Assertions.assertFalse(repository.findElementById(repository.getTrucks(),1011).getAssignedPackagesIdList().contains(2))
+                () -> Assertions.assertFalse(repository.findElementById(repository.getTrucks(), 1011).getAssignedPackagesIdList().contains(2))
         );
 
     }
