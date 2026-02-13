@@ -25,11 +25,6 @@ import java.util.List;
 
 
 public class RepositoryImpl implements Repository {
-    private static final String NO_LOGGED_IN_USER = "There is no logged in user.";
-    private final static String NO_SUCH_USER = "There is no user with username %s!";
-    private final static String USER_ALREADY_EXIST = "User %s already exist. Choose a different username!";
-
-
     private int nextId;
     private User loggedUser;
 
@@ -174,7 +169,7 @@ public class RepositoryImpl implements Repository {
     @Override
     public User addUser(User userToAdd) {
         if (users.contains(userToAdd)) {
-            throw new UserAlreadyExistsException(String.format(USER_ALREADY_EXIST, userToAdd.getUsername()));
+            throw new UserAlreadyExistsException(String.format(Constants.USER_ALREADY_EXIST, userToAdd.getUsername()));
         }
         this.users.add(userToAdd);
         return userToAdd;
