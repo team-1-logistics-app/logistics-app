@@ -21,40 +21,29 @@ public class UnassignTruck extends BaseCommand {
     public UnassignTruck(Repository repository) {
         super(repository);
     }
+
     //EXPECTED STRING TRUCK ID AND STRING ROUTE ID
     @Override
     protected String executeCommand(List<String> parameters) {
+        Repository repo = getRepository();
         User loggedUser = getRepository().getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        Repository repo = getRepository();
-        int truckId;
-        int routeId;
-        Truck truck;
-        Route route;
-
-        try {
-            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
-            truckId = Parsers.parseToInteger("Truck id", parameters.get(0));
-            routeId = Parsers.parseToInteger("Route id", parameters.get(1));
-            truck = repo.findElementById(repo.getTrucks(), truckId);
-            route = repo.findElementById(repo.getRoutes(), routeId);
-        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException e) {
-            return e.getMessage();
-        }
+        int truckId = Parsers.parseToInteger("Truck id", parameters.get(0));
+        int routeId = Parsers.parseToInteger("Route id", parameters.get(1));
+        Truck truck = repo.findElementById(repo.getTrucks(), truckId);
+        Route route = repo.findElementById(repo.getRoutes(), routeId);
 
         return unassignTruck(truck, route);
     }
 
     private String unassignTruck(Truck truck, Route route) {
-        try {
-            getRepository().unassignTruckFromRoute(truck, route);
-        } catch (TruckNotAssignedToRouteException e) {
-            return e.getMessage();
-        }
+        getRepository().unassignTruckFromRoute(truck, route);
+
         return String.format(Constants.TRUCK_SUCCESSFULLY_UNASSIGNED_FROM_ROUTE,
                 truck.getTruckType().getDisplayName(),
                 truck.getId(),

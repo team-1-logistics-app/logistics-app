@@ -5,6 +5,9 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.ElementNotFoundException;
+import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.TruckNotAssignedToRouteException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
@@ -66,23 +69,23 @@ class UnassignTruckTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentCount_IsInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentCount_IsInvalid() {
         //Arrange
         repository.login(user);
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 2, Received: 1.",
+        Assertions.assertThrows(InvalidValueException.class, () ->
                 unassignTruck.execute(List.of("1011")));
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentValue_IsInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentValue_IsInvalid() {
         //Arrange
         repository.login(user);
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Truck id has to be valid integer.",
+                () -> Assertions.assertThrows(InvalidValueException.class, () ->
                         unassignTruck.execute(List.of("asd", "1"))),
-                () -> Assertions.assertEquals("Route id has to be valid integer.",
+                () -> Assertions.assertThrows(InvalidValueException.class, () ->
                         unassignTruck.execute(List.of("1011", "asd")))
         );
     }
@@ -93,19 +96,19 @@ class UnassignTruckTest {
         repository.login(user);
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("No record with id 10123 in the repository",
+                () -> Assertions.assertThrows(ElementNotFoundException.class, () ->
                         unassignTruck.execute(List.of("10123", "1"))),
-                () -> Assertions.assertEquals("No record with id 123123 in the repository",
+                () -> Assertions.assertThrows(ElementNotFoundException.class, () ->
                         unassignTruck.execute(List.of("1011", "123123")))
         );
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Truck_Is_NotAssigned() {
+    void executeCommand_Should_Throw_Error_When_Truck_Is_NotAssigned() {
         //Arrange
         repository.login(user);
         //Act,Assert
-        Assertions.assertEquals("Truck Man with id 1012 is not assigned to route with id 1",
+        Assertions.assertThrows(TruckNotAssignedToRouteException.class, () ->
                 unassignTruck.execute(List.of("1012", "1")));
 
     }
