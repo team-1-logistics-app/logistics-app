@@ -232,7 +232,7 @@ public class RepositoryImpl implements Repository {
             Files.write(Constants.FILE_PATH_USERS, Parsers.parseCollectionToStringList(this.users));
 
         } catch (IOException e) {
-            return Constants.STATE_FAILED_TO_SAVE;
+           throw new FailedToSaveToFileException(Constants.STATE_FAILED_TO_SAVE);
         }
         return Constants.STATE_SAVED_TO_FILE;
     }
