@@ -20,24 +20,19 @@ public class ShowRoute extends BaseCommand {
     public ShowRoute(Repository repository) {
         super(repository);
     }
+
     //EXPECTED STRING ROUTE ID
     @Override
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
 
-        int id;
-        Route route;
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-            id = Parsers.parseToInteger("Route id", parameters.get(0));
-            route = getRepository().findElementById(getRepository().getRoutes(), id);
-        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException e) {
-            return e.getMessage();
-        }
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+        int id = Parsers.parseToInteger("Route id", parameters.get(0));
+        Route route = getRepository().findElementById(getRepository().getRoutes(), id);
 
         return showRoute(route);
     }
@@ -52,10 +47,10 @@ public class ShowRoute extends BaseCommand {
             output.append("No assigned truck to the route.\n");
         }
         route.getRouteLocations().forEach(location -> {
-            output.append(String.format("City: %s,",location.getLocation().getDisplayName()))
-                    .append(String.format(" Scheduled time: %s\n",location.getEventTimeAsString()));
+            output.append(String.format("City: %s,", location.getLocation().getDisplayName()))
+                    .append(String.format(" Scheduled time: %s\n", location.getEventTimeAsString()));
         });
-        if(route.getRouteLocations().isEmpty()){
+        if (route.getRouteLocations().isEmpty()) {
             output.append("No locations added to the route yet.\n");
         }
         return output.toString();

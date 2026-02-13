@@ -4,6 +4,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.Locations;
@@ -101,11 +102,10 @@ class ShowRouteTest {
     }
 
     @Test
-    void showRouteCommand_Should_Return_Error_When_ArgumentsAreInvalid() {
+    void showRouteCommand_Should_Throw_Error_When_ArgumentsAreInvalid() {
         //Arrange
         parameters = List.of("Test", "Test");
-        String expected = "Route id has to be valid integer.";
         //Act,Assert
-        Assertions.assertEquals(expected, showRoute.execute(parameters));
+        Assertions.assertThrows(InvalidValueException.class,() -> showRoute.execute(parameters));
     }
 }
