@@ -4,6 +4,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
@@ -55,48 +56,48 @@ class AssignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentCount_isInvalid() {
+    void executeCommand_Should_Throws_Error_When_ArgumentCount_isInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Invalid number of arguments. Expected: 2, Received: 1.",
-                        assignLocation.execute(List.of("1"))),
-                () -> Assertions.assertEquals("Invalid number of arguments. Expected: 5, Received: 3.",
-                        assignLocation.execute(List.of("1", "Sydney", "Feb"))),
-                () -> Assertions.assertEquals("Invalid number of arguments. Expected: 5, Received: 4.",
-                        assignLocation.execute(List.of("1", "Sydney", "Feb", "20")))
+                () -> Assertions.assertThrows(InvalidValueException.class,
+                        () -> assignLocation.execute(List.of("1"))),
+                () -> Assertions.assertThrows(InvalidValueException.class,
+                        () -> assignLocation.execute(List.of("1", "Sydney", "Feb"))),
+                () -> Assertions.assertThrows(InvalidValueException.class,
+                        () -> assignLocation.execute(List.of("1", "Sydney", "Feb", "20")))
         );
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentValue_isInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentValue_isInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Route id has to be valid integer.",
-                        assignLocation.execute(List.of("asd", "Sydney", "Feb", "20", "13:00"))),
-                () -> Assertions.assertEquals("asd is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.",
-                        assignLocation.execute(List.of("1", "asd", "Feb", "20", "13:00"))),
-                () -> Assertions.assertEquals("Invalid event time format. Expected format: MMM d HH:mm.",
-                        assignLocation.execute(List.of("1", "Sydney", "asd", "20", "13:00"))),
-                () -> Assertions.assertEquals("Invalid event time format. Expected format: MMM d HH:mm.",
-                        assignLocation.execute(List.of("1", "Sydney", "Feb", "65", "13:00"))),
-                () -> Assertions.assertEquals("Invalid event time format. Expected format: MMM d HH:mm.",
-                        assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "65:00")))
+                () -> Assertions.assertThrows(InvalidValueException.class,
+                        () -> assignLocation.execute(List.of("asd", "Sydney", "Feb", "20", "13:00"))),
+                () -> Assertions.assertThrows(InvalidLocationException.class,
+                        () -> assignLocation.execute(List.of("1", "asd", "Feb", "20", "13:00"))),
+                () -> Assertions.assertThrows(InvalidTimeFormatException.class,
+                        () -> assignLocation.execute(List.of("1", "Sydney", "asd", "20", "13:00"))),
+                () -> Assertions.assertThrows(InvalidTimeFormatException.class,
+                        () -> assignLocation.execute(List.of("1", "Sydney", "Feb", "65", "13:00"))),
+                () -> Assertions.assertThrows(InvalidTimeFormatException.class,
+                        () -> assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "65:00")))
         );
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_RouteId_Is_NotFound() {
+    void executeCommand_Should_Throw_Error_When_RouteId_Is_NotFound() {
         //Act,Assert
-        Assertions.assertEquals("No record with id 23 in the repository",
-                assignLocation.execute(List.of("23", "Sydney", "Feb", "20", "13:00")));
+        Assertions.assertThrows(ElementNotFoundException.class,
+                () ->  assignLocation.execute(List.of("23", "Sydney", "Feb", "20", "13:00")));
 
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_RouteIsEmpty_And_DepartTime_IsNot_Provided() {
+    void executeCommand_Should_Throw_Error_When_RouteIsEmpty_And_DepartTime_IsNot_Provided() {
         //Act,Assert
-        Assertions.assertEquals("Route with id 1 doesn't contain any locations yet, you should provide departure time for your start location.",
-                assignLocation.execute(List.of("1", "Sydney")));
+        Assertions.assertThrows(RouteIsEmptyException.class,
+                () ->  assignLocation.execute(List.of("1", "Sydney")));
     }
 
     @Test
@@ -112,11 +113,11 @@ class AssignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Assigning_Second_FirstLocation() {
+    void executeCommand_Should_Throws_Error_When_Assigning_Second_FirstLocation() {
         //Arrange
         assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00"));
         //Act,Assert
-        Assertions.assertEquals("Route with id 1 already contains location with depart time(starting location).",assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00")));
+        Assertions.assertThrows(RouteIsNotEmptyException.class,() -> assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00")));
     }
 
     @Test
@@ -134,11 +135,11 @@ class AssignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_LastLocation_IsTheSame() {
+    void executeCommand_Should_Throw_Error_When_LastLocation_IsTheSame() {
         //Arrange
         assignLocation.execute(List.of("1", "Sydney", "Feb", "20", "13:00"));
         assignLocation.execute(List.of("1", "Darwin"));
         //Act, Assert
-        Assertions.assertEquals("Route with id 1 already has Darwin as last stop.",assignLocation.execute(List.of("1", "Darwin")));
+        Assertions.assertThrows(InvalidLocationRouteException.class,() -> assignLocation.execute(List.of("1", "Darwin")));
     }
 }

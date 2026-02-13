@@ -5,6 +5,7 @@ import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.CommandFactory;
 import com.austria.logistics.core.contracts.Engine;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.LogisticsAppException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class EngineImpl implements Engine {
     private final CommandFactory commandFactory;
     private final Repository repository;
 
-    public EngineImpl(){
+    public EngineImpl() {
         this.repository = new RepositoryImpl();
         this.commandFactory = new CommandFactoryImpl();
     }
@@ -23,42 +24,48 @@ public class EngineImpl implements Engine {
     public void start() {
         Scanner input = new Scanner(System.in);
 
-        while (true){
+        while (true) {
             String inputLine = input.nextLine();
-            if(inputLine.isEmpty()){
+            if (inputLine.isEmpty()) {
                 continue;
             }
-            if(inputLine.equalsIgnoreCase(Constants.TERMINATION_COMMAND)){
+            if (inputLine.equalsIgnoreCase(Constants.TERMINATION_COMMAND)) {
                 break;
             }
-            processCommand(inputLine);
+
+            try {
+                processCommand(inputLine);
+            } catch (LogisticsAppException e) {
+                print(e.getMessage());
+            }
+
         }
     }
 
-    private void print(String output){
+    private void print(String output) {
         System.out.println(output.trim());
         System.out.println(Constants.REPORT_SEPARATOR);
     }
 
-    private void processCommand(String inputLine){
+    private void processCommand(String inputLine) {
         String commandName = extractCommandName(inputLine);
         List<String> parameters = extractParameters(inputLine);
         Command command;
         String execResult;
         try {
-            command = commandFactory.createCommandFromCommandName(commandName,repository);
+            command = commandFactory.createCommandFromCommandName(commandName, repository);
             execResult = command.execute(parameters);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             execResult = e.getMessage();
         }
         print(execResult);
     }
 
-    private String extractCommandName(String inputLine){
+    private String extractCommandName(String inputLine) {
         return inputLine.split(" ")[0];
     }
 
-    private List<String> extractParameters(String inputLine){
+    private List<String> extractParameters(String inputLine) {
         String[] parts = inputLine.split(" ");
 
         List<String> parameters = new ArrayList<>();
