@@ -11,7 +11,6 @@ public class Constants {
     public static final String LOCATION_REMOVED_MESSAGE = "%s is successfully removed from route with id %d .";
     public static final String LOCATION_ROUTE_INVALID_MESSAGE = "Route with id %d doesn't contain path from %s to %s.";
     public static final String LOCATION_PREVIOUS_IS_SAME_MESSAGE = "Route with id %d already has %s as last stop.";
-    public static final int LOCATION_FIRST_IN_ROUTE_LIST = 1;
 
     public static final String ROUTE_IS_EMPTY_MESSAGE = "Route with id %d doesn't contain any locations yet.";
     public static final String ROUTE_IS_EMPTY_WHILE_ADDING_AS_FIRST_LOCATION_MESSAGE = "Route with id %d doesn't contain any locations yet, you should provide departure time for your start location.";
@@ -73,7 +72,6 @@ public class Constants {
 
     public static final String ELEMENT_NOT_FOUND_MESSAGE = "No record with id %d in the repository";
 
-
     public final static Path FILE_PATH_PACKAGES = Paths.get(Constants.STATE_DIR_TO_SAVE, Constants.STATE_FILE_TO_SAVE_PACKAGES);
     public final static Path FILE_PATH_TRUCKS = Paths.get(Constants.STATE_DIR_TO_SAVE, Constants.STATE_FILE_TO_SAVE_TRUCKS);
     public final static Path FILE_PATH_ROUTES = Paths.get(Constants.STATE_DIR_TO_SAVE, Constants.STATE_FILE_TO_SAVE_ROUTES);
@@ -96,5 +94,4 @@ public class Constants {
     private Constants() {
     }
 
-    ;
 }
