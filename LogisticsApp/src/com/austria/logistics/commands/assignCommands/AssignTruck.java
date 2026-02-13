@@ -27,38 +27,25 @@ public class AssignTruck extends BaseCommand {
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
-        TruckType truck;
-        int id;
 
-        Route route;
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
+        int id = Parsers.parseToInteger("Route id", parameters.get(0));
+        Route route = getRepository().findElementById(getRepository().getRoutes(), id);
+        TruckType truck = Parsers.parseTruck(parameters.get(1));
 
-        try {
-            Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
-            id = Parsers.parseToInteger("Route id", parameters.get(0));
-            route = getRepository().findElementById(getRepository().getRoutes(), id);
-            truck = Parsers.parseTruck(parameters.get(1));
-        } catch (IllegalArgumentException | InvalidValueException | ElementNotFoundException |
-                 InvalidTruckTypeException e) {
-            return e.getMessage();
-        }
         return assignTruck(route, truck);
     }
 
     private String assignTruck(Route route, TruckType truckType) {
-        Truck truck;
-        int routeId;
-        try {
-            truck = getRepository().getTrucks().stream()
+        Truck truck = getRepository().getTrucks().stream()
                     .filter(element -> element.getTruckType() == truckType && !element.isAssigned())
                     .findFirst()
                     .orElseThrow(() -> new NoAvailableTruckException(String.format(Constants.TRUCK_TYPE_NOT_AVAILABLE_MESSAGE, truckType.getDisplayName())));
-            routeId = getRepository().assignTruckToRoute(truck, route).getId();
-        } catch (NoAvailableTruckException | RouteIsEmptyException  e) {
-            return e.getMessage();
-        }
+
+        int routeId = getRepository().assignTruckToRoute(truck, route).getId();
 
         return String.format(Constants.TRUCK_ASSIGNED_MESSAGE, truckType.getDisplayName(), truck.getId(), routeId);
     }

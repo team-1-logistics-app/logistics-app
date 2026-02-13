@@ -5,6 +5,7 @@ import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
@@ -61,27 +62,27 @@ class AssignTruckTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_ArgumentsCount_IsInvalid() {
+    void execute_Should_Throw_Error_When_ArgumentsCount_IsInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 2, Received: 1.", assignTruck.execute(List.of(String.valueOf(route.getId()))));
+        Assertions.assertThrows(InvalidValueException.class, () -> assignTruck.execute(List.of(String.valueOf(route.getId()))));
     }
 
     @Test
-    void execute_Should_Return_Error_When_Arguments_AreInvalid() {
+    void execute_Should_Throw_Error_When_Arguments_AreInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () ->Assertions.assertEquals("Route id has to be valid integer.", assignTruck.execute(List.of("asd",String.valueOf(route.getId())))),
-                () ->Assertions.assertEquals("No record with id 2 in the repository", assignTruck.execute(List.of(String.valueOf(2),TruckType.MAN.getDisplayName()))),
-                () ->Assertions.assertEquals("TEST is unsupported truck type, use one of those: Scania, Man or Actros", assignTruck.execute(List.of(String.valueOf(route.getId()),"TEST")))
+                () ->Assertions.assertThrows(InvalidValueException.class, () -> assignTruck.execute(List.of("asd",String.valueOf(route.getId())))),
+                () ->Assertions.assertThrows(ElementNotFoundException.class, () -> assignTruck.execute(List.of(String.valueOf(2),TruckType.MAN.getDisplayName()))),
+                () ->Assertions.assertThrows(InvalidTruckTypeException.class, () -> assignTruck.execute(List.of(String.valueOf(route.getId()),"TEST")))
         );
     }
 
     @Test
-    void execute_Should_Return_Error_When_The_Route_IsEmpty() {
+    void execute_Should_Throw_Error_When_The_Route_IsEmpty() {
         //Arrange
         createRoute.execute(List.of());
         //Act,Assert
-        Assertions.assertEquals("Route with id 2 doesn't have enough locations assigned yet, please assign at least 2 locations before assigning truck to it.",
+        Assertions.assertThrows(RouteIsEmptyException.class, () ->
                 assignTruck.execute(List.of(String.valueOf(2),
                         TruckType.MAN.getDisplayName())));
     }
@@ -95,7 +96,7 @@ class AssignTruckTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_NoAvailable_Trucks_Left() {
+    void execute_Should_Throw_Error_When_NoAvailable_Trucks_Left() {
         //Arrange
         this.repository.getTrucks()
                 .forEach(truck ->{
@@ -104,7 +105,7 @@ class AssignTruckTest {
                     }
                 });
         //Act,Assert
-        Assertions.assertEquals("All trucks Man are busy at the moment, try different truck type.",
+        Assertions.assertThrows(NoAvailableTruckException.class,() ->
                 assignTruck.execute(List.of(String.valueOf(route.getId()),
                         TruckType.MAN.getDisplayName())));
     }
