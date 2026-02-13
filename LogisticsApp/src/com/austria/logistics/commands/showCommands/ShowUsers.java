@@ -3,6 +3,7 @@ package com.austria.logistics.commands.showCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 
@@ -18,7 +19,7 @@ public class ShowUsers extends BaseCommand {
         User loggedUser = getRepository().getLoggedUser();
 
         if(loggedUser.getUserRole() != UserRole.MANAGER){
-            return Constants.USER_NOT_MANAGER;
+            throw new NotLoggedInException(Constants.USER_NOT_MANAGER);
         }
 
         return showUsers();

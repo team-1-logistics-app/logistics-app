@@ -3,6 +3,7 @@ package com.austria.logistics.commands.creationCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 
@@ -21,7 +22,7 @@ public class CreateRoute extends BaseCommand {
         User loggedUser = getRepository().getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
-            return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
+            throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
         }
 
         return createRoute();

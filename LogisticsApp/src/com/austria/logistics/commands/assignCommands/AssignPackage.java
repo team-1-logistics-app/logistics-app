@@ -27,7 +27,7 @@ public class AssignPackage extends BaseCommand {
         User loggedUser = getRepository().getLoggedUser();
 
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
-            return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
+            throw new NotLoggedInException(Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE);
         }
 
         Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);

@@ -3,6 +3,7 @@ package com.austria.logistics.commands.creationCommands;
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
@@ -31,12 +32,12 @@ class CreateRouteTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
+    void execute_Should_Throw_Error_When_User_Not_LoggedIn_AsEmployee() {
         //Arrange
         repository.logout();
         repository.login(new UserImpl("Test","Test","Test","Test", "test@test.bg", UserRole.CUSTOMER));
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as manager or employee!", createRoute.execute(List.of("Test")));
+        Assertions.assertThrows(NotLoggedInException.class, () -> createRoute.execute(List.of("Test")));
     }
 
     @Test

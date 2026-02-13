@@ -78,13 +78,13 @@ class AssignPackageTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_User_Not_LoggedIn_AsEmployee() {
+    void execute_Should_Throw_Error_When_User_Not_LoggedIn_AsEmployee() {
         //Arrange
         repository.logout();
         user = new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER);
         repository.login(user);
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as manager or employee!", assignPackage.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> assignPackage.execute(List.of()));
     }
 
 

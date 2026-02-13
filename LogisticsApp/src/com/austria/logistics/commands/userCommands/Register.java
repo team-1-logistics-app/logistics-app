@@ -4,6 +4,8 @@ import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.NotLoggedInException;
+import com.austria.logistics.exceptions.UserAlreadyExistsException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.utils.Parsers;
@@ -42,11 +44,11 @@ public class Register extends BaseCommand {
         Repository repo = getRepository();
 
         if (repo.getUsers().stream().anyMatch(user -> user.getUsername().equals(username))) {
-            return String.format(Constants.USER_ALREADY_EXIST, username);
+            throw new UserAlreadyExistsException(String.format(Constants.USER_ALREADY_EXIST, username));
         }
 
         if (repo.getUsers().stream().anyMatch(user -> user.getEmail().equals(email))) {
-            return String.format(Constants.USER_EMAIL_ALREADY_USED, email);
+            throw new UserAlreadyExistsException(String.format(Constants.USER_EMAIL_ALREADY_USED, email));
         }
 
 

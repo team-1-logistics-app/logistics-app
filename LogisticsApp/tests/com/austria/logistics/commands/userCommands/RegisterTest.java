@@ -4,6 +4,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.UserAlreadyExistsException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.Locations;
@@ -56,11 +57,11 @@ class RegisterTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Username_Exists() {
+    void executeCommand_Throw_Return_Error_When_Username_Exists() {
         //Arrange
         register.execute(List.of("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE.toString()));
         //Act,Assert
-        Assertions.assertEquals("User Test already exist. Choose a different username!",
+        Assertions.assertThrows(UserAlreadyExistsException.class, () ->
                 register.execute(List.of("Test", "Test", "Test", "Test", "test@test.bg", UserRole.EMPLOYEE.toString())));
     }
 

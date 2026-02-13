@@ -7,6 +7,7 @@ import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.ElementNotFoundException;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.exceptions.TruckNotAssignedToRouteException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
@@ -59,12 +60,12 @@ class UnassignTruckTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_User_Is_Not_LoggedIn_As_Employee_Or_Manager() {
+    void executeCommand_Should_Throw_Error_When_User_Is_Not_LoggedIn_As_Employee_Or_Manager() {
         //Arrange
         repository.logout();
         repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER));
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as manager or employee!",
+        Assertions.assertThrows(NotLoggedInException.class, () ->
                 unassignTruck.execute(List.of("1011", "1")));
     }
 

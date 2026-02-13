@@ -4,6 +4,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
@@ -43,11 +44,11 @@ class ShowUsersTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Not_LoggedIn_As_Manager() {
+    void executeCommand_Should_Throw_Error_When_Not_LoggedIn_As_Manager() {
         //Arrange
         repository.login(userCustomer);
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as manager!", showUsers.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> showUsers.execute(List.of()));
     }
 
     @Test

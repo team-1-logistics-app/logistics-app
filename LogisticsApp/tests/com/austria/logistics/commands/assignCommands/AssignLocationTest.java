@@ -47,12 +47,12 @@ class AssignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Not_LoggedIn_As_Employee_Or_Manager() {
+    void executeCommand_Should_Throw_Error_When_Not_LoggedIn_As_Employee_Or_Manager() {
         //Arrange
         repository.logout();
         repository.login(new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER));
         //Act,Assert
-        Assertions.assertEquals("You are not logged in as manager or employee!", assignLocation.execute(List.of("1", "Sydney", Parsers.parseEventTimeToString(FIXED_TIME))));
+        Assertions.assertThrows(NotLoggedInException.class, () -> assignLocation.execute(List.of("1", "Sydney", Parsers.parseEventTimeToString(FIXED_TIME))));
     }
 
     @Test
