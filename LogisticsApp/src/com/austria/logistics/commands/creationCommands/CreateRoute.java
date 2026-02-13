@@ -21,22 +21,16 @@ public class CreateRoute extends BaseCommand {
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();
 
-        if(loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE){
+        if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
-        }
-
-        try {
-            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
-        } catch (IllegalArgumentException e){
-            return e.getMessage();
         }
 
         return createRoute();
     }
 
-    private String createRoute(){
+    private String createRoute() {
         int id = getRepository().createRoute().getId();
-        return String.format(Constants.ROUTE_CREATED_MESSAGE,id);
+        return String.format(Constants.ROUTE_CREATED_MESSAGE, id);
     }
 
     @Override
