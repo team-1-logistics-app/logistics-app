@@ -1,6 +1,6 @@
 package com.austria.logistics.exceptions;
 
-public class RouteNotEnoughLocationsException extends RuntimeException {
+public class RouteNotEnoughLocationsException extends LogisticsAppException {
     public RouteNotEnoughLocationsException(String message) {
         super(message);
     }

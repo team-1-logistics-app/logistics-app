@@ -12,19 +12,13 @@ public class Validators {
 
     public static void validateArgumentsCount(List<String> list, int expectedArgumentsCount) {
         if (list.size() < expectedArgumentsCount) {
-            throw new IllegalArgumentException(String.format(Constants.INVALID_NUMBER_OF_ARGUMENTS_MESSAGE, expectedArgumentsCount, list.size()));
-        }
-    }
-
-    public static void validateIntegerRange(int value,int min, int max, String errorMessage){
-        if(value < min || value > max){
-            throw new IllegalArgumentException(errorMessage);
+            throw new InvalidValueException(String.format(Constants.INVALID_NUMBER_OF_ARGUMENTS_MESSAGE, expectedArgumentsCount, list.size()));
         }
     }
 
     public static void validateStringLength(String value, int min, int max, String message) {
         if(value.length() < min || value.length() > max){
-            throw new IllegalArgumentException(message);
+            throw new InvalidValueException(message);
         }
     }
 

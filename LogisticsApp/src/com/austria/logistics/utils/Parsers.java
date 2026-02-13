@@ -54,7 +54,7 @@ public class Parsers {
         try {
             return Enum.valueOf(type, valueToParse.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(String.format(errorMessage, valueToParse));
+            throw new InvalidValueException(String.format(errorMessage, valueToParse));
         }
     }
 
