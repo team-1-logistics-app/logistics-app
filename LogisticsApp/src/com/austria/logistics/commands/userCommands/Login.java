@@ -15,7 +15,7 @@ public class Login extends BaseCommand {
     public Login(Repository repository) {
         super(repository);
     }
-
+    //EXPECTED STRING USERNAME AND STRING PASSWORD
     @Override
     protected String executeCommand(List<String> parameters) {
         if(getRepository().hasLoggedUser()){

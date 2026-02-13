@@ -21,7 +21,7 @@ public class ShowPackage extends BaseCommand {
         super(repository);
     }
 
-
+    //EXPECTED STRING PACKAGE ID
     @Override
     protected String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

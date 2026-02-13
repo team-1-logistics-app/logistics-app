@@ -51,7 +51,6 @@ public class RepositoryImpl implements Repository {
         for (int id = 1026; id <= 1040; id++) this.trucks.add(this.createTruck(id, TruckType.ACTROS));
     }
 
-    /// Can do those with generic method
     @Override
     public List<Truck> getTrucks() {
         return new ArrayList<>(this.trucks);
@@ -72,7 +71,6 @@ public class RepositoryImpl implements Repository {
         return new ArrayList<>(this.users);
     }
 
-
     @Override
     public <E extends Identifiable> E findElementById(List<E> elements, int id) {
         return elements.stream()
@@ -82,8 +80,7 @@ public class RepositoryImpl implements Repository {
     }
 
     private Truck createTruck(int id, TruckType truckType) {
-        Truck truck = new TruckImpl(id, truckType);
-        return truck;
+        return new TruckImpl(id, truckType);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class UnassignPackage extends BaseCommand {
     public UnassignPackage(Repository repository) {
         super(repository);
     }
-
+    //EXPECTED STRING PACKAGE ID
     @Override
     protected String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

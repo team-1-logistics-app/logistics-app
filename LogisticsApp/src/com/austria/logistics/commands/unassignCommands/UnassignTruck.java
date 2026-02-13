@@ -21,7 +21,7 @@ public class UnassignTruck extends BaseCommand {
     public UnassignTruck(Repository repository) {
         super(repository);
     }
-
+    //EXPECTED STRING TRUCK ID AND STRING ROUTE ID
     @Override
     protected String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

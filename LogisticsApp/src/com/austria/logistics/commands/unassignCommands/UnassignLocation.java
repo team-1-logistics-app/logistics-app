@@ -24,7 +24,7 @@ public class UnassignLocation extends BaseCommand {
     public UnassignLocation(Repository repository) {
         super(repository);
     }
-
+    //EXPECTED STRING ROUTE ID AND STRING CITY
     @Override
     protected String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

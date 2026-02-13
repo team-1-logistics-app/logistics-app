@@ -10,7 +10,7 @@ public class Logout extends BaseCommand {
     public Logout(Repository repository) {
         super(repository);
     }
-
+    //NO ARGUMENTS ARE EXPECTED
     @Override
     protected String executeCommand(List<String> parameters) {
         getRepository().logout();

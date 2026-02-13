@@ -20,7 +20,7 @@ public class ShowRoute extends BaseCommand {
     public ShowRoute(Repository repository) {
         super(repository);
     }
-
+    //EXPECTED STRING ROUTE ID
     @Override
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

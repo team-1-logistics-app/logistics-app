@@ -23,6 +23,8 @@ public class AssignLocation extends BaseCommand{
         super(repository);
     }
 
+    //ASSIGNING FIRST LOCATION TO ROUTE EXPECTS STRING ROUTE ID, STRING CITY, STRING DEPART TIME IN FORMAT MMM d HH:mm
+    //ASSIGNING ANY OTHER LOCATION EXPECTS STRING ROUTE ID AND STRING CITY
     @Override
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

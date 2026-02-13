@@ -17,7 +17,7 @@ public class ShowPackages extends BaseCommand {
         super(repository);
     }
 
-
+    //NO ARGUMENTS ARE EXPECTED
     @Override
     public String executeCommand(List<String> parameters) {
         User loggedUser = getRepository().getLoggedUser();

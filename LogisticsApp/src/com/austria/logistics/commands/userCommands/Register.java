@@ -17,7 +17,7 @@ public class Register extends BaseCommand {
     public Register(Repository repository) {
         super(repository);
     }
-
+    //EXPECTED USERNAME,FIRSTNAME,LASTNAME,PASSWORD,EMAIL AND USER ROLE(OPTIONAL)
     @Override
     protected String executeCommand(List<String> parameters) {
         if (getRepository().hasLoggedUser()) {
