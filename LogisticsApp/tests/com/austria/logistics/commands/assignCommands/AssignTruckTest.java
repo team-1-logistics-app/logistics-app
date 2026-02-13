@@ -2,14 +2,13 @@ package com.austria.logistics.commands.assignCommands;
 
 import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
-import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
@@ -38,9 +37,9 @@ class AssignTruckTest {
         createRoute.execute(List.of());
         route = repository.getRoutes().get(0);
 
-        route.addFirstLocationToRoute(Locations.BRI, FIXED_TIME);
-        route.addLocationToRoute(Locations.ADL);
-        route.addLocationToRoute(Locations.DAR);
+        route.addFirstLocationToRoute(CityName.BRI, FIXED_TIME);
+        route.addLocationToRoute(CityName.ADL);
+        route.addLocationToRoute(CityName.DAR);
     }
 
     @Test

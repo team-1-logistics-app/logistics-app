@@ -12,7 +12,7 @@ import com.austria.logistics.models.RouteImpl;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.*;
 import com.austria.logistics.models.contracts.Package;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.TruckImpl;
@@ -29,22 +29,22 @@ import java.util.Locale;
 public class Parsers {
     private Parsers() {}
 
-    public static Locations parseLocation(String location) {
+    public static CityName parseLocation(String location) {
         switch (location) {
             case "Sydney":
-                return Locations.getCityValue("Sydney");
+                return CityName.getCityValue("Sydney");
             case "Melbourne":
-                return Locations.getCityValue("Melbourne");
+                return CityName.getCityValue("Melbourne");
             case "Adelaide":
-                return Locations.getCityValue("Adelaide");
+                return CityName.getCityValue("Adelaide");
             case "Alice Springs":
-                return Locations.getCityValue("Alice Springs");
+                return CityName.getCityValue("Alice Springs");
             case "Brisbane":
-                return Locations.getCityValue("Brisbane");
+                return CityName.getCityValue("Brisbane");
             case "Darwin":
-                return Locations.getCityValue("Darwin");
+                return CityName.getCityValue("Darwin");
             case "Perth":
-                return Locations.getCityValue("Perth");
+                return CityName.getCityValue("Perth");
             default:
                 throw new InvalidLocationException(String.format(Constants.LOCATION_INVALID_MESSAGE, location));
         }
@@ -117,7 +117,7 @@ public class Parsers {
             LocationAndEventTimeList.stream()
                     .map(element -> {
                         String[] parts = element.split("@");
-                        Locations location = Parsers.parseLocation(parts[0]);
+                        CityName location = Parsers.parseLocation(parts[0]);
                         LocalDateTime eventTime = Parsers.parseEventTimeToLocalDateTime(parts[1]);
                         return (Location) new LocationImpl(location, eventTime);
                     }).forEach(route::addLocationFromLoad);
@@ -132,8 +132,8 @@ public class Parsers {
     public static Package packageFromSaveString(String line, Repository repository) {
         String[] elements = line.split("\\|");
         int id = Integer.parseInt(elements[0]);
-        Locations startLocation = Parsers.parseLocation(elements[1]);
-        Locations endLocation = Parsers.parseLocation(elements[2]);
+        CityName startLocation = Parsers.parseLocation(elements[1]);
+        CityName endLocation = Parsers.parseLocation(elements[2]);
         int weight = Integer.parseInt(elements[3]);
         String contactInfo = elements[4];
 

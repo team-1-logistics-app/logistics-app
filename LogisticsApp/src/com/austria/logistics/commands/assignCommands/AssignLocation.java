@@ -6,7 +6,7 @@ import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
@@ -38,7 +38,7 @@ public class AssignLocation extends BaseCommand {
         Validators.validateArgumentsCount(parameters, MIN_ARGUMENTS_COUNT);
         int routeId = Parsers.parseToInteger("Route id", parameters.get(0));
         Route route = getRepository().findElementById(getRepository().getRoutes(), routeId);
-        Locations location = Parsers.parseLocation(parameters.get(1));
+        CityName location = Parsers.parseLocation(parameters.get(1));
 
         if (route.isRouteEmpty() && parameters.size() > MIN_ARGUMENTS_COUNT) {
             Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS_WHEN_ROUTE_ISEMPTY);
@@ -54,11 +54,11 @@ public class AssignLocation extends BaseCommand {
 
     }
 
-    private String addFirstLocation(Route route, Locations location, LocalDateTime eventTime) {
+    private String addFirstLocation(Route route, CityName location, LocalDateTime eventTime) {
         return route.addFirstLocationToRoute(location, eventTime);
     }
 
-    private String addAnyOtherLocation(Route route, Locations location) {
+    private String addAnyOtherLocation(Route route, CityName location) {
         return route.addLocationToRoute(location);
     }
 

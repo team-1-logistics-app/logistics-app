@@ -1,23 +1,23 @@
 package com.austria.logistics.models.contracts;
 
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
 public interface Route extends Identifiable, Savealbe{
-    String addFirstLocationToRoute(Locations location, LocalDateTime eventTime);
-    String addLocationToRoute(Locations location);
+    String addFirstLocationToRoute(CityName location, LocalDateTime eventTime);
+    String addLocationToRoute(CityName location);
     void addLocationFromLoad(Location location);
-    String removeLocationFromRoute(Locations location);
+    String removeLocationFromRoute(CityName location);
 
-    boolean containsLocation(Locations location);
-    Location findByCity(Locations location);
+    boolean containsLocation(CityName location);
+    Location findByCity(CityName location);
     LinkedList<Location> getRouteLocations();
     boolean isRouteEmpty();
     int calculateTotalDistance();
-    int calculateDistanceBetween(Locations startLocation, Locations endLocation);
+    int calculateDistanceBetween(CityName startLocation, CityName endLocation);
     void calculateSchedule();
     Truck getAssignedTruck();
 

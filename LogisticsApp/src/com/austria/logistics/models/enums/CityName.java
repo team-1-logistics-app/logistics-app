@@ -3,7 +3,7 @@ package com.austria.logistics.models.enums;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.exceptions.InvalidLocationException;
 
-public enum Locations {
+public enum CityName {
     SYD("Sydney"),
     MEL("Melbourne"),
     ADL("Adelaide"),
@@ -14,7 +14,7 @@ public enum Locations {
 
     private final String displayName;
 
-    Locations(String city){
+    CityName(String city){
         this.displayName = city;
     }
 
@@ -22,8 +22,8 @@ public enum Locations {
         return displayName;
     }
 
-    public static Locations getCityValue(String cityName){
-        for(Locations city: values()){
+    public static CityName getCityValue(String cityName){
+        for(CityName city: values()){
             if(city.displayName.equalsIgnoreCase(cityName)){
                 return city;
             }

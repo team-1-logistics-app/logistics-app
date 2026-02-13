@@ -1,6 +1,6 @@
 package com.austria.logistics.models.contracts;
 
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.LocalDateTime;
@@ -10,11 +10,11 @@ public interface Package extends Identifiable, Printable, Savealbe {
     Truck getAssignedTruck();
     void unassign();
 
-    void setStartLocation(Locations startLocation);
-    Locations getStartLocation();
+    void setStartLocation(CityName startLocation);
+    CityName getStartLocation();
 
-    void setEndLocation(Locations endLocation);
-    Locations getEndLocation();
+    void setEndLocation(CityName endLocation);
+    CityName getEndLocation();
 
     void setWeight(int weight);
     int getWeight();

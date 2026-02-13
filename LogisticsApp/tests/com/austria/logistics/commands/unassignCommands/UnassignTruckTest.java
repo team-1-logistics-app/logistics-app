@@ -12,7 +12,7 @@ import com.austria.logistics.exceptions.TruckNotAssignedToRouteException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,9 +43,9 @@ class UnassignTruckTest {
         createRoute.execute(List.of());
         route = repository.getRoutes().get(0);
 
-        route.addFirstLocationToRoute(Locations.BRI, FIXED_TIME);
-        route.addLocationToRoute(Locations.ADL);
-        route.addLocationToRoute(Locations.DAR);
+        route.addFirstLocationToRoute(CityName.BRI, FIXED_TIME);
+        route.addLocationToRoute(CityName.ADL);
+        route.addLocationToRoute(CityName.DAR);
         assignTruck.execute(List.of("1", "Man"));
 
     }

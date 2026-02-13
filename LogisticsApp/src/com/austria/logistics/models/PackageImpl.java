@@ -1,7 +1,7 @@
 package com.austria.logistics.models;
 
 import com.austria.logistics.models.contracts.Package;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Parsers;
 
@@ -9,14 +9,14 @@ import java.time.LocalDateTime;
 
 public class PackageImpl implements Package {
     private final int id;
-    private Locations startLocation;
-    private Locations endLocation;
+    private CityName startLocation;
+    private CityName endLocation;
     private int weight;
     private String contactInformation;
     private Truck assignedTruck;
     private LocalDateTime estimatedArrivalTime;
 
-    public PackageImpl(int id, Locations startLocation, Locations endLocation, int weight, String contactInformation) {
+    public PackageImpl(int id, CityName startLocation, CityName endLocation, int weight, String contactInformation) {
         this.id = id;
         this.setStartLocation(startLocation);
         this.setEndLocation(endLocation);
@@ -37,22 +37,22 @@ public class PackageImpl implements Package {
     public void unassign() { this.assignedTruck = null; }
 
     @Override
-    public void setStartLocation(Locations startLocation) {
+    public void setStartLocation(CityName startLocation) {
         this.startLocation = startLocation;
     }
 
     @Override
-    public Locations getStartLocation() {
+    public CityName getStartLocation() {
         return this.startLocation;
     }
 
     @Override
-    public void setEndLocation(Locations endLocation) {
+    public void setEndLocation(CityName endLocation) {
         this.endLocation = endLocation;
     }
 
     @Override
-    public Locations getEndLocation() {
+    public CityName getEndLocation() {
         return this.endLocation;
     }
 

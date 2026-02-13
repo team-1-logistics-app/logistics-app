@@ -4,7 +4,7 @@ import com.austria.logistics.constants.Constants;
 import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Route;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 
 import java.time.LocalDateTime;
@@ -58,7 +58,7 @@ public class RouteImpl implements Route {
     }
 
     @Override
-    public String addFirstLocationToRoute(Locations location, LocalDateTime eventTime) {
+    public String addFirstLocationToRoute(CityName location, LocalDateTime eventTime) {
         if (!this.route.isEmpty()) {
             throw new RouteIsNotEmptyException(String.format(Constants.ROUTE_IS_NOT_EMPTY_MESSAGE, this.getId()));
         }
@@ -67,7 +67,7 @@ public class RouteImpl implements Route {
     }
 
     @Override
-    public String addLocationToRoute(Locations location) {
+    public String addLocationToRoute(CityName location) {
         if (!this.isRouteEmpty() && route.getLast().getLocation() == location) {
             throw new InvalidLocationRouteException(String.format(Constants.LOCATION_PREVIOUS_IS_SAME_MESSAGE, this.getId(), location.getDisplayName()));
         } else if (this.isRouteEmpty()) {
@@ -86,13 +86,13 @@ public class RouteImpl implements Route {
 
 
     @Override
-    public boolean containsLocation(Locations location) {
+    public boolean containsLocation(CityName location) {
         return this.route.stream().anyMatch(locationElement -> locationElement.getLocation() == location);
     }
 
 
     @Override
-    public Location findByCity(Locations location) {
+    public Location findByCity(CityName location) {
         return this.route.stream()
                 .filter(locationElement -> locationElement.getLocation() == location)
                 .findFirst()
@@ -101,7 +101,7 @@ public class RouteImpl implements Route {
 
 
     @Override
-    public String removeLocationFromRoute(Locations location) {
+    public String removeLocationFromRoute(CityName location) {
         Location locationToRemove = this.findByCity(location);
         this.route.remove(locationToRemove);
         return String.format(Constants.LOCATION_REMOVED_MESSAGE, location, this.getId());
@@ -138,7 +138,7 @@ public class RouteImpl implements Route {
 
 
     @Override
-    public int calculateDistanceBetween(Locations startLocation, Locations endLocation) {
+    public int calculateDistanceBetween(CityName startLocation, CityName endLocation) {
         int distance = 0;
         Location startPoint = this.findByCity(startLocation);
         Location endPoint = this.findByCity(endLocation);

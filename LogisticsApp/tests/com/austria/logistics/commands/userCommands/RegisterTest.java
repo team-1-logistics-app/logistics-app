@@ -7,7 +7,7 @@ import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.exceptions.UserAlreadyExistsException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.User;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +53,7 @@ class RegisterTest {
     void executeCommand_Should_Throw_Error_When_UserRole_IsInvalid() {
         //Act,Assert
         Assertions.assertThrows(InvalidValueException.class, () ->
-                register.execute(List.of("Test", "Test", "Test", "Test", "test@test.bg", Locations.BRI.getDisplayName())));
+                register.execute(List.of("Test", "Test", "Test", "Test", "test@test.bg", CityName.BRI.getDisplayName())));
     }
 
     @Test

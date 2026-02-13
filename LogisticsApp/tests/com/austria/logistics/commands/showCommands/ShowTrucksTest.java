@@ -7,7 +7,7 @@ import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,9 +29,9 @@ class ShowTrucksTest {
         createRoute.execute(List.of());
 
         Route route = repository.getRoutes().get(0);
-        route.addFirstLocationToRoute(Locations.BRI, FIXED_TIME);
-        route.addLocationToRoute(Locations.ADL);
-        route.addLocationToRoute(Locations.BRI);
+        route.addFirstLocationToRoute(CityName.BRI, FIXED_TIME);
+        route.addLocationToRoute(CityName.ADL);
+        route.addLocationToRoute(CityName.BRI);
 
         Command assignTruck = new AssignTruck(repository);
         assignTruck.execute(List.of(String.valueOf(route.getId()), "Man"));

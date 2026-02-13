@@ -7,7 +7,7 @@ import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.enums.UserRole;
 import com.austria.logistics.models.vehicles.TruckImpl;
@@ -71,7 +71,7 @@ class ShowRouteTest {
     @Test
     void showRouteCommand_Should_Return_Locations() {
         //Arrange
-        route.addFirstLocationToRoute(Locations.SYD, FIXED_TIME);
+        route.addFirstLocationToRoute(CityName.SYD, FIXED_TIME);
         String expected =
                 "Current schedule for route with id 1:\n" +
                         "No assigned truck to the route.\n" +
@@ -85,9 +85,9 @@ class ShowRouteTest {
     @Test
     void showRouteCommand_Should_Return_Assigned_Truck() {
         //Arrange
-        route.addFirstLocationToRoute(Locations.BRI, FIXED_TIME);
-        route.addLocationToRoute(Locations.ADL);
-        route.addLocationToRoute(Locations.BRI);
+        route.addFirstLocationToRoute(CityName.BRI, FIXED_TIME);
+        route.addLocationToRoute(CityName.ADL);
+        route.addLocationToRoute(CityName.BRI);
         this.repository.assignTruckToRoute(truck, route);
 
         String expected =

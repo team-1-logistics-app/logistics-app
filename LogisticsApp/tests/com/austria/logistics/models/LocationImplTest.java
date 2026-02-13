@@ -1,6 +1,6 @@
 package com.austria.logistics.models;
 
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ class LocationImplTest {
     @Test
     public void constructor_WithSingeArgument_Should_InitializeLocation_When_ArgumentsAreValid() {
         //Arrange,Act,Assert
-        Assertions.assertEquals(Locations.DAR, new LocationImpl(Locations.DAR).getLocation());
+        Assertions.assertEquals(CityName.DAR, new LocationImpl(CityName.DAR).getLocation());
     }
 
     @Test
@@ -21,8 +21,8 @@ class LocationImplTest {
         LocalDateTime fixedTime = LocalDateTime.now();
         // Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals(Locations.DAR, new LocationImpl(Locations.DAR, fixedTime).getLocation()),
-                () -> Assertions.assertEquals(fixedTime, new LocationImpl(Locations.DAR, fixedTime).getEventTime())
+                () -> Assertions.assertEquals(CityName.DAR, new LocationImpl(CityName.DAR, fixedTime).getLocation()),
+                () -> Assertions.assertEquals(fixedTime, new LocationImpl(CityName.DAR, fixedTime).getEventTime())
         );
     }
 

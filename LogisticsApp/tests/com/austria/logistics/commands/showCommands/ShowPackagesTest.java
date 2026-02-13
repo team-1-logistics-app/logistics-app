@@ -8,7 +8,7 @@ import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,14 +57,14 @@ class ShowPackagesTest {
         createRoute.execute(parameters);
 
         Route route = repository.getRoutes().get(0);
-        route.addFirstLocationToRoute(Locations.SYD, FIXED_TIME);
-        route.addLocationToRoute(Locations.BRI);
-        route.addLocationToRoute(Locations.ADL);
-        route.addLocationToRoute(Locations.DAR);
+        route.addFirstLocationToRoute(CityName.SYD, FIXED_TIME);
+        route.addLocationToRoute(CityName.BRI);
+        route.addLocationToRoute(CityName.ADL);
+        route.addLocationToRoute(CityName.DAR);
 
         assignTruck.execute(List.of(String.valueOf(route.getId()), "Man"));
-        this.repository.createPackage(Locations.SYD, Locations.BRI, 30, "test@test.com");
-        this.repository.createPackage(Locations.ADL, Locations.DAR, 40, "test@test.bg");
+        this.repository.createPackage(CityName.SYD, CityName.BRI, 30, "test@test.com");
+        this.repository.createPackage(CityName.ADL, CityName.DAR, 40, "test@test.bg");
 
         String expected = """
                 Package with id 2, start location Sydney, end location Brisbane, weight 30, contact info test@test.com is assigned to truck Man with id 1011. Estimated arrival time is: Jan 24 22:27

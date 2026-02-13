@@ -1,32 +1,32 @@
 package com.austria.logistics.models;
 
-import com.austria.logistics.models.enums.Locations;
+import com.austria.logistics.models.enums.CityName;
 import com.austria.logistics.models.contracts.Location;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class LocationImpl implements Location {
-    private Locations location;
+    private CityName location;
     private LocalDateTime eventTime;
 
-    public LocationImpl(Locations location){
+    public LocationImpl(CityName location){
         this.setLocation(location);
     }
 
-    public LocationImpl(Locations location, LocalDateTime eventTime){
+    public LocationImpl(CityName location, LocalDateTime eventTime){
         this.setLocation(location);
         this.setEventTime(eventTime);
     }
 
 
     @Override
-    public void setLocation(Locations location) {
+    public void setLocation(CityName location) {
         this.location = location;
     }
 
     @Override
-    public Locations getLocation() {
+    public CityName getLocation() {
         return this.location;
     }
 
