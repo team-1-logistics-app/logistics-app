@@ -24,6 +24,7 @@ public class UnassignLocation extends BaseCommand {
     public UnassignLocation(Repository repository) {
         super(repository);
     }
+
     //EXPECTED STRING ROUTE ID AND STRING CITY
     @Override
     protected String executeCommand(List<String> parameters) {
@@ -32,33 +33,20 @@ public class UnassignLocation extends BaseCommand {
         if (loggedUser.getUserRole() != UserRole.MANAGER && loggedUser.getUserRole() != UserRole.EMPLOYEE) {
             return Constants.USER_NOT_MANAGER_AND_NOT_EMPLOYEE;
         }
+        Validators.validateArgumentsCount(parameters, EXPECTED_NUMBER_OF_ARGUMENTS);
 
-        Route route;
-        Locations location;
-        try {
-            Validators.validateArgumentsCount(parameters,EXPECTED_NUMBER_OF_ARGUMENTS);
-            int routeId = Parsers.parseToInteger("Route id",parameters.get(0));
-            location = Parsers.parseLocation(parameters.get(1));
-            route = repo.findElementById(repo.getRoutes(),routeId);
-        }catch (IllegalArgumentException |
-                InvalidValueException |
-                InvalidLocationException |
-                ElementNotFoundException e){
+        int routeId = Parsers.parseToInteger("Route id", parameters.get(0));
+        Locations location = Parsers.parseLocation(parameters.get(1));
+        Route route = repo.findElementById(repo.getRoutes(), routeId);
 
-            return  e.getMessage();
-        }
 
-        return unassignLocation(route,location);
+        return unassignLocation(route, location);
     }
 
-    private String unassignLocation(Route route, Locations location){
-        Location locationToCheck;
-        try{
-          locationToCheck = route.findByCity(location);
-        }catch (LocationNotFoundException e){
-            return e.getMessage();
-        }
-        if(route.getRouteLocations().indexOf(locationToCheck) == 0 && route.getRouteLocations().size() > 1){
+    private String unassignLocation(Route route, Locations location) {
+        Location locationToCheck = route.findByCity(location);
+
+        if (route.getRouteLocations().indexOf(locationToCheck) == 0 && route.getRouteLocations().size() > 1) {
             return Constants.ROUTE_REMOVE_STARTLOCATION_ERROR_MESSAGE;
         }
 

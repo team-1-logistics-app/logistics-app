@@ -5,6 +5,8 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.InvalidLocationException;
+import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
@@ -53,18 +55,17 @@ class UnassignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentCount_IsInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentCount_IsInvalid() {
         //Act,Assert
-        Assertions.assertEquals("Invalid number of arguments. Expected: 2, Received: 0.",unassignLocation.execute(List.of()));
+        Assertions.assertThrows(InvalidValueException.class, () -> unassignLocation.execute(List.of()));
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_ArgumentValue_IsInvalid() {
+    void executeCommand_Should_Throw_Error_When_ArgumentValue_IsInvalid() {
         //Act,Assert
         Assertions.assertAll(
-                () -> Assertions.assertEquals("Route id has to be valid integer.",unassignLocation.execute(List.of("asd","Darwin"))),
-                () -> Assertions.assertEquals("asd is not valid location, the supported locations are: Sydney, Melbourne, Adelaide, Alice Springs, Brisbane, Darwin, Perth.",
-                        unassignLocation.execute(List.of("1","asd")))
+                () -> Assertions.assertThrows(InvalidValueException.class,() -> unassignLocation.execute(List.of("asd","Darwin"))),
+                () -> Assertions.assertThrows(InvalidLocationException.class,() -> unassignLocation.execute(List.of("1","asd")))
         );
 
     }
