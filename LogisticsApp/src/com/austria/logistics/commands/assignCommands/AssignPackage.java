@@ -47,8 +47,6 @@ public class AssignPackage extends BaseCommand {
             throw new MaxCapacityReachedException(String.format(Constants.TRUCK_MAXCAPACITY_REACHED_MESSAGE, truck.getTruckType().getDisplayName(), truck.getId()));
         }
 
-        truck.addLoad(pkg.getWeight());
-
         int truckId = getRepository().assignPackageToTruck(pkg, truck).getId();
 
         return String.format(Constants.PACKAGE_ASSIGNED_MESSAGE, pkg.getId(), truck.getTruckType().getDisplayName(), truckId);

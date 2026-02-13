@@ -310,3 +310,159 @@ To execute any operational command (except `Register`,`Login`,`Logout`,`Save`,`L
 a valid login session is required.
 
 If no user is logged in, the system denies command execution.
+
+---
+
+---
+
+## Full System Test Scenario (Extended)
+
+This scenario demonstrates:
+
+- Role-based access control
+- Valid and invalid operations
+- Route and truck assignment validation
+- Package assignment validation
+- Show commands
+- Unassignment logic
+- Persistence (Save / Load)
+- Mailbox functionality
+
+---
+
+## Test Input
+
+```text
+Register john John Doe 123456 john@email.com CUSTOMER
+Login john 123456
+CreateRoute
+CreatePackage Sydney Darwin 20 john@email.com
+CreatePackage Sydney Melbourne 30 john@email.com
+Logout
+Register emp1 Ivan Petrov emp123 emp@email.com EMPLOYEE
+Login emp1 emp123
+CreateRoute
+AssignTruck 3 SCANIA
+AssignLocation 3 Sydney Feb 20 13:00
+AssignTruck 3 SCANIA
+AssignLocation 3 Darwin
+AssignTruck 3 SCANIA
+AssignTruck 3 SCANIA
+AssignPackage 1 1001
+AssignPackage 1 1001
+AssignPackage 2 1001
+ShowUsers
+ShowRoute 3
+ShowPackages
+ShowTrucks
+ShowPackage 1
+ShowPackage 2
+Logout
+Register boss Anna Smith admin123 boss@email.com MANAGER
+Login boss admin123
+ShowUsers
+UnassignPackage 999
+UnassignPackage 1
+UnassignTruck 1001 3
+UnassignTruck 1001 3
+Logout
+AssignLocation 3 Melbourne
+Save
+Load
+Login john 123456
+ReadMail
+Logout
+```
+
+---
+
+## Expected Output
+
+```text
+User john registered successfully!
+####################
+User john successfully logged in!
+####################
+You are not logged in as manager or employee!
+####################
+Package with id 1 was created!
+####################
+Package with id 2 was created!
+####################
+You logged out!
+####################
+User emp1 registered successfully!
+####################
+User emp1 successfully logged in!
+####################
+Route with id 3 was created!
+####################
+Route with id 3 doesn't have enough locations assigned yet, please assign at least 2 locations before assigning truck to it.
+####################
+Sydney is successfully added to route with id 3 .
+####################
+Route with id 3 doesn't have enough locations assigned yet, please assign at least 2 locations before assigning truck to it.
+####################
+Darwin is successfully added to route with id 3 .
+####################
+Truck Scania with id 1001 was assigned to route with id 3!
+####################
+Route with id 3 is already has assigned truck!
+####################
+Package with id 1 was assigned to truck Scania with id 1001!
+####################
+Package with id 1 is already assigned to truck Scania with id 1001
+####################
+Melbourne is not in the route.
+####################
+You are not logged in as manager!
+####################
+Current schedule for route with id 3:
+The route has assigned truck Scania with id 1001.
+City: Sydney, Scheduled time: Feb 20 13:00
+City: Darwin, Scheduled time: Feb 22 10:14
+####################
+Package with id 1, start location Sydney, end location Darwin, weight 20, contact info john@email.com is assigned to truck Scania with id 1001. Estimated arrival time is: Feb 22 10:14
+Package with id 2, start location Sydney, end location Melbourne, weight 30, contact info john@email.com is not assigned to a truck yet.
+####################
+Scania with id 1001 is assigned to route with id 3, current weight is 20 kg and max capacity is 42000 kg
+...
+####################
+Package with id 1, start location Sydney, end location Darwin, weight 20, contact info john@email.com is assigned to truck Scania with id 1001. Estimated arrival time is: Feb 22 10:14
+####################
+Package with id 2, start location Sydney, end location Melbourne, weight 30, contact info john@email.com is not assigned to a truck yet.
+####################
+You logged out!
+####################
+User boss registered successfully!
+####################
+User boss successfully logged in!
+####################
+Username: john, First Name: John, Last Name: Doe, Password: 123456, Email: john@email.com, User Role: Customer
+Username: emp1, First Name: Ivan, Last Name: Petrov, Password: emp123, Email: emp@email.com, User Role: Employee
+Username: boss, First Name: Anna, Last Name: Smith, Password: admin123, Email: boss@email.com, User Role: Manager
+####################
+No record with id 999 in the repository
+####################
+Package with id 1 is successfully unassigned!
+####################
+Truck Scania with id 1001 is successfully unassigned to route with id 3
+####################
+Truck Scania with id 1001 is not assigned to route with id 3
+####################
+You logged out!
+####################
+You are not logged in! Please login first!
+####################
+State successfully saved to file!
+####################
+Loaded state from file!
+####################
+User john successfully logged in!
+####################
+MESSAGE#1 - Package with id 1, start location Sydney, end location Darwin, weight 20, contact info john@email.com is assigned to truck Scania with id 1001. Estimated arrival time is: Feb 22 10:14
+MESSAGE#2 - Package with id 2, start location Sydney, end location Melbourne, weight 30, contact info john@email.com is not assigned to a truck yet.
+####################
+You logged out!
+####################
+```

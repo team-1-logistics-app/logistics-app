@@ -132,6 +132,7 @@ public class RepositoryImpl implements Repository {
         }
 
         pkg.setAssignedTruck(truck);
+        truck.addLoad(pkg.getWeight());
         truck.addAssignedPackageId(pkg.getId());
 
         if (endLocationIndex > 0) {
