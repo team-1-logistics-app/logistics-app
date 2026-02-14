@@ -55,11 +55,11 @@ class UnassignPackageTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Not_LoggedIn() {
+    void executeCommand_Should_Throw_Error_When_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!", unassignPackage.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> unassignPackage.execute(List.of()));
     }
 
     @Test

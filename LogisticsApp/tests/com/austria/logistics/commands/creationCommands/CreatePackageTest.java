@@ -5,6 +5,7 @@ import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidLocationException;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.enums.UserRole;
 import org.junit.jupiter.api.Assertions;
@@ -26,11 +27,11 @@ class CreatePackageTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+    void execute_Should_Throw_Error_When_User_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!", createPackage.execute(List.of("Sydney", "Darwin", "40")));
+        Assertions.assertThrows(NotLoggedInException.class, () -> createPackage.execute(List.of("Sydney", "Darwin", "40")));
     }
 
     @Test

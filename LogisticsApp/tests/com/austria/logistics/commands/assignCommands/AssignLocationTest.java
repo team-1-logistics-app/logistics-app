@@ -39,11 +39,11 @@ class AssignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Not_LoggedIn() {
+    void executeCommand_Should_Throw_Error_When_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!", assignLocation.execute(List.of("1", "Sydney", "Darwin", Parsers.parseEventTimeToString(FIXED_TIME))));
+        Assertions.assertThrows(NotLoggedInException.class, () -> assignLocation.execute(List.of("1", "Sydney", "Darwin", Parsers.parseEventTimeToString(FIXED_TIME))));
     }
 
     @Test

@@ -70,11 +70,11 @@ class AssignPackageTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+    void execute_Should_Throw_Error_When_User_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!", assignPackage.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> assignPackage.execute(List.of()));
     }
 
     @Test

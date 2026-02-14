@@ -5,6 +5,7 @@ import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.InvalidValueException;
+import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.enums.CityName;
@@ -47,13 +48,13 @@ class ShowRouteTest {
     }
 
     @Test
-    void showRouteCommand_Should_Return_Error_When_User_Not_LoggedIn() {
+    void showRouteCommand_Should_Throw_Error_When_User_Not_LoggedIn() {
         //Arrange
         repository.logout();
         String expected = "You are not logged in! Please login first!";
 
         //Act,Assert
-        Assertions.assertEquals(expected, showRoute.execute(parameters));
+        Assertions.assertThrows(NotLoggedInException.class, () -> showRoute.execute(parameters));
     }
 
     @Test

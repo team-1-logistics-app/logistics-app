@@ -51,12 +51,11 @@ class UnassignTruckTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_User_Is_Not_LoggedIn() {
+    void executeCommand_Should_Throw_Error_When_User_Is_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!",
-                unassignTruck.execute(List.of("1011", "1")));
+        Assertions.assertThrows(NotLoggedInException.class, () -> unassignTruck.execute(List.of("1011", "1")));
     }
 
     @Test

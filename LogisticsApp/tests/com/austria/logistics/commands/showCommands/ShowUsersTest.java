@@ -38,9 +38,9 @@ class ShowUsersTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Not_LoggedIn() {
+    void executeCommand_Should_Throw_Error_When_Not_LoggedIn() {
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!", showUsers.execute(List.of()));
+        Assertions.assertThrows(NotLoggedInException.class, () -> showUsers.execute(List.of()));
     }
 
     @Test

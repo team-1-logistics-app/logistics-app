@@ -24,11 +24,11 @@ class CreateRouteTest {
     }
 
     @Test
-    void execute_Should_Return_Error_When_User_Not_LoggedIn() {
+    void execute_Should_Throw_Error_When_User_Not_LoggedIn() {
         //Arrange
         repository.logout();
         //Act,Assert
-        Assertions.assertEquals("You are not logged in! Please login first!", createRoute.execute(List.of("Test")));
+        Assertions.assertThrows(NotLoggedInException.class, () -> createRoute.execute(List.of("Test")));
     }
 
     @Test
