@@ -107,7 +107,6 @@ public class Parsers {
                 .toList();
     }
 
-
     public static Route routeFromSaveString(String line) {
         String[] elements = line.split("\\|");
         int id = Integer.parseInt(elements[0]);
@@ -127,7 +126,6 @@ public class Parsers {
         }
         return route;
     }
-
 
     public static Package packageFromSaveString(String line, Repository repository) {
         String[] elements = line.split("\\|");

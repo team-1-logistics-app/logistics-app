@@ -20,7 +20,6 @@ public class AssignPackage extends BaseCommand {
         super(repository);
     }
 
-
     //EXPECTED ARGUMENTS ARE STRING PACKAGEID AND STRING TRUCKID
     @Override
     public String executeCommand(List<String> parameters) {

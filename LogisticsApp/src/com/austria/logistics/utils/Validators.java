@@ -9,7 +9,6 @@ import java.util.List;
 public class Validators {
     private Validators(){}
 
-
     public static void validateArgumentsCount(List<String> list, int expectedArgumentsCount) {
         if (list.size() < expectedArgumentsCount) {
             throw new InvalidValueException(String.format(Constants.INVALID_NUMBER_OF_ARGUMENTS_MESSAGE, expectedArgumentsCount, list.size()));

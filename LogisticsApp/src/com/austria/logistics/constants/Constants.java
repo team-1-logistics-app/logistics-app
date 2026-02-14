@@ -1,6 +1,5 @@
 package com.austria.logistics.constants;
 
-import javax.swing.plaf.PanelUI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -65,7 +64,6 @@ public class Constants {
     public final static String STATE_FILE_TO_SAVE_TRUCKS = "trucks.txt";
     public final static String STATE_FILE_TO_SAVE_ROUTES = "routes.txt";
     public final static String STATE_FILE_TO_SAVE_USERS = "users.txt";
-
     public final static String STATE_SAVED_TO_FILE = "State successfully saved to file!";
     public final static String STATE_FAILED_TO_SAVE = "State failed to save to file!";
     public final static String STATE_FAILED_TO_LOAD = "State failed to load from file!";

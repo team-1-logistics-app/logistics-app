@@ -1,7 +1,6 @@
 package com.austria.logistics.models.vehicles;
 
 import com.austria.logistics.models.contracts.Route;
-import com.austria.logistics.models.contracts.Savealbe;
 import com.austria.logistics.models.enums.TruckType;
 import com.austria.logistics.models.vehicles.contracts.Truck;
 

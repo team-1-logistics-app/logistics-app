@@ -16,7 +16,6 @@ public class CreatePackage extends BaseCommand {
         super(repository);
     }
 
-
     //EXPECTED ARGUMENTS ARE STRING STARTLOCATION, STRING ENDLOCATION, STRING WEIGHT, STRING CONTACTINFO
     @Override
     public String executeCommand(List<String> parameters) {

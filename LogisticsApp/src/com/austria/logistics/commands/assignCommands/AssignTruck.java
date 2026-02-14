@@ -21,7 +21,6 @@ public class AssignTruck extends BaseCommand {
         super(repository);
     }
 
-
     //EXPECTED ARGUMENTS ARE STRING ROUTEID AND STRING TRUCKTYPE
     @Override
     public String executeCommand(List<String> parameters) {

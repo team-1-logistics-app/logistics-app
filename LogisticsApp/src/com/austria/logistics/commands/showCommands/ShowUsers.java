@@ -13,6 +13,7 @@ public class ShowUsers extends BaseCommand {
     public ShowUsers(Repository repository) {
         super(repository);
     }
+
     //NO ARGUMENTS ARE EXPECTED
     @Override
     protected String executeCommand(List<String> parameters) {

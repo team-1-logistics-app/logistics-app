@@ -13,7 +13,9 @@ import java.util.List;
 public class ShowTrucks extends BaseCommand {
 
     public ShowTrucks(Repository repository) {
-        super(repository);}
+        super(repository);
+    }
+
     //NO ARGUMENTS ARE EXPECTED
     @Override
     public String executeCommand(List<String> parameters) {

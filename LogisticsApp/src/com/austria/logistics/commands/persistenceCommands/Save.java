@@ -11,6 +11,7 @@ public class Save extends BaseCommand {
     public Save(Repository repository) {
         super(repository);
     }
+
     //NO ARGUMENTS ARE EXPECTED
     @Override
     protected String executeCommand(List<String> parameters) {

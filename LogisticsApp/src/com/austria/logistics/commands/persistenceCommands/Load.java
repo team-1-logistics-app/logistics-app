@@ -11,6 +11,7 @@ public class Load extends BaseCommand {
     public Load(Repository repository) {
         super(repository);
     }
+
     //NO ARGUMENTS ARE EXPECTED
     @Override
     protected String executeCommand(List<String> parameters) {

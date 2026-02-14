@@ -7,7 +7,6 @@ import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.contracts.Route;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.models.enums.UserRole;
-import com.austria.logistics.models.vehicles.contracts.Truck;
 import com.austria.logistics.utils.Parsers;
 import com.austria.logistics.utils.Validators;
 

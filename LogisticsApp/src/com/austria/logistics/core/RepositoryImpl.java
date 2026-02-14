@@ -233,7 +233,6 @@ public class RepositoryImpl implements Repository {
         return Constants.STATE_SAVED_TO_FILE;
     }
 
-
     @Override
     public String loadFromFile() {
         Helpers.readFileLines(Constants.FILE_PATH_ROUTES, this.routes, Parsers::routeFromSaveString);
@@ -246,7 +245,6 @@ public class RepositoryImpl implements Repository {
 
         return Constants.STATE_LOADED_FROM_FILE;
     }
-
 
     private void resolveRouteTruckReferences() {
         this.routes.forEach(route -> {

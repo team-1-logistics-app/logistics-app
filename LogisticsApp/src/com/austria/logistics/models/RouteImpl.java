@@ -90,7 +90,6 @@ public class RouteImpl implements Route {
         return this.route.stream().anyMatch(locationElement -> locationElement.getLocation() == location);
     }
 
-
     @Override
     public Location findByCity(CityName location) {
         return this.route.stream()
@@ -99,14 +98,12 @@ public class RouteImpl implements Route {
                 .orElseThrow(() -> new LocationNotFoundException(String.format(Constants.LOCATION_NOT_FOUND_MESSAGE, location.getDisplayName())));
     }
 
-
     @Override
     public String removeLocationFromRoute(CityName location) {
         Location locationToRemove = this.findByCity(location);
         this.route.remove(locationToRemove);
         return String.format(Constants.LOCATION_REMOVED_MESSAGE, location.getDisplayName(), this.getId());
     }
-
 
     @Override
     public LinkedList<Location> getRouteLocations() {
@@ -117,7 +114,6 @@ public class RouteImpl implements Route {
     public boolean isRouteEmpty() {
         return this.route.isEmpty();
     }
-
 
     @Override
     public int calculateTotalDistance() {
@@ -135,7 +131,6 @@ public class RouteImpl implements Route {
         }
         throw new RouteIsEmptyException(String.format(Constants.ROUTE_IS_EMPTY_MESSAGE, this.getId()));
     }
-
 
     @Override
     public int calculateDistanceBetween(CityName startLocation, CityName endLocation) {
