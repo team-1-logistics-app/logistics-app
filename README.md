@@ -11,7 +11,7 @@ The system currently supports logistics operations across major Australian citie
 
 Routes, package deliveries, and truck assignments can be created between the following locations
 
-![img.png](img.png)
+![img.png](map.png)
 ## Project Structure
 
 ```
