@@ -6,7 +6,7 @@ import com.austria.logistics.models.vehicles.contracts.Truck;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
-public interface Route extends Identifiable, Savealbe{
+public interface Route extends Identifiable, Savealbe, Printable{
     String addFirstLocationToRoute(CityName location, LocalDateTime eventTime);
     String addLocationToRoute(CityName location);
     void addLocationFromLoad(Location location);

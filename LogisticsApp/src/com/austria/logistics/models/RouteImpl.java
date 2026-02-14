@@ -175,6 +175,26 @@ public class RouteImpl implements Route {
     }
 
     @Override
+    public String toString(){
+            StringBuilder output = new StringBuilder();
+            output.append(String.format("Current schedule for route with id %d:\n", this.getId()));
+            if (this.hasAssignedTruck()) {
+                Truck assignedTruck = this.getAssignedTruck();
+                output.append(String.format("The route has assigned truck %s with id %d.\n", assignedTruck.getTruckType().getDisplayName(), assignedTruck.getId()));
+            } else {
+                output.append("No assigned truck to the route.\n");
+            }
+            this.getRouteLocations().forEach(location -> {
+                output.append(String.format("City: %s,", location.getLocation().getDisplayName()))
+                        .append(String.format(" Scheduled time: %s\n", location.getEventTimeAsString()));
+            });
+            if (this.getRouteLocations().isEmpty()) {
+                output.append("No locations added to the route yet.\n");
+            }
+            return output.toString();
+    }
+
+    @Override
     public String toSaveString() {
         return String.join("|",
                 String.valueOf(id),

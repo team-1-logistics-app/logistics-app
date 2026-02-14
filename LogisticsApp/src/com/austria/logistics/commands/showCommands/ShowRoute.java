@@ -37,22 +37,7 @@ public class ShowRoute extends BaseCommand {
     }
 
     private String showRoute(Route route) {
-        StringBuilder output = new StringBuilder();
-        output.append(String.format("Current schedule for route with id %d:\n", route.getId()));
-        if (route.hasAssignedTruck()) {
-            Truck assignedTruck = route.getAssignedTruck();
-            output.append(String.format("The route has assigned truck %s with id %d.\n", assignedTruck.getTruckType().getDisplayName(), assignedTruck.getId()));
-        } else {
-            output.append("No assigned truck to the route.\n");
-        }
-        route.getRouteLocations().forEach(location -> {
-            output.append(String.format("City: %s,", location.getLocation().getDisplayName()))
-                    .append(String.format(" Scheduled time: %s\n", location.getEventTimeAsString()));
-        });
-        if (route.getRouteLocations().isEmpty()) {
-            output.append("No locations added to the route yet.\n");
-        }
-        return output.toString();
+        return route.toString();
     }
 
     @Override
