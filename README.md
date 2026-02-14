@@ -5,6 +5,13 @@ A structured console-based logistics management system built in Java.
 The application simulates real-world logistics operations including route creation,
 truck assignment, package management, and role-based command execution.
 
+## Supported Coverage Area
+
+The system currently supports logistics operations across major Australian cities.
+
+Routes, package deliveries, and truck assignments can be created between the following locations
+
+![img.png](img.png)
 ## Project Structure
 
 ```
