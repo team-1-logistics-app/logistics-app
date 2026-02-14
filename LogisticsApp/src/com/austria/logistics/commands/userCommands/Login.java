@@ -3,6 +3,7 @@ package com.austria.logistics.commands.userCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.LoginFailedException;
 import com.austria.logistics.models.contracts.User;
 import com.austria.logistics.utils.Validators;
 
@@ -35,7 +36,7 @@ public class Login extends BaseCommand {
         User user = repo.findUserByUsername(username);
 
         if (!user.getPassword().equals(password)) {
-            return Constants.USER_PASSWORD_MISMATCH;
+            throw new LoginFailedException(Constants.USER_PASSWORD_MISMATCH);
         }
         repo.login(user);
 

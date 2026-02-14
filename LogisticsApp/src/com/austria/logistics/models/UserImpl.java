@@ -125,7 +125,7 @@ public class UserImpl implements User {
                 this.lastName,
                 this.password,
                 this.email,
-                this.userRole.toString());
+                this.userRole.getDisplayName());
     }
 
     @Override
@@ -136,7 +136,7 @@ public class UserImpl implements User {
                 lastName,
                 password,
                 email,
-                userRole.toString(),
+                userRole.getDisplayName(),
                 mailbox.isEmpty()? "NONE" : String.join("^",mailbox));
     }
 }

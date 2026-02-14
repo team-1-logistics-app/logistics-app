@@ -247,7 +247,16 @@ Load
 - Restores routes, packages, trucks, users, and their relationships.
 - Overwrites the current in-memory state with the loaded data.
 ---
+## System
 
+### `Exit`
+
+**Description:**
+- Terminates the application.
+- Stops the command processing loop.
+- Closes the program gracefully.
+- Ensures no further commands are accepted after execution.
+---
 ## Role-Based Command Access
 
 The system enforces role-based access control for command execution.
@@ -299,14 +308,13 @@ The following commands can be executed without authentication:
 - `Logout`
 - `Save`
 - `Load`
-
-These commands handle file-based persistence and do not require user privileges.
+- `Exit`
 
 ---
 
 ### Authentication Rule
 
-To execute any operational command (except `Register`,`Login`,`Logout`,`Save`,`Load`),
+To execute any operational command (except `Register`,`Login`,`Logout`,`Save`,`Load`,`Exit`),
 a valid login session is required.
 
 If no user is logged in, the system denies command execution.
@@ -365,8 +373,13 @@ UnassignPackage 999
 UnassignPackage 1
 UnassignTruck 1001 3
 UnassignTruck 1001 3
+UnassignLocation 3 Sydney
+UnassignLocation 3 Darwin
+UnassignLocation 3 Darwin
+UnassignLocation 3 Sydney
+AssignLocation 3 Melbourne Feb 24 16:00
 Logout
-AssignLocation 3 Melbourne
+AssignLocation 3 Darwin
 Save
 Load
 Login john 123456
@@ -426,7 +439,45 @@ Package with id 1, start location Sydney, end location Darwin, weight 20, contac
 Package with id 2, start location Sydney, end location Melbourne, weight 30, contact info john@email.com is not assigned to a truck yet.
 ####################
 Scania with id 1001 is assigned to route with id 3, current weight is 20 kg and max capacity is 42000 kg
-...
+Scania with id 1002 is not assigned.
+Scania with id 1003 is not assigned.
+Scania with id 1004 is not assigned.
+Scania with id 1005 is not assigned.
+Scania with id 1006 is not assigned.
+Scania with id 1007 is not assigned.
+Scania with id 1008 is not assigned.
+Scania with id 1009 is not assigned.
+Scania with id 1010 is not assigned.
+Man with id 1011 is not assigned.
+Man with id 1012 is not assigned.
+Man with id 1013 is not assigned.
+Man with id 1014 is not assigned.
+Man with id 1015 is not assigned.
+Man with id 1016 is not assigned.
+Man with id 1017 is not assigned.
+Man with id 1018 is not assigned.
+Man with id 1019 is not assigned.
+Man with id 1020 is not assigned.
+Man with id 1021 is not assigned.
+Man with id 1022 is not assigned.
+Man with id 1023 is not assigned.
+Man with id 1024 is not assigned.
+Man with id 1025 is not assigned.
+Actros with id 1026 is not assigned.
+Actros with id 1027 is not assigned.
+Actros with id 1028 is not assigned.
+Actros with id 1029 is not assigned.
+Actros with id 1030 is not assigned.
+Actros with id 1031 is not assigned.
+Actros with id 1032 is not assigned.
+Actros with id 1033 is not assigned.
+Actros with id 1034 is not assigned.
+Actros with id 1035 is not assigned.
+Actros with id 1036 is not assigned.
+Actros with id 1037 is not assigned.
+Actros with id 1038 is not assigned.
+Actros with id 1039 is not assigned.
+Actros with id 1040 is not assigned.
 ####################
 Package with id 1, start location Sydney, end location Darwin, weight 20, contact info john@email.com is assigned to truck Scania with id 1001. Estimated arrival time is: Feb 22 10:14
 ####################
@@ -449,6 +500,16 @@ Package with id 1 is successfully unassigned!
 Truck Scania with id 1001 is successfully unassigned to route with id 3
 ####################
 Truck Scania with id 1001 is not assigned to route with id 3
+####################
+You cannot remove the starting location in the route, before every other location is removed!
+####################
+Darwin is successfully removed from route with id 3 .
+####################
+Darwin is not in the route.
+####################
+Sydney is successfully removed from route with id 3 .
+####################
+Melbourne is successfully added to route with id 3 .
 ####################
 You logged out!
 ####################

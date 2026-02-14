@@ -5,8 +5,7 @@ public enum UserRole {
     EMPLOYEE ,
     MANAGER;
 
-    @Override
-    public String toString() {
+    public String getDisplayName() {
         switch (this) {
             case CUSTOMER:
                 return "Customer";

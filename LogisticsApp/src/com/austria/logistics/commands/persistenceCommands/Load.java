@@ -7,6 +7,7 @@ import com.austria.logistics.core.contracts.Repository;
 import java.util.List;
 
 public class Load extends BaseCommand {
+
     public Load(Repository repository) {
         super(repository);
     }

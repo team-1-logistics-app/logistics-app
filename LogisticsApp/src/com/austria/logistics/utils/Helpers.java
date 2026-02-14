@@ -23,5 +23,4 @@ public class Helpers {
             throw new FailedToLoadFromFileException(Constants.STATE_FAILED_TO_LOAD);
         }
     }
-
 }

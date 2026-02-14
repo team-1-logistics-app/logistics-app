@@ -38,7 +38,6 @@ public class EngineImpl implements Engine {
             } catch (LogisticsAppException e) {
                 print(e.getMessage());
             }
-
         }
     }
 
@@ -50,14 +49,10 @@ public class EngineImpl implements Engine {
     private void processCommand(String inputLine) {
         String commandName = extractCommandName(inputLine);
         List<String> parameters = extractParameters(inputLine);
-        Command command;
-        String execResult;
-        try {
-            command = commandFactory.createCommandFromCommandName(commandName, repository);
-            execResult = command.execute(parameters);
-        } catch (IllegalArgumentException e) {
-            execResult = e.getMessage();
-        }
+        Command command = commandFactory.createCommandFromCommandName(commandName, repository);
+
+        String execResult = command.execute(parameters);
+
         print(execResult);
     }
 

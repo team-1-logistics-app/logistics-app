@@ -104,7 +104,7 @@ public class RouteImpl implements Route {
     public String removeLocationFromRoute(CityName location) {
         Location locationToRemove = this.findByCity(location);
         this.route.remove(locationToRemove);
-        return String.format(Constants.LOCATION_REMOVED_MESSAGE, location, this.getId());
+        return String.format(Constants.LOCATION_REMOVED_MESSAGE, location.getDisplayName(), this.getId());
     }
 
 

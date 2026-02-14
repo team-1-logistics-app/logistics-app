@@ -28,8 +28,8 @@ class ShowUsersTest {
         repository = new RepositoryImpl();
         register = new Register(repository);
         showUsers = new ShowUsers(repository);
-        userCustomerParameters = List.of("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER.toString());
-        userManagerParameters = List.of("Test1", "Test", "Test", "Test", "test1@test.bg", UserRole.MANAGER.toString());
+        userCustomerParameters = List.of("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER.getDisplayName());
+        userManagerParameters = List.of("Test1", "Test", "Test", "Test", "test1@test.bg", UserRole.MANAGER.getDisplayName());
         userCustomer = new UserImpl("Test", "Test", "Test", "Test", "test@test.bg", UserRole.CUSTOMER);
         userManager = new UserImpl("Test1", "Test", "Test", "Test", "test1@test.bg", UserRole.MANAGER);
         register.execute(userCustomerParameters);

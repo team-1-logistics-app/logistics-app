@@ -1,5 +1,6 @@
 package com.austria.logistics.core;
 
+import com.austria.logistics.core.contracts.Repository;
 import com.austria.logistics.exceptions.*;
 import com.austria.logistics.models.UserImpl;
 import com.austria.logistics.models.contracts.Package;
@@ -15,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 class RepositoryImplTest {
     private static final LocalDateTime FIXED_TIME = LocalDateTime.of(2026, 1, 24, 12, 0);

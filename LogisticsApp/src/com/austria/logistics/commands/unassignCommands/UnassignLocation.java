@@ -3,6 +3,7 @@ package com.austria.logistics.commands.unassignCommands;
 import com.austria.logistics.commands.BaseCommand;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.FailedToRemoveLocationException;
 import com.austria.logistics.exceptions.NotLoggedInException;
 import com.austria.logistics.models.contracts.Location;
 import com.austria.logistics.models.contracts.Route;
@@ -44,7 +45,7 @@ public class UnassignLocation extends BaseCommand {
         Location locationToCheck = route.findByCity(location);
 
         if (route.getRouteLocations().indexOf(locationToCheck) == 0 && route.getRouteLocations().size() > 1) {
-            return Constants.ROUTE_REMOVE_STARTLOCATION_ERROR_MESSAGE;
+            throw new FailedToRemoveLocationException(Constants.ROUTE_REMOVE_STARTLOCATION_ERROR_MESSAGE);
         }
 
         return route.removeLocationFromRoute(location);

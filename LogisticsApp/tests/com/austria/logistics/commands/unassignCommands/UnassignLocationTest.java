@@ -5,6 +5,7 @@ import com.austria.logistics.commands.contracts.Command;
 import com.austria.logistics.commands.creationCommands.CreateRoute;
 import com.austria.logistics.core.RepositoryImpl;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.FailedToRemoveLocationException;
 import com.austria.logistics.exceptions.InvalidLocationException;
 import com.austria.logistics.exceptions.InvalidValueException;
 import com.austria.logistics.exceptions.NotLoggedInException;
@@ -72,9 +73,9 @@ class UnassignLocationTest {
     }
 
     @Test
-    void executeCommand_Should_Return_Error_When_Unassigning_startLocation_But_ThereAre_OtherLocation() {
+    void executeCommand_Should_Throw_Error_When_Unassigning_startLocation_But_ThereAre_OtherLocation() {
         //Act,Assert
-        Assertions.assertEquals("You cannot remove the starting location in the route, before every other location is removed!",
+        Assertions.assertThrows(FailedToRemoveLocationException.class, () ->
                 unassignLocation.execute(List.of("1","Sydney")));
     }
 

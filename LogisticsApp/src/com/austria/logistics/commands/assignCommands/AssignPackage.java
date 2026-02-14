@@ -38,8 +38,7 @@ public class AssignPackage extends BaseCommand {
         Package pkg = getRepository().findElementById(getRepository().getPackages(), packageId);
         Truck truck = getRepository().findElementById(getRepository().getTrucks(), truckId);
 
-        String result = assignPackage(pkg, truck);
-        return result;
+        return assignPackage(pkg, truck);
     }
 
     private String assignPackage(Package pkg, Truck truck) {

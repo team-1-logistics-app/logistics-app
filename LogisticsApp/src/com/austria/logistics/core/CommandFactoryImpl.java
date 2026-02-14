@@ -20,6 +20,7 @@ import com.austria.logistics.commands.userCommands.Register;
 import com.austria.logistics.constants.Constants;
 import com.austria.logistics.core.contracts.CommandFactory;
 import com.austria.logistics.core.contracts.Repository;
+import com.austria.logistics.exceptions.InvalidCommandException;
 import com.austria.logistics.utils.Parsers;
 
 public class CommandFactoryImpl implements CommandFactory {
@@ -69,7 +70,7 @@ public class CommandFactoryImpl implements CommandFactory {
             case LOAD:
                 return new Load(repository);
             default:
-                throw new IllegalArgumentException(String.format(Constants.INVALID_COMMAND, commandTypeAsString));
+                throw new InvalidCommandException(String.format(Constants.INVALID_COMMAND, commandTypeAsString));
         }
     }
 }
